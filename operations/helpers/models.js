@@ -41,3 +41,15 @@ class Model {
         .del();
     };
 }
+
+// Class objects for the tables to be used in the router
+
+const Department = new Model("departments");
+const Inventory = new Model("inventory");
+const Users = new Model("users");
+
+module.exports = {
+    Department,
+    Inventory,
+    Users
+}
