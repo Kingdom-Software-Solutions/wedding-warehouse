@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  return knex.schema.createTable('rentables', tbl => {
+  return knex.schema.createTable('inventory', tbl => {
     tbl.increments('id').primary();
     tbl.string('itemName', 64).unique().notNullable();
     tbl.text('description', 500);
@@ -17,5 +17,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('rentables')
+  return knex.schema.dropTableIfExists('inventory')
 };

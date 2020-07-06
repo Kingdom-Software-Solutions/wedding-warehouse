@@ -11,10 +11,10 @@ exports.up = function(knex) {
         .inTable('users')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
-        tbl.integer('rentableId', 9)
+        tbl.integer('inventoryId', 9)
         .unsigned()
         .references('id')
-        .inTable('rentables')
+        .inTable('inventory')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
     })
