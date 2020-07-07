@@ -5,7 +5,7 @@ const cors = require('cors');
 const environment = process.env.NODE_ENV
 
 // ROUTER IMPORTS
-const authRouter = require('../operations/auth/authRouter');
+const authRouter = require('../routers/auth/authRouter');
 
 const server = express();
 server.use(helmet());
