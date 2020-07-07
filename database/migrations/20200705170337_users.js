@@ -5,7 +5,7 @@ exports.up = function(knex) {
         tbl.string('username', 64).unique().notNullable();
         tbl.string('password', 64).notNullable();
         tbl.string('email', 64).unique();
-        tbl.boolean('isAdmin').defaultTo(false);
+        tbl.boolean('isAdmin').defaultTo(0);
         tbl.string('addressLine1', 64);
         tbl.string('addressLine2', 64);
         tbl.string('addressCity', 64);
