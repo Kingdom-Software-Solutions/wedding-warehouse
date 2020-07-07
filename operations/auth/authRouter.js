@@ -27,10 +27,10 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  let {username, password } = req.body;
+  let { username, password } = req.body;
 
   // search for the user using the username
-  Users.findBy({ username })
+  Models.Users.findBy({ username })
   .then(([user]) => { 
     // if we find the user also check if the passwords match
     if(user && bcrypt.compareSync(password, user.password)){
