@@ -18,6 +18,10 @@ class Model {
     find() {
         return db(this.tableName).select("*");
     };
+    
+    findBy(filter) {
+        return db(this.tableName).where(filter);
+    }
 
     findById(id) {
         return db(this.tableName).where("id", id).select("*").first();
