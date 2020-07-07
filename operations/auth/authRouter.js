@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 
-const Users = require("../helpers/models");
+const Models = require("../helpers/models");
 const secrets = require("../../api/secrets");
 
 router.post("/register", (req, res) => {
@@ -18,7 +18,7 @@ router.post("/register", (req, res) => {
   user.password = lockdown;
 // NEVER save the password in plain text
   
-  Users.insert(user).then(saved => {
+  Models.Users.insert(user).then(saved => {
     res.status(201).json(saved)
   }).catch(error => {
     console.log(error);
