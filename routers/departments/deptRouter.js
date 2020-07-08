@@ -28,4 +28,54 @@ router.get("/", (req, res) => {
     });
 });
 
+// get dept by id
+router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    Models.Department.findById(id)
+    .then(dept => {
+        res.status(200).json(dept);
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    })
+})
+
+// get dept by name
+router.post("/name", (req, res) => {
+    const name = req.body
+    Models.Department.findBy(name)
+    .then(([dept]) => {
+        console.log(dept)
+        res.status(200).json(dept)
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    })
+});
+
+// update dept
+
+router.put("/:id", (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+    Models.Department.updateById(id, changes)
+    .then(updatedDept => {
+        res.status(200).json(updatedDept)
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    })    
+});
+
+router.delete("/:id", (req, res) => {
+    const { id } = req.params;
+    Models.Department.removeById(id)
+    .then(deleted => {
+        res.status(200).json({message: "Department successfull deleted! 😬"})
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    });
+});
+
 module.exports = router;
