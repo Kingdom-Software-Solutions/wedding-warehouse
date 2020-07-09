@@ -7,8 +7,9 @@ const environment = process.env.NODE_ENV
 
 // ROUTER IMPORTS
 const authRouter = require('../routers/auth/authRouter');
-const deptRouter = require('../routers/departments/deptRouter')
-const inventoryRouter = require('../routers/inventory/inventoryRouter')
+const deptRouter = require('../routers/departments/deptRouter');
+const inventoryRouter = require('../routers/inventory/inventoryRouter');
+const userRouter = require('../routers/users/userRouter');
 
 const server = express();
 server.use(helmet());
@@ -29,9 +30,10 @@ server.use(
 server.use(cors());
 
 // USE ROUTERS
-server.use('/api/auth', authRouter)
-server.use('/api/departments', deptRouter)
-server.use('/api/inventory', inventoryRouter)
+server.use('/api/auth', authRouter);
+server.use('/api/users', userRouter)
+server.use('/api/departments', deptRouter);
+server.use('/api/inventory', inventoryRouter);
 
 server.get("/", (req, res) => {
     res.json(`STATUS: Wedding Warehouse api is running in ${environment} mode`);
