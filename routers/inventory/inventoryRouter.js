@@ -1,12 +1,15 @@
 const router = require("express").Router();
 const Models = require("../helpers/models");
+// initalize db variables
+const Inv = Models.Inventory
+// const Review = Models.Reviews
 
 // add an item to inventory
 router.post("/", (req, res) => {
     let item = req.body;
     
     if(item.departmentId) {
-        Models.Inventory.insert(item)
+        Inv.insert(item)
         .then(newItem => {
             res.status(201).json({message: "Item successfully added to DB!", newItem})
         })
@@ -19,7 +22,7 @@ router.post("/", (req, res) => {
 })
 // get all inventory
 router.get("/", (req, res) => {
-    Models.Inventory.find()
+    Inv.find()
     .then(items => {
         res.status(200).json(items)
     })
@@ -30,7 +33,8 @@ router.get("/", (req, res) => {
 // get item by id
 router.get("/:id", (req, res) => {
     const { id } = req.params;
-    Models.Inventory.findById(id)
+    // join item to reviews table later and grab reviews with the item?
+    Inv.findById(id)
     .then(item => {
         res.status(200).json(item)
     })
@@ -42,7 +46,7 @@ router.get("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
     const { id } = req.params;
     const itemUpdate = req.body;
-    Models.Inventory.updateById(id, itemUpdate)
+    Inv.updateById(id, itemUpdate)
     .then(updated => {
         res.status(200).json({message: "Item succsessfully updated!", updated})
     })
@@ -54,14 +58,16 @@ router.put("/:id", (req, res) => {
 // delete an item by id
 router.delete("/:id", (req, res) => {
     const { id } = req.params;
-    Models.Inventory.removeById(id)
+    Inv.removeById(id)
     .then(item => {
         res.status(200).json({message: "Item successfully deleted! 😬"})
     })
     .catch(err => {
         res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
     })
-})
+});
+
+// Add POST, PUT, DELETE a review on an item
 
 
 module.exports = router;

@@ -3,11 +3,13 @@ const router = require("express").Router();
 const Models = require("../helpers/models")
 const heimdal = require("../auth/authenticator");
 
+const Dept = Models.Department
+
 // add a department
 router.post("/", (req, res) => {
     let dept = req.body;
 
-    Models.Department.insert(dept)
+    Dept.insert(dept)
     .then(dept =>{
         res.status(201).json({message:"Department successfully added!", dept})
     })
@@ -19,7 +21,7 @@ router.post("/", (req, res) => {
 
 // find all depts
 router.get("/", (req, res) => {
-    Models.Department.find()
+    Dept.find()
     .then(depts => {
         res.status(200).json(depts)
     })
@@ -31,7 +33,7 @@ router.get("/", (req, res) => {
 // get dept by id
 router.get("/:id", (req, res) => {
     const { id } = req.params;
-    Models.Department.findById(id)
+    Dept.findById(id)
     .then(dept => {
         res.status(200).json(dept);
     })
@@ -43,7 +45,7 @@ router.get("/:id", (req, res) => {
 // get dept by name
 router.post("/name", (req, res) => {
     const name = req.body
-    Models.Department.findBy(name)
+    Dept.findBy(name)
     .then(([dept]) => {
         console.log(dept)
         res.status(200).json(dept)
@@ -58,7 +60,7 @@ router.post("/name", (req, res) => {
 router.put("/:id", (req, res) => {
     const { id } = req.params;
     const changes = req.body;
-    Models.Department.updateById(id, changes)
+    Dept.updateById(id, changes)
     .then(updatedDept => {
         res.status(200).json(updatedDept)
     })
@@ -69,7 +71,7 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
     const { id } = req.params;
-    Models.Department.removeById(id)
+    Dept.removeById(id)
     .then(deleted => {
         res.status(200).json({message: "Department successfull deleted! 😬"})
     })
