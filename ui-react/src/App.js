@@ -4,6 +4,7 @@ import './App.css';
 import NavBar from './components/NavBar';
 import LandingPage from './components/Home/LandingPage';
 import InventoryPage from './components/Inventory/InventoryPage';
+import ItemPage from './components/Inventory/ItemPage';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
       </Route>
       <Route path="/inventory">
         <InventoryPage />
+      </Route>
+      <Route path="/inventory/:id">
+        <ItemPage />
       </Route>
     </div>
   );
