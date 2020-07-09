@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const users = require("express").Router();
 const Models = require("../helpers/models");
 const check = require("../middleware/index");
 
@@ -6,7 +6,7 @@ const User = Models.Users;
 
 const { validateUserId } = check
 
-router.get("/username", (req, res) => {
+users.get("/username", (req, res) => {
     const username = req.body;
     User.findBy(username)
     .then(user => {
@@ -16,7 +16,7 @@ router.get("/username", (req, res) => {
         res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
     })
 })
-router.put("/:id", validateUserId, (req, res) => {
+users.put("/:id", validateUserId, (req, res) => {
     const { id } = req.params;
     const userUpdate = req.body;
 
@@ -29,7 +29,7 @@ router.put("/:id", validateUserId, (req, res) => {
     });
 });
 
-router.delete("/:id", validateUserId, (req, res) => {
+users.delete("/:id", validateUserId, (req, res) => {
     const { id } = req.params;
 
     User.removeById(id)
@@ -41,4 +41,4 @@ router.delete("/:id", validateUserId, (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = users;

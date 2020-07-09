@@ -1,11 +1,11 @@
-const router = require("express").Router();
+const inventory = require("express").Router();
 const Models = require("../helpers/models");
 // initalize db variables
 const Inv = Models.Inventory
 // const Review = Models.Reviews
 
 // add an item to inventory
-router.post("/", (req, res) => {
+inventory.post("/", (req, res) => {
     let item = req.body;
     
     if(item.departmentId) {
@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
     }
 })
 // get all inventory
-router.get("/", (req, res) => {
+inventory.get("/", (req, res) => {
     Inv.find()
     .then(items => {
         res.status(200).json(items)
@@ -31,7 +31,7 @@ router.get("/", (req, res) => {
     })
 })
 // get item by id
-router.get("/:id", (req, res) => {
+inventory.get("/:id", (req, res) => {
     const { id } = req.params;
     // join item to reviews table later and grab reviews with the item?
     Inv.findById(id)
@@ -43,7 +43,7 @@ router.get("/:id", (req, res) => {
     })
 })
 // update an item by id
-router.put("/:id", (req, res) => {
+inventory.put("/:id", (req, res) => {
     const { id } = req.params;
     const itemUpdate = req.body;
     Inv.updateById(id, itemUpdate)
@@ -56,7 +56,7 @@ router.put("/:id", (req, res) => {
 })
 
 // delete an item by id
-router.delete("/:id", (req, res) => {
+inventory.delete("/:id", (req, res) => {
     const { id } = req.params;
     Inv.removeById(id)
     .then(item => {
@@ -70,4 +70,4 @@ router.delete("/:id", (req, res) => {
 // Add POST, PUT, DELETE a review on an item
 
 
-module.exports = router;
+module.exports = inventory;

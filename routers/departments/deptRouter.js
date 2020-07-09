@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const department = require("express").Router();
 // const Depts = require("../helpers/deptModel");
 const Models = require("../helpers/models")
 const heimdal = require("../auth/authenticator");
@@ -6,7 +6,7 @@ const heimdal = require("../auth/authenticator");
 const Dept = Models.Department
 
 // add a department
-router.post("/", (req, res) => {
+department.post("/", (req, res) => {
     let dept = req.body;
 
     Dept.insert(dept)
@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
 })
 
 // find all depts
-router.get("/", (req, res) => {
+department.get("/", (req, res) => {
     Dept.find()
     .then(depts => {
         res.status(200).json(depts)
@@ -31,7 +31,7 @@ router.get("/", (req, res) => {
 });
 
 // get dept by id
-router.get("/:id", (req, res) => {
+department.get("/:id", (req, res) => {
     const { id } = req.params;
     Dept.findById(id)
     .then(dept => {
@@ -43,7 +43,7 @@ router.get("/:id", (req, res) => {
 })
 
 // get dept by name
-router.post("/name", (req, res) => {
+department.post("/name", (req, res) => {
     const name = req.body
     Dept.findBy(name)
     .then(([dept]) => {
@@ -57,7 +57,7 @@ router.post("/name", (req, res) => {
 
 // update dept
 
-router.put("/:id", (req, res) => {
+department.put("/:id", (req, res) => {
     const { id } = req.params;
     const changes = req.body;
     Dept.updateById(id, changes)
@@ -69,7 +69,7 @@ router.put("/:id", (req, res) => {
     })    
 });
 
-router.delete("/:id", (req, res) => {
+department.delete("/:id", (req, res) => {
     const { id } = req.params;
     Dept.removeById(id)
     .then(deleted => {
@@ -80,4 +80,4 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = department;
