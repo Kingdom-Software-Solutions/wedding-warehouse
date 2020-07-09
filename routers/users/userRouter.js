@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const Models = require("../helpers/models");
+const check = require("../middleware/index");
+
+const { validateUserId } = check
 
 router.get("/username", (req, res) => {
     const username = req.body;
@@ -11,7 +14,7 @@ router.get("/username", (req, res) => {
         res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
     })
 })
-router.put("/:id", (req, res) => {
+router.put("/:id", validateUserId, (req, res) => {
     const { id } = req.params;
     const changes = req.body;
 
@@ -24,7 +27,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", validateUserId, (req, res) => {
     const { id } = req.params;
 
     Models.Users.removeById(id)
