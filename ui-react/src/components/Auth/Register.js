@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AuthBtn } from '../material-ui/AuthBtn'; 
 
 const Register = () => {
     const [newUser, setNewUser] = useState({});
@@ -23,6 +24,7 @@ const Register = () => {
                 <input name="username"></input>
                 <label>Password</label>
                 <input name="password" type="password"></input>
+                <AuthBtn>Register</AuthBtn>
             </form>
         </div>
     )
