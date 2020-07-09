@@ -19,7 +19,7 @@ router.post("/", (req, res) => {
 })
 // get all inventory
 router.get("/", (req, res) => {
-    Models.Department.find()
+    Models.Inventory.find()
     .then(items => {
         res.status(200).json(items)
     })
