@@ -11,6 +11,8 @@ const NavBar = () => {
                 <HomeIcon />
             </Link>
             <Link to="/inventory">Inventory</Link>
+            <Link to="/login">Log In</Link>
+            <Link to="/register">Sign Up</Link>
         </nav>
     )
 }
