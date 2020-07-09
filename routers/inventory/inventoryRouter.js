@@ -28,10 +28,39 @@ router.get("/", (req, res) => {
     })
 })
 // get item by id
-
+router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    Models.Inventory.findById(id)
+    .then(item => {
+        res.status(200).json(item)
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    })
+})
 // update an item by id
+router.put("/:id", (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+    Models.Inventory.updateById(id, changes)
+    .then(updated => {
+        res.status(200).json({message: "Item succsessfully updated!", updated})
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    })
+})
 
 // delete an item by id
+router.delete("/:id", (req, res) => {
+    Models.Inventory.removeById(id)
+    .then(item => {
+        res.status(200).json({message: "Item successfully deleted! 😬"})
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    })
+})
 
 
 module.exports = router;
