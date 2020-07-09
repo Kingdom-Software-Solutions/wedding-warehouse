@@ -16,14 +16,14 @@ router.get("/username", (req, res) => {
 })
 router.put("/:id", validateUserId, (req, res) => {
     const { id } = req.params;
-    const changes = req.body;
+    const userUpdate = req.body;
 
-    Models.Users.updateById(id, changes)
+    Models.Users.updateById(id, userUpdate)
     .then(user => {
         res.status(200).json({message: "User successfully updated!", user})
     })
     .catch(err => {
-        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end updating the user"})
     });
 });
 

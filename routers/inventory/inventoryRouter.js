@@ -41,8 +41,8 @@ router.get("/:id", (req, res) => {
 // update an item by id
 router.put("/:id", (req, res) => {
     const { id } = req.params;
-    const changes = req.body;
-    Models.Inventory.updateById(id, changes)
+    const itemUpdate = req.body;
+    Models.Inventory.updateById(id, itemUpdate)
     .then(updated => {
         res.status(200).json({message: "Item succsessfully updated!", updated})
     })
@@ -53,6 +53,7 @@ router.put("/:id", (req, res) => {
 
 // delete an item by id
 router.delete("/:id", (req, res) => {
+    const { id } = req.params;
     Models.Inventory.removeById(id)
     .then(item => {
         res.status(200).json({message: "Item successfully deleted! 😬"})
