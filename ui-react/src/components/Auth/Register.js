@@ -18,13 +18,13 @@ const Register = () => {
 
     return(
         <div>
-            <p>Register Form</p>
             <form>
                 <label>Username</label>
                 <input name="username"></input>
                 <label>Password</label>
                 <input name="password" type="password"></input>
                 <AuthBtn>Register</AuthBtn>
+                <AuthBtn>Returning Users</AuthBtn>
             </form>
         </div>
     )
