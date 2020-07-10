@@ -1,17 +1,7 @@
 // Warehouse State
-const initialState = {
-    isFetching: false,
-    isPosting: false,
-    readyToMount: false,
-    items: [],
-    singleItem: {
-        id: 0,
-        itemName: "",
-        description: ""
-    }
-}
+import { initialState } from './warehouseInitial'
 
-export const warehouseReducer = (state, action) =>{
+export const warehouseReducer = (state = initialState, action) =>{
     switch (action.type) {
         default:
           return state
