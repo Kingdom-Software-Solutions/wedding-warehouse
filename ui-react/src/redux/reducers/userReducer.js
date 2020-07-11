@@ -1,5 +1,7 @@
 // This reducer handles user state
-export const userReducer = (state, action) =>{
+import { initialState } from './userInitialState';
+
+export const userReducer = (state = initialState, action) =>{
     switch (action.type) {
         default:
           return state

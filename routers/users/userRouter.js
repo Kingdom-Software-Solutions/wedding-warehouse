@@ -2,6 +2,7 @@ const users = require("express").Router();
 const Models = require("../helpers/models");
 const check = require("../middleware/index");
 
+// initialize variable for helpers to use the users table
 const User = Models.Users;
 
 const { validateUserId } = check
@@ -40,5 +41,8 @@ users.delete("/:id", validateUserId, (req, res) => {
         res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
     });
 });
+
+// add ability to save an item as a favorite
+// will need to make a helper in model.js
 
 module.exports = users;
