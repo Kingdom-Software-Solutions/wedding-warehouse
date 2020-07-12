@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { registerUser } from '../../redux/actions/userActions';
 import { AuthBtn } from '../material-ui/AuthBtn'; 
 
-const Register = props => {
+const Register = (props) => {
     console.log(props)
     const history = useHistory()
     const [newUser, setNewUser] = useState({});
@@ -46,8 +46,8 @@ const Register = props => {
 
 const mapStateToProps = state => {
     return {
-        isPosting: state.isPosting,
-        user: state.user
+        isPosting: state.userReducer.isPosting,
+        user: state.userReducer.user
     }
 }
 

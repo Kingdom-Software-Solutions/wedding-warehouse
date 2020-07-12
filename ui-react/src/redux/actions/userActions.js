@@ -14,7 +14,7 @@ export const registerUser = credentials => dispatch => {
     axiosWithEnv().post('/api/auth/register', credentials)
     .then(res => {
         console.log('Register Response', res);
-        dispatch({ type: USER_CREATED })
+        dispatch({ type: USER_CREATED, payload: res.data.id })
     })
     .catch(error => {
         console.log('ERROR', error);
@@ -30,8 +30,10 @@ export const loginUser = credentials => dispatch => {
     dispatch({ type: USER_LOGIN });
     axiosWithEnv().post('/api/auth/login', credentials)
     .then(res => {
-        console.log('Login Response', res);
-        dispatch({ type: LOGIN_SUCCESS })
+        console.log('Login Response', res.data);
+        localStorage.setItem("token", res.data.token)
+        localStorage.setItem("userId", res.data.id)
+        dispatch({ type: LOGIN_SUCCESS, payload: res.data.id })
     })
     .catch(error => {
         console.log('ERROR', error);

@@ -13,7 +13,9 @@ import {
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAILURE,
     DEL_USER,
-    USER_DELETED
+    USER_DELETED,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE
 } from '../actions/userActions'
 import { initialState } from './userInitialState';
 
@@ -32,13 +34,30 @@ export const userReducer = (state = initialState, action) =>{
         case USER_CREATED:
             return {
                 ...state,
-                user: action.payload,
+                activeUserId: action.payload,
                 isPosting: false,
             };
         case REGISTER_FAILED:
             return {
                 ...state,
                 error: "Registration failed",
+                isPosting: false
+            };
+        case USER_LOGIN:
+            return {
+                ...state,
+                isPosting: true
+            };
+        case LOGIN_SUCCESS:
+            return {
+                ...state,
+                activeUserId: action.payload,
+                isPosting: false
+            }
+        case LOGIN_FAILURE:
+            return {
+                ...state,
+                error: "Error logging in 😬",
                 isPosting: false
             }
         default:

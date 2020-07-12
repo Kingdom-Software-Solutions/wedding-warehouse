@@ -1,9 +1,10 @@
 import React,{ useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { loginUser } from '../../redux/actions/userActions'
 import { AuthBtn } from '../material-ui/AuthBtn'
 
-const Login = () => {
+const Login = props => {
     const history = useHistory()
     const [user, setUser] = useState({});
     const handleChanges = e =>{
@@ -15,16 +16,18 @@ const Login = () => {
 
     const handleSubmit = e =>{
         e.preventDefault();
-        // use redux actions to post new user, another days problem
+        props.loginUser(user);
+        setUser({})
+        history.push("/inventory")
     }
     return(
         <div>
             <h3>Login</h3>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>Username</label>
-                <input name="username"></input>
+                <input name="username" onChange={handleChanges}></input>
                 <label>Password</label>
-                <input name="password" type="password"></input>
+                <input name="password" type="password" onChange={handleChanges}></input>
                 <AuthBtn type="submit">Login</AuthBtn>
                 <AuthBtn onClick={() => {
                     history.push("/register")
@@ -34,4 +37,11 @@ const Login = () => {
     )
 };
 
-export default Login;
+const mapStateToProps = state => {
+    return {
+        isPosting: state.userReducer.isPosting,
+        user: state.userReducer.state
+    }
+}
+
+export default connect(mapStateToProps, { loginUser })(Login);

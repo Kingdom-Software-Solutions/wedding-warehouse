@@ -3,6 +3,7 @@ export const initialState = {
     isPosting: false,
     readyToMount: false,
     error: "",
+    activeUserId: NaN,
     user: {
         username: "",
         email: "",
