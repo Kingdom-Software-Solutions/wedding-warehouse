@@ -5,7 +5,8 @@ import {
     REGISTER_FAILED,
     USER_CREATED,
     USER_LOGIN,
-    LOGIN_SUCCESSFUL,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
     GET_USER,
     GET_USER_SUCCESS,
     GET_USER_FAILURE,
@@ -14,8 +15,6 @@ import {
     UPDATE_USER_FAILURE,
     DEL_USER,
     USER_DELETED,
-    LOGIN_SUCCESS,
-    LOGIN_FAILURE
 } from '../actions/userActions'
 import { initialState } from './userInitialState';
 
