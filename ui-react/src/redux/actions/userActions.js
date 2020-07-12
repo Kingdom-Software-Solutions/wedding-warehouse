@@ -6,9 +6,12 @@ import { axiosWithEnv } from '../../utils/axiosWithEnv';
 export const SET_ERROR = 'SET_ERROR';
 
 // register user actions
-export const POST_USER = 'POST_USER';
+export const REGISTER_USER = 'POST_USER';
 export const USER_CREATED = 'USER_CREATED';
 
+const registerUser = credentials = dispatch => {
+    dispatch
+}
 // log user in
 export const USER_LOGIN = 'USER_LOGIN';
 export const LOGGED_IN= 'LOGGED_IN';
