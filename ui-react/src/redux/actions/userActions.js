@@ -6,11 +6,20 @@ import { axiosWithEnv } from '../../utils/axiosWithEnv';
 export const SET_ERROR = 'SET_ERROR';
 
 // register user actions
-export const REGISTER_USER = 'POST_USER';
+export const REGISTER_USER = 'REGISTER_USER';
 export const USER_CREATED = 'USER_CREATED';
 
 const registerUser = credentials = dispatch => {
-    dispatch
+    dispatch({ type: REGISTER_USER });
+    axiosWithEnv().post('/api/auth/register', credentials)
+    .then(res => {
+        console.log('Register Response', res);
+        dispatch({ type: USER_CREATED })
+    })
+    .catch(error => {
+        console.log('ERROR', error);
+        dispatch({ type: SET_ERROR })
+    })
 }
 // log user in
 export const USER_LOGIN = 'USER_LOGIN';
