@@ -8,7 +8,7 @@ export const ADD_DEPT_FAILURE = 'ADD_DEPT_FAILURE';
 
 export const addDept = newDept => dispatch => {
     dispatch({ type: ADD_DEPT_START});
-    axiosWithAuth().post("/api/deptartments")
+    axiosWithAuth().post("/api/departments")
     .then(res => {
         console.log('Add dept res', res);
         dispatch({ type: ADD_DEPT_SUCCESS });
@@ -24,8 +24,17 @@ export const UPDATE_DEPT_START = 'UPDATE_DEPT_START';
 export const UPDATE_DEPT_SUCCESS = 'UPDATE_DEPT_SUCCESS';
 export const UPDATE_DEPT_FAILURE = 'UPDATE_DEPT_FAILURE';
 
-export const updateDept = (id, updatedDept) => dispatch => {
-
+export const updateDept = (id, deptChanges) => dispatch => {
+    dispatch({ type: UPDATE_DEPT_START });
+    axiosWithAuth().put(`/api/departments/${id}`)
+    .then(res => {
+        console.log('Update dept res', res);
+        dispatch({ type: UPDATE_DEPT_SUCCESS, payload: deptChanges });
+    })
+    .catch(error => {
+        console.log('Update dept error', error);
+        dispatch({ type: UPDATE_DEPT_FAILURE})
+    })
 };
 
 // add item to inventory
