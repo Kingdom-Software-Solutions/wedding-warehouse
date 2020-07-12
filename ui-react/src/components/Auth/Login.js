@@ -1,7 +1,10 @@
 import React,{ useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { AuthBtn } from '../material-ui/AuthBtn'
 
 const Login = () => {
+    const history = useHistory()
     const [user, setUser] = useState({});
     const handleChanges = e =>{
         setUser({
@@ -16,14 +19,16 @@ const Login = () => {
     }
     return(
         <div>
-            <p>Login Form</p>
+            <h3>Login</h3>
             <form>
                 <label>Username</label>
                 <input name="username"></input>
                 <label>Password</label>
                 <input name="password" type="password"></input>
-                <AuthBtn>Login</AuthBtn>
-                <AuthBtn>New User?</AuthBtn>
+                <AuthBtn type="submit">Login</AuthBtn>
+                <AuthBtn onClick={() => {
+                    history.push("/register")
+                }}>New User?</AuthBtn>
             </form>
         </div>
     )

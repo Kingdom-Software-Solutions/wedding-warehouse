@@ -19,7 +19,10 @@ router.post("/register", (req, res) => {
 // NEVER save the password in plain text
   
   Models.Users.insert(user).then(saved => {
-    res.status(201).json(saved)
+    res.status(201).json({
+      id: saved.id,
+      username: saved.username
+    })
   }).catch(error => {
     console.log(error);
     res.status(500).json({ errorMessage: error.message })

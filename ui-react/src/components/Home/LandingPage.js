@@ -1,4 +1,5 @@
 import React from 'react';
+// SHOULD THIS JUST BE AN INVENTORY PAGE?
 
 const LandingPage = () => {
 

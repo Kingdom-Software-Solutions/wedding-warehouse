@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registerUser } from '../../redux/actions/userActions';
 import { AuthBtn } from '../material-ui/AuthBtn'; 
 
-const Register = () => {
+const Register = props => {
+    console.log(props)
+    const history = useHistory()
     const [newUser, setNewUser] = useState({});
 
     const handleChanges = e =>{
@@ -13,21 +18,37 @@ const Register = () => {
 
     const handleSubmit = e =>{
         e.preventDefault();
-        // use redux actions to post new user, another days problem
-    }
-
+        props.registerUser(newUser);
+        setNewUser({
+            username: "",
+            password: ""
+        });
+        // push to inventory page
+        history.push("/inventory")
+    };
+    
     return(
         <div>
-            <form>
+            <h3>Register</h3>
+            <form onSubmit={handleSubmit}>
                 <label>Username</label>
-                <input name="username"></input>
+                <input name="username" onChange={handleChanges}></input>
                 <label>Password</label>
-                <input name="password" type="password"></input>
-                <AuthBtn>Register</AuthBtn>
-                <AuthBtn>Returning Users</AuthBtn>
+                <input name="password" type="password" onChange={handleChanges}></input>
+                <AuthBtn type="submit">Register</AuthBtn>
+                <AuthBtn onClick={()=>{
+                    history.push("/login")
+                }}>Returning Users</AuthBtn>
             </form>
         </div>
     )
 };
 
-export default Register;
+const mapStateToProps = state => {
+    return {
+        isPosting: state.isPosting,
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps, { registerUser })(Register);

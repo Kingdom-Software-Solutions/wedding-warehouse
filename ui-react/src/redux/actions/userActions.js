@@ -18,12 +18,26 @@ export const registerUser = credentials => dispatch => {
     })
     .catch(error => {
         console.log('ERROR', error);
-        dispatch({ type: SET_ERROR })
-    })
-}
+        dispatch({ type: REGISTER_FAILED })
+    });
+};
 // log user in
 export const USER_LOGIN = 'USER_LOGIN';
-export const LOGIN_SUCCESS= 'LOGIN_SUCCESS';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
+export const loginUser = credentials => dispatch => {
+    dispatch({ type: USER_LOGIN });
+    axiosWithEnv().post('/api/auth/login', credentials)
+    .then(res => {
+        console.log('Login Response', res);
+        dispatch({ type: LOGIN_SUCCESS })
+    })
+    .catch(error => {
+        console.log('ERROR', error);
+        dispatch({ type: LOGIN_FAILURE })
+    });
+};
 
 // get user
 export const GET_USER = 'GET_USER_DATA';
