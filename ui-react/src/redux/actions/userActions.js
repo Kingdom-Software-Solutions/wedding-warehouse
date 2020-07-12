@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 
@@ -8,8 +7,9 @@ export const SET_ERROR = 'SET_ERROR';
 // register user actions
 export const REGISTER_USER = 'REGISTER_USER';
 export const USER_CREATED = 'USER_CREATED';
+export const REGISTER_FAILED = 'REGISTER_FAILED'
 
-const registerUser = credentials = dispatch => {
+export const registerUser = credentials => dispatch => {
     dispatch({ type: REGISTER_USER });
     axiosWithEnv().post('/api/auth/register', credentials)
     .then(res => {
@@ -23,7 +23,7 @@ const registerUser = credentials = dispatch => {
 }
 // log user in
 export const USER_LOGIN = 'USER_LOGIN';
-export const LOGGED_IN= 'LOGGED_IN';
+export const LOGIN_SUCCESS= 'LOGIN_SUCCESS';
 
 // get user
 export const GET_USER = 'GET_USER_DATA';

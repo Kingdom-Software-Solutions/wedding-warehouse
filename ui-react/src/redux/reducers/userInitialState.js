@@ -2,18 +2,21 @@ export const initialState = {
     isFetching: false,
     isPosting: false,
     readyToMount: false,
-    username: "",
-    email: "",
-    isAdmin: false,
-    firstName: "",
-    lastName: "",
-    shipping: {
-        line1: "",
-        line2: "",
-        city: "",
-        country: "",
-        state: "",
-        zip: "",
+    error: "",
+    user: {
+        username: "",
+        email: "",
+        isAdmin: false,
+        firstName: "",
+        lastName: "",
+        shipping: {
+            line1: "",
+            line2: "",
+            city: "",
+            country: "",
+            state: "",
+            zip: "",
+        },
     },
     // uncomment when ready to take online payments down the line
     // billing: {
