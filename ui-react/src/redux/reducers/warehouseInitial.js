@@ -2,7 +2,9 @@ export const initialState = {
     isFetching: false,
     isPosting: false,
     readyToMount: false,
-    department: {
+    error: "",
+    departments: [],
+    singleDept: {
         id: 0,
         name: ""
     },

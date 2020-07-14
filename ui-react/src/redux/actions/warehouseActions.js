@@ -38,6 +38,15 @@ export const updateDept = (id, deptChanges) => dispatch => {
     })
 };
 
+// get all departments
+export const GET_ALL_DEPT = 'GET_ALL_DEPT';
+export const GET_ALL_DEPT_SUCCESS = 'GET_ALL_DEPT_SUCCESS'
+export const GET_ALL_DEPT_FAILURE = 'GET_ALL_DEPT_FAILURE'
+
+export const GET_DEPT = 'GET_DEPT';
+export const GET_DEPT_SUCCESS = 'GET_DEPT_SUCCESS'
+export const GET_DEPT_FAILURE = 'GET_DEPT_FAILURE'
+
 // add item to inventory
 export const ADD_ITEM_START = 'ADD_ITEM_START';
 export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
