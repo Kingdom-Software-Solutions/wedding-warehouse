@@ -25,7 +25,7 @@ import {
     GET_ALL_ITEMS_SUCCESS,
     GET_ALL_ITEMS_FAILURE,
     GET_ITEM,
-    GET_ITEM_SUCESS,
+    GET_ITEM_SUCCESS,
     GET_ITEM_FAILURE
 } from '../actions/warehouseActions'
 import { initialState } from './warehouseInitial';
@@ -124,7 +124,7 @@ export const warehouseReducer = (state = initialState, action) =>{
                 ...state,
                 isPosting: true
             }
-        case GET_ITEM_SUCESS:
+        case GET_ITEM_SUCCESS:
             return {
                 ...state,
                 singleItem: action.payload,

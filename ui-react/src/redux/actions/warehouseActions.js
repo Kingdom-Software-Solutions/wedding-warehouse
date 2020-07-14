@@ -1,6 +1,6 @@
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
-import e from 'express';
+
 
 // create a department
 export const ADD_DEPT_START = 'ADD_DEPT_START';
@@ -43,9 +43,36 @@ export const GET_ALL_DEPT = 'GET_ALL_DEPT';
 export const GET_ALL_DEPT_SUCCESS = 'GET_ALL_DEPT_SUCCESS'
 export const GET_ALL_DEPT_FAILURE = 'GET_ALL_DEPT_FAILURE'
 
+export const getAllDepts = () => dispatch =>{
+    dispatch({ type: GET_ALL_DEPT });
+    axiosWithEnv().get("/api/departments")
+    .then(res => {
+        console.log('Get all dept res', res)
+        dispatch({type: GET_ALL_DEPT_SUCCESS, payload: res.data })
+    })
+    .catch(error => {
+        console.log('Get all dept error', error)
+        dispatch({type: GET_ALL_DEPT_FAILURE})
+    })
+}
+
+// get a single department
 export const GET_DEPT = 'GET_DEPT';
 export const GET_DEPT_SUCCESS = 'GET_DEPT_SUCCESS'
 export const GET_DEPT_FAILURE = 'GET_DEPT_FAILURE'
+
+export const getDept = (id) => dispatch => {
+    dispatch({ type: GET_DEPT });
+    axiosWithEnv().get(`/api/departments/${id}`)
+    .then(res => {
+        console.log('Get dept res', res)
+        dispatch({type: GET_DEPT_SUCCESS, payload: res.data })
+    })
+    .catch(error => {
+        console.log('Get dept error', error)
+        dispatch({type: GET_DEPT_FAILURE})
+    })
+}
 
 // add item to inventory
 export const ADD_ITEM_START = 'ADD_ITEM_START';
@@ -75,7 +102,7 @@ export const updateItem = (id, updatedItem) => dispatch => {
     axiosWithAuth().put(`/api/inventory/${id}`)
     .then(res => {
         console.log('Update inventory res', res);
-        dispatch({ type: UPDATE_ITEM_SUCCESS, payload: deptChanges });
+        dispatch({ type: UPDATE_ITEM_SUCCESS, payload: updatedItem });
     })
     .catch(error => {
         console.log('Update inventory error', error);
@@ -93,7 +120,7 @@ export const deleteItem = (id) => dispatch => {
     axiosWithAuth().put(`/api/inventory/${id}`)
     .then(res => {
         console.log('Delete item res', res);
-        dispatch({ type: DELETE_ITEM_SUCCESS, payload: deptChanges });
+        dispatch({ type: DELETE_ITEM_SUCCESS });
     })
     .catch(error => {
         console.log('delete item error', error);
@@ -107,7 +134,7 @@ export const GET_ALL_ITEMS = 'GET_ALL_ITEMS';
 export const GET_ALL_ITEMS_SUCCESS = 'GET_ALL_ITEMS_SUCCESS';
 export const GET_ALL_ITEMS_FAILURE = 'GET_ALL_ITEMS_FAILURE';
 
-export const getAllItems = () => {
+export const getAllItems = () => dispatch => {
     dispatch({ type: GET_ALL_ITEMS });
     axiosWithEnv().get("/api/inventory")
     .then(res => {
@@ -122,10 +149,10 @@ export const getAllItems = () => {
 
 // get a single item
 export const GET_ITEM = 'GET_ITEM';
-export const GET_ITEM_SUCESS = 'GET_ITEM_SUCCESS';
+export const GET_ITEM_SUCCESS = 'GET_ITEM_SUCCESS';
 export const GET_ITEM_FAILURE = 'GET_ITEM_FAILURE';
 
-export const getItem = (id) => {
+export const getItem = (id) => dispatch => {
     dispatch({ type: GET_ITEM });
     axiosWithEnv().get(`/api/inventory/${id}`)
     .then(res => {
