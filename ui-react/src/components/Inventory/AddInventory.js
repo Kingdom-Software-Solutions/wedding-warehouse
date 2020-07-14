@@ -9,6 +9,9 @@ import { axiosWithEnv } from '../../utils/axiosWithEnv';
 const AddInventory = props => {
     const dispatch = useDispatch()
     const [depts, setDepts] = useState([]);
+    const [newDept, setNewDept] = useState({
+        name: ""
+    })
     const [newItem, setNewItem] = useState({
         itemName: "",
         description: "",
@@ -30,15 +33,29 @@ const AddInventory = props => {
         .catch(err => {
             console.log(err)
         })
-    },[]);
+    },[toggleDept]);
 
-    const handleChanges = e =>{
+    const handleChanges = e => {
         setNewItem({
             ...newItem,
             [e.target.name]: e.target.value
         });
     };
 
+    // dispatches add dept
+    const newDeptChanges = e =>{
+        setNewDept({
+            ...newDept,
+            [e.target.name]: e.target.value
+        })
+    }
+    const postDept = e =>{
+        dispatch(addDept(newDept));
+        setToggleDept(false)
+    };
+
+    console.log(depts)
+    console.log(newItem)
 
     return (
         <div>
@@ -60,12 +77,13 @@ const AddInventory = props => {
                 <input name="rentalRate" onChange={handleChanges}/>
                 <label>Buy Now Price</label>
                 <input name="buyNow" onChange={handleChanges}/>
-                <label htmlFor="deptId">Select Department</label>
-                <select name="deptId" required={true}>
+                <label htmlFor="departmentId">Select Department</label>
+                <select name="departmentId" required={true}>
                     <option value="" disabled selected>Required</option>
                     {depts.map(dept=>{
                         console.log(dept)
                             return(
+                                // onclick updates dept id
                                 <option
                                 key={dept.id}
                                 value={dept.id}>
@@ -75,8 +93,8 @@ const AddInventory = props => {
                     })};
                 </select>
                 { toggleDept ? <>
-                <input name="name" />
-                <Button >Add</Button>
+                <input name="name" onChange={newDeptChanges} />
+                <Button onClick={postDept}>Add</Button>
                 <Button onClick={()=>{
                     setToggleDept(false)
                 }}>Cancel</Button>
@@ -95,10 +113,5 @@ const AddInventory = props => {
     )
 };
 
-// const mapStateToProps = state => {
-//     return {
-//         isPosting: state.warehouseReducer.isPosting
-//     }
-// }
 
 export default AddInventory;

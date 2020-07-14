@@ -9,7 +9,7 @@ export const ADD_DEPT_FAILURE = 'ADD_DEPT_FAILURE';
 
 export const addDept = newDept => dispatch => {
     dispatch({ type: ADD_DEPT_START});
-    axiosWithAuth().post("/api/departments")
+    axiosWithAuth().post("/api/departments", newDept)
     .then(res => {
         console.log('Add dept res', res);
         dispatch({ type: ADD_DEPT_SUCCESS });
