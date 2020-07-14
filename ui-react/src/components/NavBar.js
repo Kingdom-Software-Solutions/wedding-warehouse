@@ -18,7 +18,8 @@ const NavBar = () => {
                 <HomeIcon />
             </Link>
             <Link to="/inventory">Inventory</Link>
-            {localStorage.getItem("token") ? 
+            {/* Need a better way to verify a user is logged in */}
+            {!!localStorage.getItem("token") ? 
             <AuthBtn onClick={logout}>Logout</AuthBtn>
             :
             <>

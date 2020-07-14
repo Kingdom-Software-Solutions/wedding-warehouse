@@ -7,6 +7,7 @@ import Register from './components/Auth/Register'
 import LandingPage from './components/Home/LandingPage';
 import InventoryPage from './components/Inventory/InventoryPage';
 import ItemPage from './components/Inventory/ItemPage';
+import AddInventory from './components/Inventory/AddInventory';
 
 function App() {
   return (
@@ -21,11 +22,14 @@ function App() {
       <Route path="/register">
         <Register />
       </Route>
-      <Route path="/inventory">
+      <Route exact path="/inventory">
         <InventoryPage />
       </Route>
-      <Route path="/inventory/:id">
+      <Route exact path="/inventory/:id">
         <ItemPage />
+      </Route>
+      <Route exact path="/inventory/addItem">
+        <AddInventory />
       </Route>
     </div>
   );
