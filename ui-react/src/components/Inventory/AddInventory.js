@@ -98,7 +98,7 @@ const AddInventory = props => {
                 <input name="buyNow" onChange={handleChanges}/>
                 <label htmlFor="departmentId">Select Department</label>
                 <select name="departmentId" required={true} onChange={handleDeptId}>
-                    <option value="" disabled selected>Required</option>
+                    <option value="DEFAULT" disabled>Required</option>
                     {depts.map(dept=>{
                         // console.log(dept)
                             return(
