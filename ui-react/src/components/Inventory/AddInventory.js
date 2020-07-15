@@ -93,9 +93,11 @@ const AddInventory = props => {
                 null
                 }
                 <label>Rental Rate</label>
-                <input name="rentalRate" onChange={handleChanges}/>
+                <input name="rentalRate" onChange={handleChanges}
+                type="number" min="1" step="any"/>
                 <label>Buy Now Price</label>
-                <input name="buyNow" onChange={handleChanges}/>
+                <input name="buyNow" onChange={handleChanges}
+                type="number" min="1" step="any"/>
                 <label htmlFor="departmentId">Select Department</label>
                 <select name="departmentId" required={true} onChange={handleDeptId}>
                     <option value="DEFAULT" disabled>Required</option>
