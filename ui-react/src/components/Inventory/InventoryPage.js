@@ -17,6 +17,7 @@ const InventoryPage = props => {
     return(
         <div>
             <h2>Inventory Here</h2>
+            {/* Add dropdown filter by department (stretch) */}
             {/* Add ternary to check if user isAdmin when live to display add inventory button */}
             <Button
             color="primary"
@@ -33,7 +34,7 @@ const InventoryPage = props => {
                         <p>{item.description}</p>
                         <span>Rent ${item.rentalRate}</span>
                         <span>Buy ${item.buyNow}</span>
-                        {/* Add button to reserve after user flow is built */}
+                        {/* Add button to reserve  and to see more (reviews, etc.)after user flow is built */}
                     </div>
                 )
             })}
