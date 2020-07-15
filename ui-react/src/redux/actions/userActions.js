@@ -15,6 +15,7 @@ export const registerUser = credentials => dispatch => {
     .then(res => {
         console.log('Register Response', res);
         dispatch({ type: USER_CREATED, payload: res.data.id })
+        // dispatch get user by id and save that user to state?
     })
     .catch(error => {
         console.log('ERROR', error);
@@ -34,6 +35,8 @@ export const loginUser = credentials => dispatch => {
         localStorage.setItem("token", res.data.token)
         localStorage.setItem("userId", res.data.id)
         dispatch({ type: LOGIN_SUCCESS, payload: res.data.id })
+        // dispatch get user by id and save active user to state?
+        // storing it and state will keep it from breaking with funky storage from other sites and can return isAdmin?
     })
     .catch(error => {
         console.log('ERROR', error);

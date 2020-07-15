@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addDept, addItem } from '../../redux/actions/warehouseActions'
+import { addDept, addItem, getAllDepts } from '../../redux/actions/warehouseActions'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Button from '@material-ui/core/Button';
 import { AuthBtn } from '../material-ui/AuthBtn';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 
 const AddInventory = props => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() // won't need with selector
     const [depts, setDepts] = useState([]);
     const [newDept, setNewDept] = useState({
         name: ""
@@ -15,6 +15,7 @@ const AddInventory = props => {
     const [newItem, setNewItem] = useState({
         itemName: "",
         description: "",
+        designUrl: "",
         rentalRate: 0,
         buyNow: 0,
         departmentId: NaN
@@ -24,6 +25,7 @@ const AddInventory = props => {
 
     // get dept for <select> on mount
     useEffect(()=>{
+        // dispatch(getAllDepts());
         // maybe convert to get depts redux dispatch
         axiosWithEnv().get("/api/departments")
         .then(res => {
@@ -42,6 +44,13 @@ const AddInventory = props => {
         });
     };
 
+    const handleDeptId = e =>{
+        setNewItem({
+            ...newItem,
+            departmentId: e.target.value
+        })
+    }
+
     // dispatches add dept
     const newDeptChanges = e =>{
         setNewDept({
@@ -54,36 +63,45 @@ const AddInventory = props => {
         setToggleDept(false)
     };
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        dispatch(addItem(newItem));
+        // add success message or failure modal depending on response
+    }
+
     console.log(depts)
     console.log(newItem)
 
     return (
         <div>
             <h3>Add Item to Inventory</h3>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>Item Name</label>
                 <input name="itemName" onChange={handleChanges}/>
                 <label>Description</label>
                 <textarea name="description" onChange={handleChanges}/>
                 {/* image uploader here */}
-                <Button
+                {/* <Button
                 variant="contained"
                 color="primary"
+                type="file"
                 startIcon={<AddAPhotoIcon />}
                 >
                 Upload
-                </Button>
+                </Button> */}
+                <AddAPhotoIcon />
+                <input name="designUrl" type="file"
+                />
                 <label>Rental Rate</label>
                 <input name="rentalRate" onChange={handleChanges}/>
                 <label>Buy Now Price</label>
                 <input name="buyNow" onChange={handleChanges}/>
                 <label htmlFor="departmentId">Select Department</label>
-                <select name="departmentId" required={true}>
+                <select name="departmentId" required={true} onChange={handleDeptId}>
                     <option value="" disabled selected>Required</option>
                     {depts.map(dept=>{
-                        console.log(dept)
+                        // console.log(dept)
                             return(
-                                // onclick updates dept id
                                 <option
                                 key={dept.id}
                                 value={dept.id}>
