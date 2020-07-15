@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { addDept, addItem, getAllDepts } from '../../redux/actions/warehouseActions'
 import Button from '@material-ui/core/Button';
 import { AuthBtn } from '../material-ui/AuthBtn';
@@ -9,6 +10,7 @@ import ImageUpload from './CloudinaryWidget';
 
 const AddInventory = props => {
     const dispatch = useDispatch() // won't need with selector
+    const history = useHistory()
     const [depts, setDepts] = useState([]);
     const [newDept, setNewDept] = useState({
         name: ""
@@ -71,6 +73,7 @@ const AddInventory = props => {
         e.preventDefault();
         dispatch(addItem(newItem));
         // add success message or failure modal depending on response
+        history.push("/inventory")
     }
 
     console.log(depts)

@@ -109,7 +109,7 @@ export const warehouseReducer = (state = initialState, action) =>{
         case GET_ALL_ITEMS_SUCCESS:
             return {
                 ...state,
-                items: action.payload,
+                items: [...action.payload],
                 isPosting: false
             }
         case GET_ALL_ITEMS_FAILURE:
