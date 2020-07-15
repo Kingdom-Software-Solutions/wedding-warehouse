@@ -4,18 +4,21 @@ import { addDept, addItem, getAllDepts } from '../../redux/actions/warehouseActi
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Button from '@material-ui/core/Button';
 import { AuthBtn } from '../material-ui/AuthBtn';
+import axios from 'axios';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
+import ImageUpload from './CloudinaryWidget';
+
 
 const AddInventory = props => {
     const dispatch = useDispatch() // won't need with selector
     const [depts, setDepts] = useState([]);
     const [newDept, setNewDept] = useState({
         name: ""
-    })
+    });
     const [newItem, setNewItem] = useState({
         itemName: "",
         description: "",
-        designUrl: "",
+        mainImgUrl: "",
         rentalRate: 0,
         buyNow: 0,
         departmentId: NaN
@@ -36,6 +39,8 @@ const AddInventory = props => {
             console.log(err)
         })
     },[toggleDept]);
+
+    // cloud image uploader
 
     const handleChanges = e => {
         setNewItem({
@@ -62,6 +67,7 @@ const AddInventory = props => {
         dispatch(addDept(newDept));
         setToggleDept(false)
     };
+    // handles file for upload
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -85,13 +91,12 @@ const AddInventory = props => {
                 variant="contained"
                 color="primary"
                 type="file"
+                onClick={handleCloudinary}
                 startIcon={<AddAPhotoIcon />}
                 >
                 Upload
                 </Button> */}
-                <AddAPhotoIcon />
-                <input name="designUrl" type="file"
-                />
+                <ImageUpload newItem={newItem} setNewItem={setNewItem} />
                 <label>Rental Rate</label>
                 <input name="rentalRate" onChange={handleChanges}/>
                 <label>Buy Now Price</label>
