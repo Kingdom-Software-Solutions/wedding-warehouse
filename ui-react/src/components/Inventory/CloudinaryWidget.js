@@ -3,10 +3,17 @@ import Button from '@material-ui/core/Button';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
 const ImageUpload = ({ newItem, setNewItem }) => {
+  // check if in development and upload to a local preset
+  let preset;
+  if(process.env.REACT_APP_BASE_URL === "development"){
+    preset = "kss-widget-local"
+  } else {
+    preset = "kss-widget"
+  }
   let widget = window.cloudinary.createUploadWidget(
     {
       cloudName: "kss-image-cloud",
-      uploadPreset: "logoFromWidget",
+      uploadPreset: preset,
       sources: ["local", "url"],
       showAdvancedOptions: false,
       cropping: false,
@@ -16,9 +23,11 @@ const ImageUpload = ({ newItem, setNewItem }) => {
     (error, result) => {
       if (result.event === "success") {
         const data = result.info;
-
+        console.log(data)
         setNewItem({
-            ...newItem
+            ...newItem,
+            mainImageUrl: data.secure_url,
+            thumbnailUrl: data.thumbnail_url
         });
       }
     }

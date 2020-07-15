@@ -6,7 +6,7 @@ exports.up = function(knex) {
     tbl.text('description', 500);
     tbl.integer('rentalRate', 100000)
     tbl.integer('buyNow', 500000)
-    tbl.string('designUrl', 255);
+    tbl.string('mainImgUrl', 255);
     tbl.string('thumbnailUrl', 255);
     tbl.boolean('isAvailable').defaultTo(true);
     tbl.integer('departmentId', 9)

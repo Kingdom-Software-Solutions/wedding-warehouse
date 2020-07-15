@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDept, addItem, getAllDepts } from '../../redux/actions/warehouseActions'
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Button from '@material-ui/core/Button';
 import { AuthBtn } from '../material-ui/AuthBtn';
-import axios from 'axios';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 import ImageUpload from './CloudinaryWidget';
 
@@ -19,6 +17,7 @@ const AddInventory = props => {
         itemName: "",
         description: "",
         mainImgUrl: "",
+        thumbnailUrl: "",
         rentalRate: 0,
         buyNow: 0,
         departmentId: NaN
@@ -87,16 +86,12 @@ const AddInventory = props => {
                 <label>Description</label>
                 <textarea name="description" onChange={handleChanges}/>
                 {/* image uploader here */}
-                {/* <Button
-                variant="contained"
-                color="primary"
-                type="file"
-                onClick={handleCloudinary}
-                startIcon={<AddAPhotoIcon />}
-                >
-                Upload
-                </Button> */}
                 <ImageUpload newItem={newItem} setNewItem={setNewItem} />
+                {newItem.thumbnailUrl ? 
+                <img src={newItem.thumbnailUrl} />
+                :
+                null
+                }
                 <label>Rental Rate</label>
                 <input name="rentalRate" onChange={handleChanges}/>
                 <label>Buy Now Price</label>
