@@ -26,7 +26,7 @@ const ImageUpload = ({ newItem, setNewItem }) => {
         console.log(data)
         setNewItem({
             ...newItem,
-            mainImageUrl: data.secure_url,
+            mainImgUrl: data.secure_url,
             thumbnailUrl: data.thumbnail_url
         });
       }
@@ -42,7 +42,6 @@ const ImageUpload = ({ newItem, setNewItem }) => {
         <Button
         variant="contained"
         color="primary"
-        type="file"
         onClick={showWidget}
         startIcon={<AddAPhotoIcon />}
         >

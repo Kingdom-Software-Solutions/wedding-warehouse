@@ -18,9 +18,9 @@ const AddInventory = props => {
         description: "",
         mainImgUrl: "",
         thumbnailUrl: "",
-        rentalRate: 0,
-        buyNow: 0,
-        departmentId: NaN
+        rentalRate: NaN,
+        buyNow: NaN,
+        departmentId: 1
     });
     // used to show add dept field or not
     const [toggleDept, setToggleDept] = useState(false);
@@ -51,7 +51,7 @@ const AddInventory = props => {
     const handleDeptId = e =>{
         setNewItem({
             ...newItem,
-            departmentId: e.target.value
+            departmentId: parseInt(e.target.value)
         })
     }
 
@@ -66,9 +66,8 @@ const AddInventory = props => {
         dispatch(addDept(newDept));
         setToggleDept(false)
     };
-    // handles file for upload
 
-    const handleSubmit = e => {
+    const handleSubmitItem = e => {
         e.preventDefault();
         dispatch(addItem(newItem));
         // add success message or failure modal depending on response
@@ -80,7 +79,7 @@ const AddInventory = props => {
     return (
         <div>
             <h3>Add Item to Inventory</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitItem}>
                 <label>Item Name</label>
                 <input name="itemName" onChange={handleChanges}/>
                 <label>Description</label>

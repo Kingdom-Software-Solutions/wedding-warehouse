@@ -7,7 +7,7 @@ const Inv = Models.Inventory
 // add an item to inventory
 inventory.post("/", (req, res) => {
     let item = req.body;
-    
+   
     if(item.departmentId) {
         Inv.insert(item)
         .then(newItem => {
