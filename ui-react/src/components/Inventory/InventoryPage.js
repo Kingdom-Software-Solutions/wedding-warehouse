@@ -5,6 +5,17 @@ import { getAllItems } from '../../redux/actions/warehouseActions'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 
+
+// page styles
+import {
+    InvPageContainer,
+    MappedItems,
+    ItemDiv,
+    ImgContainer,
+    StyledImg
+} from '../styled/InvPageStyles'
+
+
 const InventoryPage = props => {
     const history = useHistory();
     console.log(props)
@@ -15,7 +26,7 @@ const InventoryPage = props => {
     
 
     return(
-        <div>
+        <InvPageContainer>
             <h2>Inventory Here</h2>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add ternary to check if user isAdmin when live to display add inventory button */}
@@ -26,19 +37,23 @@ const InventoryPage = props => {
             >
                 Add Inventory
             </Button>
+            <MappedItems>
             {props.items.map(item =>{
                 return (
-                    <div key={item.id}>
-                        <img src={item.mainImgUrl} />
+                    <ItemDiv key={item.id}>
+                        <ImgContainer>
+                            <StyledImg src={item.mainImgUrl} />
+                        </ImgContainer>
                         <h3>{item.itemName}</h3>
                         <p>{item.description}</p>
                         <span>Rent ${item.rentalRate}</span>
                         <span>Buy ${item.buyNow}</span>
                         {/* Add button to reserve  and to see more (reviews, etc.)after user flow is built */}
-                    </div>
+                    </ItemDiv>
                 )
             })}
-        </div>
+            </MappedItems>
+        </InvPageContainer>
     )
 };
 
