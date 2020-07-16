@@ -35,3 +35,14 @@ export const StyledImg = styled.img`
     width: 200px;
     object-fit: contain;
 `;
+
+export const DetailsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+`;
+
+export const ActionContainer = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+`;

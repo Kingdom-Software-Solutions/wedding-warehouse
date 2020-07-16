@@ -12,7 +12,9 @@ import {
     MappedItems,
     ItemDiv,
     ImgContainer,
-    StyledImg
+    StyledImg,
+    DetailsContainer,
+    ActionContainer
 } from '../styled/InvPageStyles'
 
 
@@ -30,6 +32,7 @@ const InventoryPage = props => {
         <InvPageContainer>
             <h2>Inventory Here</h2>
             {/* Add dropdown filter by department (stretch) */}
+            {/* Add search to filter by item (stretch) */}
             {/* Add ternary to check if user isAdmin when live to display add inventory button */}
             <Button
             color="primary"
@@ -42,7 +45,6 @@ const InventoryPage = props => {
             {props.items.map(item =>{
                 return (
                     <ItemDiv key={item.id}>
-                        {/* add ternary for image placholder */}
                         <ImgContainer>
                             {item.mainImgUrl ?
                             <StyledImg src={item.mainImgUrl}
@@ -52,12 +54,17 @@ const InventoryPage = props => {
                             alt="item image"/>
                             }
                         </ImgContainer>
-                        <h3>{item.itemName}</h3>
-                        <p>{item.description}</p>
-                        <span>Rent: ${item.rentalRate}</span>
-                        <span>Buy ${item.buyNow}</span>
-                        <Button>Reserve Now</Button>
-                        <Button>See More</Button>
+                        <DetailsContainer>
+                            <h3>{item.itemName}</h3>
+                            <p>{item.description}</p>
+                            {/* add customizable with "i" icon */}
+                            <span>Rent: ${item.rentalRate}</span>
+                            {/* <span>Buy ${item.buyNow}</span> */}
+                        </DetailsContainer>
+                        <ActionContainer>
+                            <Button disabled>Reserve Now</Button>
+                            <Button disabled>See More</Button>
+                        </ActionContainer>
                     </ItemDiv>
                 )
             })}
