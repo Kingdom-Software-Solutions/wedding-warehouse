@@ -26,7 +26,6 @@ export const ItemDiv = styled.div`
 // box in the images
 export const ImgContainer = styled.div`
     max-width: 100%;
-    border: 1px solid black
 `;
 
 export const StyledImg = styled.img`

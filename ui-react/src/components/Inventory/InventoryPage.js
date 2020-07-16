@@ -18,6 +18,7 @@ import {
 
 const InventoryPage = props => {
     const history = useHistory();
+    const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png'
     console.log(props)
     // convert to hooks later?
     useEffect(()=> {
@@ -41,14 +42,22 @@ const InventoryPage = props => {
             {props.items.map(item =>{
                 return (
                     <ItemDiv key={item.id}>
+                        {/* add ternary for image placholder */}
                         <ImgContainer>
-                            <StyledImg src={item.mainImgUrl} />
+                            {item.mainImgUrl ?
+                            <StyledImg src={item.mainImgUrl}
+                            alt="item image"/>
+                            :
+                            <StyledImg src={noImg}
+                            alt="item image"/>
+                            }
                         </ImgContainer>
                         <h3>{item.itemName}</h3>
                         <p>{item.description}</p>
-                        <span>Rent ${item.rentalRate}</span>
+                        <span>Rent: ${item.rentalRate}</span>
                         <span>Buy ${item.buyNow}</span>
-                        {/* Add button to reserve  and to see more (reviews, etc.)after user flow is built */}
+                        <Button>Reserve Now</Button>
+                        <Button>See More</Button>
                     </ItemDiv>
                 )
             })}
