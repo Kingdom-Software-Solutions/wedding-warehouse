@@ -8,6 +8,8 @@ exports.up = function(knex) {
     tbl.integer('buyNow', 500000)
     tbl.string('mainImgUrl', 255);
     tbl.string('thumbnailUrl', 255);
+    tbl.integer('quantity', 1000);
+    tbl.boolean('isCustomizable').defaultTo(false)
     tbl.boolean('isAvailable').defaultTo(true);
     tbl.integer('departmentId', 9)
     .unsigned()
