@@ -18,7 +18,8 @@ ReactDOM.render(
           domain="kss-wedding-warehouse.us.auth0.com"
           clientId="Fh4cxtgUlxUE4KCCLSaYm9qDMXUke19z"
           redirectUri={window.location.origin}
-          audience="https://kss-wedding-warehouse.us.auth0.com/api/v2/"
+          // Audience is the identifer of the API set up through AUTH0
+          audience="https://mels-warehouse-auth"
           scope="read:current_user update:current_user_metadata"
         >
           <App />
