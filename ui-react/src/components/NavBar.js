@@ -8,12 +8,12 @@ import { NavContainer, NavWrapper, NavTitle , StyledLink} from './styled/NavStyl
 
 const NavBar = () => {
     const history = useHistory();
-    const { loginWithRedirect } = useAuth0(); // Auth0 login hook
-    const logout = () => {
-        window.localStorage.removeItem('token');
-        window.localStorage.removeItem('userId');
-        history.push('/');
-      };
+    const { loginWithRedirect, logout } = useAuth0(); // Auth0 login/logout hook also handles register
+    // const logout = () => {
+    //     window.localStorage.removeItem('token');
+    //     window.localStorage.removeItem('userId');
+    //     history.push('/');
+    //   };
 
     return(
         <NavContainer>
@@ -32,7 +32,10 @@ const NavBar = () => {
                 {/* Will replace normal login/signup when configured */}
                 <AuthBtn onClick={()=>{
                 loginWithRedirect();
-                }}>Auth0 Log In</AuthBtn>
+                }}>Auth0 Login/Register</AuthBtn>
+                <AuthBtn onClick={()=>{
+                logout();
+                }}>Auth0 Logout</AuthBtn>
                 </>
                 }
             </NavWrapper>
