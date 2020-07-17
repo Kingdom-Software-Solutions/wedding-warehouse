@@ -1,7 +1,8 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
-const morgan = require('morgan')
+const morgan = require('morgan');
+const jwtCheck = require('./authJwt')
 
 const environment = process.env.NODE_ENV
 
@@ -34,6 +35,13 @@ server.use('/api/auth', authRouter);
 server.use('/api/users', userRouter)
 server.use('/api/departments', deptRouter);
 server.use('/api/inventory', inventoryRouter);
+
+// AUTH0
+server.use(jwtCheck);
+
+server.get('/authorized', (req, res) => {
+  res.send('Secured Resource');
+});
 
 server.get("/", (req, res) => {
     res.json(`STATUS: Wedding Warehouse api is running in ${environment} mode`);
