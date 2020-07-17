@@ -25,11 +25,11 @@ function App() {
       <Route exact path="/inventory">
         <InventoryPage />
       </Route>
-      <Route exact path="/inventory/:id">
-        <ItemPage />
-      </Route>
       <Route exact path="/inventory/addItem">
         <AddInventory />
+      </Route>
+      <Route exact path="/inventory/item/:id">
+        <ItemPage />
       </Route>
     </div>
   );

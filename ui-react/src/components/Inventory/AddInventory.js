@@ -6,7 +6,17 @@ import Button from '@material-ui/core/Button';
 import { AuthBtn } from '../material-ui/AuthBtn';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 import ImageUpload from './CloudinaryWidget';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
 
+//styles
+import {
+    AddInvContainer,
+    FormTitle,
+    StyledForm
+} from '../styled/AddInvStyles'
+import { MenuItem, Select } from '@material-ui/core';
 
 const AddInventory = props => {
     const dispatch = useDispatch() // won't need with selector
@@ -15,6 +25,8 @@ const AddInventory = props => {
     const [newDept, setNewDept] = useState({
         name: ""
     });
+    // material ui select needs to be passed a value 👇
+    const [initDept, setInitDept] = useState("")
     const [newItem, setNewItem] = useState({
         itemName: "",
         description: "",
@@ -80,13 +92,17 @@ const AddInventory = props => {
     console.log(newItem)
 
     return (
-        <div>
-            <h3>Add Item to Inventory</h3>
-            <form onSubmit={handleSubmitItem}>
-                <label>Item Name</label>
-                <input name="itemName" onChange={handleChanges}/>
-                <label>Description</label>
-                <textarea name="description" onChange={handleChanges}/>
+        <AddInvContainer>
+            <FormTitle>Add New Item</FormTitle>
+            <StyledForm onSubmit={handleSubmitItem}>
+                <TextField label="Item Name *" name="itemName" onChange={handleChanges}/>
+                <TextField
+                id="standard-multiline-flexible"
+                label="Description"
+                multiline
+                rowsMax={4} 
+                name="description" 
+                onChange={handleChanges}/>
                 {/* image uploader here */}
                 <ImageUpload newItem={newItem} setNewItem={setNewItem} />
                 {newItem.thumbnailUrl ? 
@@ -94,28 +110,35 @@ const AddInventory = props => {
                 :
                 null
                 }
-                <label>Rental Rate</label>
-                <input name="rentalRate" onChange={handleChanges}
-                type="number" min="1" step="any"/>
-                <label>Buy Now Price</label>
-                <input name="buyNow" onChange={handleChanges}
-                type="number" min="1" step="any"/>
-                <label htmlFor="departmentId">Select Department</label>
-                <select name="departmentId" required={true} onChange={handleDeptId}>
-                    <option value="DEFAULT" disabled>Required</option>
+                <TextField
+                label="$ Rental Rate"
+                name="rentalRate" onChange={handleChanges}
+                type="number"/>
+                <TextField
+                label="$ Buy Now Price" 
+                name="buyNow" onChange={handleChanges}
+                type="number"/>
+                {/* Without this label throws an error */}
+                <label htmlFor="departmentId"></label>
+                <TextField
+                select
+                label="Department *"
+                value={initDept}
+                helperText="Please select a department"
+                name="departmentId" onChange={handleDeptId}>
                     {depts.map(dept=>{
                         // console.log(dept)
                             return(
-                                <option
+                                <MenuItem
                                 key={dept.id}
                                 value={dept.id}>
                                     {dept.name}
-                                </option>
+                                </MenuItem>
                             );
                     })};
-                </select>
+                </TextField>
                 { toggleDept ? <>
-                <input name="name" onChange={newDeptChanges} />
+                <TextField label="New Department" name="name" onChange={newDeptChanges} />
                 <Button onClick={postDept}>Add</Button>
                 <Button onClick={()=>{
                     setToggleDept(false)
@@ -130,8 +153,8 @@ const AddInventory = props => {
                 <Button href="/inventory">
                     Back
                 </Button>
-            </form>
-        </div>
+            </StyledForm>
+        </AddInvContainer>
     )
 };
 
