@@ -14,19 +14,25 @@ import InputLabel from '@material-ui/core/InputLabel';
 import {
     AddInvContainer,
     FormTitle,
-    StyledForm
+    StyledForm,
+    InfoContainer,
+    UploadContainer,
+    PriceContainer,
+    DeptContainer,
+    SubmitContainer
 } from '../styled/AddInvStyles'
 import { MenuItem, Select } from '@material-ui/core';
 
 const AddInventory = props => {
     const dispatch = useDispatch() // won't need with selector
     const history = useHistory()
+    let thisDeptId;
     const [depts, setDepts] = useState([]);
     const [newDept, setNewDept] = useState({
         name: ""
     });
     // material ui select needs to be passed a value 👇
-    const [initDept, setInitDept] = useState("")
+    const [deptValue, setDeptValue] = useState("")
     const [newItem, setNewItem] = useState({
         itemName: "",
         description: "",
@@ -34,7 +40,7 @@ const AddInventory = props => {
         thumbnailUrl: "",
         rentalRate: NaN,
         buyNow: NaN,
-        departmentId: 1
+        departmentId: 1,
     });
     // used to show add dept field or not
     const [toggleDept, setToggleDept] = useState(false);
@@ -53,7 +59,6 @@ const AddInventory = props => {
         })
     },[toggleDept]);
 
-    // cloud image uploader
 
     const handleChanges = e => {
         setNewItem({
@@ -63,10 +68,12 @@ const AddInventory = props => {
     };
 
     const handleDeptId = e =>{
-        setNewItem({
-            ...newItem,
-            departmentId: parseInt(e.target.value)
-        })
+        // filters to assign the department id of the selected dept
+        // this was done because I needed a string value (prior to this I had it setting the deptId on the newItem) for the material ui dropdown component but I need to pass a deptId to the BE so I got my cake and ate it too
+        let thisDeptId = depts.filter(dept => dept.name === e.target.value)
+        console.log(thisDeptId)
+        newItem.departmentId = thisDeptId[0].id
+        setDeptValue(e.target.value)
     }
 
     // dispatches add dept
@@ -81,9 +88,13 @@ const AddInventory = props => {
         setToggleDept(false)
     };
 
-    const handleSubmitItem = e => {
+    const handleSubmitItem = async e => {
         e.preventDefault();
-        dispatch(addItem(newItem));
+        setNewItem({
+            ...newItem,
+            departmentId: thisDeptId
+        })
+        await dispatch(addItem(newItem));
         // add success message or failure modal depending on response
         history.push("/inventory")
     }
@@ -95,64 +106,75 @@ const AddInventory = props => {
         <AddInvContainer>
             <FormTitle>Add New Item</FormTitle>
             <StyledForm onSubmit={handleSubmitItem}>
-                <TextField label="Item Name *" name="itemName" onChange={handleChanges}/>
-                <TextField
-                id="standard-multiline-flexible"
-                label="Description"
-                multiline
-                rowsMax={4} 
-                name="description" 
-                onChange={handleChanges}/>
+                <InfoContainer>
+                    <TextField label="Item Name *" name="itemName" onChange={handleChanges}/>
+                    <TextField
+                    id="standard-multiline-flexible"
+                    label="Description"
+                    multiline
+                    rowsMax={4} 
+                    name="description" 
+                    onChange={handleChanges}/>
+                </InfoContainer>
                 {/* image uploader here */}
-                <ImageUpload newItem={newItem} setNewItem={setNewItem} />
-                {newItem.thumbnailUrl ? 
-                <img src={newItem.thumbnailUrl} />
-                :
-                null
-                }
-                <TextField
-                label="$ Rental Rate"
-                name="rentalRate" onChange={handleChanges}
-                type="number"/>
-                <TextField
-                label="$ Buy Now Price" 
-                name="buyNow" onChange={handleChanges}
-                type="number"/>
-                {/* Without this label throws an error */}
-                <label htmlFor="departmentId"></label>
-                <TextField
-                select
-                label="Department *"
-                value={initDept}
-                helperText="Please select a department"
-                name="departmentId" onChange={handleDeptId}>
-                    {depts.map(dept=>{
-                        // console.log(dept)
-                            return(
-                                <MenuItem
-                                key={dept.id}
-                                value={dept.id}>
-                                    {dept.name}
-                                </MenuItem>
-                            );
-                    })};
-                </TextField>
-                { toggleDept ? <>
-                <TextField label="New Department" name="name" onChange={newDeptChanges} />
-                <Button onClick={postDept}>Add</Button>
-                <Button onClick={()=>{
-                    setToggleDept(false)
-                }}>Cancel</Button>
-                </>
-                :
-                <Button onClick={()=>{
-                    setToggleDept(true)
-                }}>Add New Department</Button>
-                }
-                <AuthBtn type="submit">Submit</AuthBtn>
-                <Button href="/inventory">
-                    Back
-                </Button>
+                <UploadContainer>
+                    <ImageUpload newItem={newItem} setNewItem={setNewItem} />
+                    {newItem.thumbnailUrl ? 
+                    <img src={newItem.thumbnailUrl} />
+                    :
+                    null
+                    }
+                </UploadContainer>
+                <PriceContainer>
+                    <TextField
+                    label="$ Rental Rate"
+                    name="rentalRate" onChange={handleChanges}
+                    type="number"/>
+                    <TextField
+                    label="$ Buy Now Price" 
+                    name="buyNow" onChange={handleChanges}
+                    type="number"/>
+                    
+                </PriceContainer>
+                <DeptContainer>
+                    {/* Without this label throws an warning */}
+                    <label htmlFor="departmentId"></label>
+                    <TextField
+                    select
+                    label="Department *"
+                    value={deptValue}
+                    helperText="Please select a department"
+                    name="departmentId" onChange={handleDeptId}>                     
+                        {depts.map(dept=>{
+                            // console.log(dept)
+                                return(
+                                    <MenuItem
+                                    key={dept.id}
+                                    value={dept.name}>
+                                        {dept.name}
+                                    </MenuItem>
+                                );
+                        })};
+                    </TextField>
+                    { toggleDept ? <>
+                    <TextField label="New Department" name="name" onChange={newDeptChanges} />
+                    <Button onClick={postDept}>Add</Button>
+                    <Button onClick={()=>{
+                        setToggleDept(false)
+                    }}>Cancel</Button>
+                    </>
+                    :
+                    <Button onClick={()=>{
+                        setToggleDept(true)
+                    }}>Add New Department</Button>
+                    }
+                </DeptContainer>
+                <SubmitContainer>
+                    <AuthBtn type="submit">Submit</AuthBtn>
+                    <Button href="/inventory">
+                        Back
+                    </Button>
+                </SubmitContainer>
             </StyledForm>
         </AddInvContainer>
     )
