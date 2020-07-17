@@ -16,6 +16,7 @@ import {
     DetailsContainer,
     ActionContainer
 } from '../styled/InvPageStyles'
+import { DeleteWithIcon } from '../material-ui/Delete';
 
 
 const InventoryPage = props => {
@@ -65,6 +66,7 @@ const InventoryPage = props => {
                             <Button disabled>Reserve Now</Button>
                             <Button disabled>See More</Button>
                         </ActionContainer>
+                        {/* <DeleteWithIcon /> */}
                     </ItemDiv>
                 )
             })}

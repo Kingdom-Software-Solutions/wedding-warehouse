@@ -8,3 +8,7 @@ export const mainColor = blueBayoux;
 export const secondaryColor = deepBlush;
 export const tertiaryColor = onahau;
 export const accentColor = cindarella;
+
+// ctas
+
+export const danger = "#ff0033"
