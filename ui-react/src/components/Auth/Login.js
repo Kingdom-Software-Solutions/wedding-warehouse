@@ -3,15 +3,24 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../../redux/actions/userActions'
 import { AuthBtn } from '../material-ui/AuthBtn'
+import TextField from '@material-ui/core/TextField';
 
 const Login = props => {
     const history = useHistory()
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        username: '',
+        password: '',
+        showPassword: false,
+    });
     const handleChanges = e =>{
         setUser({
             ...user,
             [e.target.name]: e.target.value
         });
+    };
+
+    const handleClickShowPassword = () => {
+        setUser({ ...user, showPassword: !user.showPassword });
     };
 
     const handleSubmit = e =>{
@@ -22,12 +31,10 @@ const Login = props => {
     }
     return(
         <div>
-            <h3>Login</h3>
             <form onSubmit={handleSubmit}>
-                <label>Username</label>
-                <input name="username" onChange={handleChanges}></input>
-                <label>Password</label>
-                <input name="password" type="password" onChange={handleChanges}></input>
+                <TextField label="Username" name="username" onChange={handleChanges} />
+                <TextField 
+                label="Password" name="password" type="password" onChange={handleChanges}/>
                 <AuthBtn type="submit">Login</AuthBtn>
                 <AuthBtn onClick={() => {
                     history.push("/register")

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../redux/actions/userActions';
 import { AuthBtn } from '../material-ui/AuthBtn'; 
+import { TextField } from '@material-ui/core';
 
 const Register = (props) => {
     console.log(props)
@@ -31,10 +32,8 @@ const Register = (props) => {
         <div>
             <h3>Register</h3>
             <form onSubmit={handleSubmit}>
-                <label>Username</label>
-                <input name="username" onChange={handleChanges}></input>
-                <label>Password</label>
-                <input name="password" type="password" onChange={handleChanges}></input>
+                <TextField label="Username" name="username" onChange={handleChanges}/>
+                <TextField label="Password" name="password" type="password" onChange={handleChanges}/>
                 <AuthBtn type="submit">Register</AuthBtn>
                 <AuthBtn onClick={()=>{
                     history.push("/login")

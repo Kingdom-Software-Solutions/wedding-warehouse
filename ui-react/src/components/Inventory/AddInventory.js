@@ -7,8 +7,7 @@ import { AuthBtn } from '../material-ui/AuthBtn';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 import ImageUpload from './CloudinaryWidget';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
+
 
 //styles
 import {
