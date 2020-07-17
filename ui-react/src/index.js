@@ -4,14 +4,23 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './redux/store'
+import { store } from './redux/store';
+import { Auth0Provider } from "@auth0/auth0-react";
 import * as serviceWorker from './serviceWorker';
+
+// If you are using a custom domain with Auth0, the value of the domain prop is the value of your custom domain instead of the value reflected in the "Settings" tab. <= in Auth0
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <App />
+        <Auth0Provider
+          domain="kss-wedding-warehouse.us.auth0.com"
+          clientId="Fh4cxtgUlxUE4KCCLSaYm9qDMXUke19z"
+          redirectUri={window.location.origin}
+        >
+          <App />
+        </Auth0Provider>
       </Router>
     </Provider>
   </React.StrictMode>,
