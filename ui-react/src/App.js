@@ -16,6 +16,8 @@ function App() {
       <Route exact path="/">
         <LandingPage />
       </Route>
+      {/* Okta Path */}
+      <Route path="/implicit/callback" />
       <Route path="/login">
         <Login />
       </Route>

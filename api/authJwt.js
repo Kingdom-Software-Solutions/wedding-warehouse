@@ -1,10 +1,8 @@
-var jwt = require('express-jwt');
+var jwtExpress = require('express-jwt');
 var jwks = require('jwks-rsa');
+const jwt = require("jsonwebtoken");
 
-
-
-
-var jwtCheck = jwt({
+var jwtCheck = jwtExpress({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,

@@ -5,27 +5,19 @@ import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Security } from '@okta/okta-react';
+import { configOkta } from './okta/config-okta';
 import * as serviceWorker from './serviceWorker';
 
-// If you are using a custom domain with Auth0, the value of the domain prop is the value of your custom domain instead of the value reflected in the "Settings" tab. <= in Auth0
+const config = configOkta;
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <Auth0Provider
-          domain={process.env.REACT_APP_AUTH0_DOMAIN}
-          clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-          redirectUri={window.location.origin}
-          // Audience is the identifer of the API set up through AUTH0
-          audience="https://kss-wedding-warehouse.us.auth0.com/api/v2/"
-          scope="read:current_user 
-          update:current_user_metadata
-          "
-        >
+        <Security {...config}>
           <App />
-        </Auth0Provider>
+        </Security>
       </Router>
     </Provider>
   </React.StrictMode>,
