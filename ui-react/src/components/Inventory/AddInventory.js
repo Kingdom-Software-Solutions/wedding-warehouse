@@ -7,6 +7,7 @@ import { AuthBtn } from '../material-ui/AuthBtn';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 import ImageUpload from './CloudinaryWidget';
 import TextField from '@material-ui/core/TextField';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 //styles
@@ -24,7 +25,8 @@ import { MenuItem, Select } from '@material-ui/core';
 
 const AddInventory = props => {
     const dispatch = useDispatch() // won't need with selector
-    const history = useHistory()
+    const history = useHistory();
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     let thisDeptId;
     const [depts, setDepts] = useState([]);
     const [newDept, setNewDept] = useState({
@@ -83,8 +85,17 @@ const AddInventory = props => {
         })
     }
     const postDept = e =>{
-        dispatch(addDept(newDept));
-        setToggleDept(false)
+        try{
+            const domain = "https://kss-wedding-warehouse.us.auth0.com/api/v2/";
+            const token = getAccessTokenSilently({
+                audience: domain,
+                scope: "read:current_user crud:inventory",
+              });
+            dispatch(addDept(newDept, token));
+            setToggleDept(false)
+        } catch {
+            alert("Error posting item")
+        }
     };
 
     const handleSubmitItem = async e => {

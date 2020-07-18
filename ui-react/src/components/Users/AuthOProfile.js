@@ -9,12 +9,12 @@ const Profile = () => {
   useEffect(() => {
       // FETCHES USER META DATA, BREAK THIS FILE OUT INTO SOMETHING
     const getUserMetadata = async () => {
-      const domain = "mels-warehouse-auth";
+      const domain = "https://kss-wedding-warehouse.us.auth0.com/api/v2/";
   
       try {
         const accessToken = await getAccessTokenSilently({
-          audience: `https://${domain}`,
-          scope: "read:current_user",
+          audience: domain,
+          scope: "read:current_user crud:inventory",
         });
   
         const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
