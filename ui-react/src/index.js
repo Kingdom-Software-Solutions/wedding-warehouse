@@ -15,12 +15,15 @@ ReactDOM.render(
     <Provider store={store}>
       <Router>
         <Auth0Provider
-          domain="kss-wedding-warehouse.us.auth0.com"
-          clientId="Fh4cxtgUlxUE4KCCLSaYm9qDMXUke19z"
+          domain={process.env.REACT_APP_AUTH0_DOMAIN}
+          clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
           redirectUri={window.location.origin}
           // Audience is the identifer of the API set up through AUTH0
           audience="https://mels-warehouse-auth"
-          scope="read:current_user update:current_user_metadata"
+          scope="read:current_user 
+          update:current_user_metadata
+          crud:inventory
+          "
         >
           <App />
         </Auth0Provider>

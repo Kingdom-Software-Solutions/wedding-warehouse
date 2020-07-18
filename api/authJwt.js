@@ -1,6 +1,9 @@
 var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
 
+
+
+
 var jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,

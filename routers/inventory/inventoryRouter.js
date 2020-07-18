@@ -1,11 +1,15 @@
 const inventory = require("express").Router();
+const jwtCheck = require("../../api/authJwt");
+const jwtAuthz = require('express-jwt-authz');
 const Models = require("../helpers/models");
 // initalize db variables
 const Inv = Models.Inventory
 // const Review = Models.Reviews
 
+const checkScopes = jwtAuthz([ 'crud:inventory' ]);
+
 // add an item to inventory
-inventory.post("/", (req, res) => {
+inventory.post("/", jwtCheck, (req, res) => {
     let item = req.body;
    
     if(item.departmentId) {
