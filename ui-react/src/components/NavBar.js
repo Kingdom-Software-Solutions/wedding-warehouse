@@ -10,6 +10,9 @@ const NavBar = () => {
     const history = useHistory();
     const { authState, authService } = useOktaAuth();
     const login = () => authService.login("/inventory")
+    const logout = async () => {
+        authService.logout('/');
+    };
 
     return(
         <NavContainer>
@@ -26,7 +29,7 @@ const NavBar = () => {
                         <AuthBtn onClick={login}>Login</AuthBtn>
                     </div>
                     :
-                    null
+                    <AuthBtn onClick={logout}>Logout</AuthBtn>
                 )
                 }
             </NavWrapper>
