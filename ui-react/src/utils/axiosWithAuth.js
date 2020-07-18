@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 
-export const axiosWithAuth = (token) =>{
+export const axiosWithAuth = () =>{
     // catch for development
-    const localToken = window.localStorage.getItem('token');
+    const token = localStorage.getItem("accessToken")
+    /* global fetch */
+
 
     let url;
     if (process.env.REACT_APP_BASE_URL === "development") {
@@ -15,7 +17,7 @@ export const axiosWithAuth = (token) =>{
     return axios.create({
         baseURL: url,
         headers:{
-            Authorization: `Bearer ${token}` || localToken
+            Authorization: `Bearer ${token}`
         }
     })
 }

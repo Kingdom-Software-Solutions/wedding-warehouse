@@ -18,7 +18,6 @@ const NavBar = () => {
                 <StyledLink href="/">Home</StyledLink>
                 <StyledLink href="/inventory">Inventory</StyledLink>
                 {/* Need a better way to verify a user is logged in */}
-
                 { authState.isPending ?
                     <div>Loading authentication</div>
                 :
