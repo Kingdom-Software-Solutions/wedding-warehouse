@@ -1,14 +1,12 @@
 const inventory = require("express").Router();
-const jwtCheck = require("../../api/authJwt");
-const jwtAuthz = require('express-jwt-authz');
+const heimdal = require("../middleware/oktaAuth")
 const Models = require("../helpers/models");
 // initalize db variables
 const Inv = Models.Inventory
 // const Review = Models.Reviews
 
-const checkScopes = jwtAuthz([ 'crud:inventory' ]);
-
 // add an item to inventory
+// when okta can login we can test/use this middleware
 inventory.post("/", (req, res) => {
     let item = req.body;
    

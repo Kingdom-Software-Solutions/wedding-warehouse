@@ -10,6 +10,7 @@ import { configOkta } from './okta/config-okta';
 import * as serviceWorker from './serviceWorker';
 
 const config = configOkta;
+console.log(config)
 
 ReactDOM.render(
   <React.StrictMode>
