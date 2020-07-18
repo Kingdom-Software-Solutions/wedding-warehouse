@@ -11,7 +11,7 @@ var jwtCheck = jwt({
         jwksRequestsPerMinute: 5,
         jwksUri: 'https://kss-wedding-warehouse.us.auth0.com/.well-known/jwks.json'
   }),
-  audience: 'https://mels-warehouse-auth',
+  audience: 'https://kss-wedding-warehouse.us.auth0.com/api/v2/',
   issuer: 'https://kss-wedding-warehouse.us.auth0.com/',
   algorithms: ['RS256']
 });

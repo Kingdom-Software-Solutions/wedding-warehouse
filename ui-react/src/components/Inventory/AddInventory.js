@@ -44,7 +44,7 @@ const AddInventory = props => {
         departmentId: 1,
     });
     // used to show add dept field or not
-    const [toggleDept, setToggleDept] = useState(false);
+    const [toggleDept, setToggleDept] = useState(false)
 
     // get dept for <select> on mount
     useEffect(()=>{
@@ -58,6 +58,7 @@ const AddInventory = props => {
         .catch(err => {
             console.log(err)
         })
+
     },[toggleDept]);
 
 
@@ -85,17 +86,9 @@ const AddInventory = props => {
         })
     }
     const postDept = e =>{
-        try{
-            const domain = "https://kss-wedding-warehouse.us.auth0.com/api/v2/";
-            const token = getAccessTokenSilently({
-                audience: domain,
-                scope: "read:current_user crud:inventory",
-              });
-            dispatch(addDept(newDept, token));
+ 
+            dispatch(addDept(newDept));
             setToggleDept(false)
-        } catch {
-            alert("Error posting item")
-        }
     };
 
     const handleSubmitItem = async e => {

@@ -80,7 +80,7 @@ export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
 export const ADD_ITEM_FAILURE = 'ADD_ITEM_FAILURE';
 
 export const addItem = (newItem, token) => dispatch => {
-    console.log(newItem)
+    console.log(newItem, token)
     dispatch({ type: ADD_ITEM_START });
     axiosWithAuth(token).post('/api/inventory', newItem)
     .then(res => {

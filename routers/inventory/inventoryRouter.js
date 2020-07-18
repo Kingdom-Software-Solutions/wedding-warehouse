@@ -9,7 +9,7 @@ const Inv = Models.Inventory
 const checkScopes = jwtAuthz([ 'crud:inventory' ]);
 
 // add an item to inventory
-inventory.post("/", jwtCheck, (req, res) => {
+inventory.post("/", (req, res) => {
     let item = req.body;
    
     if(item.departmentId) {
