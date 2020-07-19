@@ -19,6 +19,8 @@ import {
 } from '../styled/InvPageStyles'
 import { DeleteWithIcon } from '../material-ui/Delete';
 import { EditWithIcon } from '../material-ui/Update';
+import { TextField } from '@material-ui/core';
+import { StyledForm } from '../styled/AddInvStyles';
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
 const InventoryPage = ({ getAllItems, deleteItem, items }) => {
@@ -28,11 +30,13 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     
     const { authState, authService } = useOktaAuth();
-    // state to handle reloading page after quick delete/update
-    const [reload, setReload] = useState(false)
     const [userInfo, setUserInfo] = useState(null);
     const [superUser, setSuperUser] = useState(false); // state for workaround
     const whitelist = ["00ul53sdvnWjre0aF4x6"];
+    // local crud state management
+    // state to handle reloading page after quick delete/update
+    const [reload, setReload] = useState(false);
+    const [toggleEdit, setToggleEdit] = useState(false)
 
     // workaround until I can pass superUser attribute from okta
     const checkSuperUser = (user) => {
@@ -102,14 +106,31 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
                             {/* add customizable with "i" icon */}
                             <span>Rent: ${item.rentalRate}</span>
                             {/* <span>Buy ${item.buyNow}</span> */}
+                            {toggleEdit ? 
+                              <StyledForm>
+                                  <TextField label="Edit Item Name" name="itemName" />
+                                  <TextField                     id="standard-multiline-flexible"
+                                  label="Description"
+                                  multiline
+                                  rowsMax={4} 
+                                  name="description" />
+                                  <TextField                     label="$ Rental Rate"
+                                  name="rentalRate" 
+                                  type="number" />
+                                  <Button>Update</Button>
+                                  <Button onClick={()=> setToggleEdit(false)}>Back</Button>
+                              </StyledForm>  
+                            :
+                                null
+                            }
                         </DetailsContainer>
                         <ActionContainer>
                             <Button disabled>Reserve Now</Button>
                             <Button disabled>See More</Button>
                         </ActionContainer>
-                        { superUser ? 
+                        { superUser && !toggleEdit ? 
                             <ActionContainer>
-                                <EditWithIcon />
+                                <EditWithIcon onClick={()=> setToggleEdit(true)} />
                                 <DeleteWithIcon onClick={()=>{
                                     setReload(!reload)
                                     handleDelete(item.id)
@@ -118,8 +139,6 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
                         :
                          null
                         }
-
-
                     </ItemDiv>
                 )
             })}
