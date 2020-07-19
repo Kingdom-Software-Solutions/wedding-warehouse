@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export const axiosWithAuth = () =>{
     // catch for development
-    const token = localStorage.getItem("accessToken")
+    const token = localStorage.getItem("okta-token-storage")
     /* global fetch */
 
 
@@ -17,7 +17,7 @@ export const axiosWithAuth = () =>{
     return axios.create({
         baseURL: url,
         headers:{
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token.accessToken.accessToken}`
         }
     })
 }

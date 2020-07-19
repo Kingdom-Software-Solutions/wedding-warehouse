@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Kingdom-Software-Solutions/wedding-warehouse#readme",
   "dependencies": {
     "@okta/jwt-verifier": "^1.0.0",
+    "@okta/okta-signin-widget": "^4.2.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

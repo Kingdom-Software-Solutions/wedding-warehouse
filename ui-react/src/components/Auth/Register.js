@@ -5,6 +5,9 @@ import { registerUser } from '../../redux/actions/userActions';
 import { AuthBtn } from '../material-ui/AuthBtn'; 
 import { TextField } from '@material-ui/core';
 
+// IMPLEMENT OKTA IN REGISTRATION?
+//https://developer.okta.com/docs/reference/api/users/#create-user-with-password
+
 const Register = (props) => {
     console.log(props)
     const history = useHistory()

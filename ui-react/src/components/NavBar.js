@@ -6,7 +6,12 @@ import { AuthBtn } from '../components/material-ui/AuthBtn';
 // styles
 import { NavContainer, NavWrapper, NavTitle , StyledLink} from './styled/NavStyles';
 
+// IF YOU DISCOVER YOU NEED TO SIGN USERS OUT OF OKTA, REFERENCE HERE: https://developer.okta.com/docs/guides/sign-users-out/react/sign-out-of-okta/
+
+// WHEN USERS LOGIN, FIND THEM BY GETTING FROM "USERNAME" IN DB
+
 const NavBar = () => {
+    console.log('okta hook', useOktaAuth)
     const history = useHistory();
     const { authState, authService } = useOktaAuth();
     const login = () => authService.login("/inventory")
@@ -26,10 +31,13 @@ const NavBar = () => {
                 :
                 ( !authState.isAuthenticated ? 
                     <div>
-                        <AuthBtn onClick={login}>Login</AuthBtn>
+                        <AuthBtn onClick={login}>Login/Register</AuthBtn>
                     </div>
                     :
+                    <>
+                    <StyledLink href="/profile">Profile</StyledLink>
                     <AuthBtn onClick={logout}>Logout</AuthBtn>
+                    </>
                 )
                 }
             </NavWrapper>

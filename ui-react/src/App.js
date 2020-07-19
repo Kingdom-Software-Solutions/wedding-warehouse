@@ -10,6 +10,7 @@ import LandingPage from './components/Home/LandingPage';
 import InventoryPage from './components/Inventory/InventoryPage';
 import ItemPage from './components/Inventory/ItemPage';
 import AddInventory from './components/Inventory/AddInventory';
+import OktaProfile from './components/Users/OktaProfile';
 
 function App() {
   const { authState, authService } = useOktaAuth();
@@ -40,6 +41,7 @@ function App() {
       <Route exact path="/inventory/item/:id">
         <ItemPage />
       </Route>
+      <SecureRoute exact path="/profile" component={OktaProfile} />
     </div>
   );
 }
