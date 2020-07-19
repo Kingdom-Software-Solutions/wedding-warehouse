@@ -21,11 +21,11 @@ export const DeleteWithIcon = props => {
     )
 }
 
-export const TrashIcon = () => {
+export const TrashIcon = props => {
     return(
         <>
         <IconButton aria-label="delete">
-            <DeleteIcon />
+            <DeleteIcon onClick={props.onClick} />
         </IconButton>
         </>
     )

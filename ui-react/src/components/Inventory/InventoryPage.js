@@ -27,8 +27,8 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     
     const { authState, authService } = useOktaAuth();
-    // state for quick deleting an item by id on this page
-    const [qkDelete, setQkDelete] = useState(NaN)
+    // state to handle reloading page after quick delete/update
+    const [reload, setReload] = useState(false)
     const [userInfo, setUserInfo] = useState(null);
     const [superUser, setSuperUser] = useState(false); // state for workaround
     const whitelist = ["00ul53sdvnWjre0aF4x6"];
@@ -37,7 +37,11 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
     const checkSuperUser = (user) => {
         let verdict = whitelist.includes(user)
         return verdict ? setSuperUser(true) : null
-    }
+    };
+    // admin action to delete item
+    const handleDelete = (id) =>{
+        deleteItem(id);
+    };
     
     // convert to hooks later for redux?
     useEffect(()=> {
@@ -52,16 +56,11 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
           }
         getAllItems();
         // if this messes up items, make another useEffect
-    }, [authState, authService, checkSuperUser()]);
+        // depends on auth status, super user status and if a crud action was taken
+    }, [authState, authService, checkSuperUser(), reload]);
 
-    // admin action to delete item
-    const handleDelete = (id) =>{
-        console.log("clicked")
-        console.log(id)
-        deleteItem(id);
-    };
     
-    console.log(userInfo, superUser, deleteItem)
+    console.log(userInfo, superUser)
 
     return(
         <InvPageContainer>
@@ -107,7 +106,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
                             <Button disabled>See More</Button>
                         </ActionContainer>
                         <DeleteWithIcon onClick={()=>{
-                            // setQkDelete(item.id)
+                            setReload(!reload)
                             handleDelete(item.id)
                         }} />
                     </ItemDiv>
