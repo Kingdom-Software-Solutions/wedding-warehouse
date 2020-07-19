@@ -18,6 +18,7 @@ import {
     ActionContainer
 } from '../styled/InvPageStyles'
 import { DeleteWithIcon } from '../material-ui/Delete';
+import { EditWithIcon } from '../material-ui/Update';
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
 const InventoryPage = ({ getAllItems, deleteItem, items }) => {
@@ -67,6 +68,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
             <h2>Inventory Here</h2>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
+            
             { superUser ? 
                 <>
                     <Button
@@ -80,7 +82,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
                 :
                 null
             }
-            {/* Add ternary for spinner of null if retrieving items */}
+            {/* Add loading bar when inventory not showing */}
             <MappedItems>
             {items.map(item =>{
                 return ( 
@@ -105,10 +107,19 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
                             <Button disabled>Reserve Now</Button>
                             <Button disabled>See More</Button>
                         </ActionContainer>
-                        <DeleteWithIcon onClick={()=>{
-                            setReload(!reload)
-                            handleDelete(item.id)
-                        }} />
+                        { superUser ? 
+                            <ActionContainer>
+                                <EditWithIcon />
+                                <DeleteWithIcon onClick={()=>{
+                                    setReload(!reload)
+                                    handleDelete(item.id)
+                                }} />                            
+                            </ActionContainer>                     
+                        :
+                         null
+                        }
+
+
                     </ItemDiv>
                 )
             })}

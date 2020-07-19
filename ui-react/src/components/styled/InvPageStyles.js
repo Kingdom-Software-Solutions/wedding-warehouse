@@ -41,10 +41,11 @@ export const DetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 `;
 
 export const ActionContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 5%;
 `;
