@@ -57,7 +57,6 @@ const InventoryPage = props => {
             <h2>Inventory Here</h2>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
-            {/* Add ternary to check if user isAdmin when live to display add inventory button */}
             { superUser ? 
                 <>
                     <Button
