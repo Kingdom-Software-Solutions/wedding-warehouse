@@ -100,7 +100,7 @@ export const UPDATE_ITEM_FAILURE = 'UPDATE_ITEM_FAILURE';
 
 export const updateItem = (id, updatedItem) => dispatch => {
     dispatch({ type: UPDATE_ITEM_START });
-    axiosWithAuth().put(`/api/inventory/${id}`)
+    axiosWithAuth().put(`/api/inventory/${id}`, updatedItem)
     .then(res => {
         console.log('Update inventory res', res);
         dispatch({ type: UPDATE_ITEM_SUCCESS, payload: updatedItem });

@@ -98,7 +98,7 @@ const AddInventory = props => {
         await dispatch(addItem(newItem));
         // add success message or failure modal depending on response
         history.push("/inventory")
-    }
+    };
 
     console.log(depts)
     console.log(newItem)

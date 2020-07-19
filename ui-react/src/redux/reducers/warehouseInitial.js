@@ -1,6 +1,8 @@
 export const initialState = {
     isFetching: false,
     isPosting: false,
+    isUpdating: false,
+    isDeleting: false,
     readyToMount: false,
     error: "",
     departments: [],

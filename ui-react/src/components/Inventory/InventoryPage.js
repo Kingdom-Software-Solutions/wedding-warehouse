@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getAllItems, deleteItem } from '../../redux/actions/warehouseActions';
+import { getAllItems, deleteItem, updateItem } from '../../redux/actions/warehouseActions';
 import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
@@ -23,29 +23,46 @@ import { TextField } from '@material-ui/core';
 import { StyledForm } from '../styled/AddInvStyles';
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
-const InventoryPage = ({ getAllItems, deleteItem, items }) => {
+const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const history = useHistory();
-    // for the warning in console. delete this comment after you address this
-    // const { getAllItems, deleteItem } = props; // destructure redux actions
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     
     const { authState, authService } = useOktaAuth();
     const [userInfo, setUserInfo] = useState(null);
     const [superUser, setSuperUser] = useState(false); // state for workaround
     const whitelist = ["00ul53sdvnWjre0aF4x6"];
-    // local crud state management
-    // state to handle reloading page after quick delete/update
-    const [reload, setReload] = useState(false);
-    const [toggleEdit, setToggleEdit] = useState(false)
-
     // workaround until I can pass superUser attribute from okta
     const checkSuperUser = (user) => {
         let verdict = whitelist.includes(user)
         return verdict ? setSuperUser(true) : null
     };
+
+    // local crud state management
+    const [reload, setReload] = useState(false);
+    const [toggleEdit, setToggleEdit] = useState(false); // state to handle reloading page after quick delete/update
+    const [update, setUpdate] = useState({
+        itemName: "",
+        description: "",
+        rentalRate: NaN
+    })
+    const [updateId, setUpdateId] = useState(NaN);
+
     // admin action to delete item
     const handleDelete = (id) =>{
         deleteItem(id);
+    };
+    // admin actions to update item
+    const handleChanges = e => {
+        setUpdate({
+            ...update,
+            [e.target.name]: e.target.value
+        });
+    };
+    const handleUpdate = e => {
+        e.preventDefault();
+        updateItem(updateId, update) // dispatch call
+        setToggleEdit(false);
+        setReload(!reload)
     };
     
     // convert to hooks later for redux?
@@ -55,7 +72,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
             setUserInfo(null);
           } else {
             authService.getUser().then((info) => {
-              checkSuperUser(info.sub) // uses the sub from the healthy response for workaround
+              checkSuperUser(info.sub) // uses the sub from the healthy response for workaround to show item CRUD
               setUserInfo(info);
             });
           }
@@ -64,15 +81,14 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
         // depends on auth status, super user status and if a crud action was taken
     }, [authState, authService, checkSuperUser(), reload]);
 
-    
-    console.log(userInfo, superUser)
+    // DO NOT PUSH THIS CONSOLE LOG
+    // console.log("DO NOT PUSH ME", userInfo, superUser)
 
     return(
         <InvPageContainer>
             <h2>Inventory Here</h2>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
-            
             { superUser ? 
                 <>
                     <Button
@@ -107,17 +123,23 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
                             <span>Rent: ${item.rentalRate}</span>
                             {/* <span>Buy ${item.buyNow}</span> */}
                             {toggleEdit ? 
-                              <StyledForm>
-                                  <TextField label="Edit Item Name" name="itemName" />
+                              <StyledForm onSubmit={handleUpdate}>
+                                  <TextField 
+                                  label="Edit Item Name" name="itemName"
+                                  onChange={handleChanges} />
                                   <TextField                     id="standard-multiline-flexible"
                                   label="Description"
                                   multiline
                                   rowsMax={4} 
-                                  name="description" />
+                                  name="description"
+                                  onChange={handleChanges} />
                                   <TextField                     label="$ Rental Rate"
                                   name="rentalRate" 
-                                  type="number" />
-                                  <Button>Update</Button>
+                                  type="number"
+                                  onChange={handleChanges} />
+                                  <Button
+                                  color="primary" 
+                                  type="submit">Update</Button>
                                   <Button onClick={()=> setToggleEdit(false)}>Back</Button>
                               </StyledForm>  
                             :
@@ -130,7 +152,10 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
                         </ActionContainer>
                         { superUser && !toggleEdit ? 
                             <ActionContainer>
-                                <EditWithIcon onClick={()=> setToggleEdit(true)} />
+                                <EditWithIcon onClick={()=>{
+                                    setUpdateId(item.id)
+                                    setToggleEdit(true)
+                                }} />
                                 <DeleteWithIcon onClick={()=>{
                                     setReload(!reload)
                                     handleDelete(item.id)
@@ -149,8 +174,9 @@ const InventoryPage = ({ getAllItems, deleteItem, items }) => {
 
 const mapStateToProps = state => {
     return {
-        items: state.warehouseReducer.items
+        items: state.warehouseReducer.items,
+        isUpdating: state.warehouseReducer.isUpdating
     }
 }
 
-export default connect(mapStateToProps, { getAllItems, deleteItem })(InventoryPage);
+export default connect(mapStateToProps, { getAllItems, deleteItem, updateItem })(InventoryPage);

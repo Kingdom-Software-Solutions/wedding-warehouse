@@ -15,12 +15,12 @@ import {
     ADD_ITEM_START,
     ADD_ITEM_SUCCESS,
     ADD_ITEM_FAILURE,
-    // UPDATE_ITEM_START,
-    // UPDATE_ITEM_SUCCESS,
-    // UPDATE_ITEM_FAILURE,
-    // DELETE_ITEM_START,
-    // DELETE_ITEM_SUCCESS,
-    // DELETE_ITEM_FAILURE,
+    UPDATE_ITEM_START,
+    UPDATE_ITEM_SUCCESS,
+    UPDATE_ITEM_FAILURE,
+    DELETE_ITEM_START,
+    DELETE_ITEM_SUCCESS,
+    DELETE_ITEM_FAILURE,
     GET_ALL_ITEMS,
     GET_ALL_ITEMS_SUCCESS,
     GET_ALL_ITEMS_FAILURE,
@@ -135,6 +135,40 @@ export const warehouseReducer = (state = initialState, action) =>{
                 ...state,
                 error: "Error Getting Item",
                 isPosting: false
+            };
+        case DELETE_ITEM_START:
+            return{
+                ...state,
+                isDeleting: true
+            }
+        case DELETE_ITEM_SUCCESS:
+            return{
+                ...state,
+                message: "Item successfully deleted!",
+                isDeleting: false
+            }
+        case DELETE_ITEM_FAILURE:
+            return{
+                ...state,
+                error: "Error deleting message",
+                isDeleting: false
+            }
+        case UPDATE_ITEM_START:
+            return{
+                ...state,
+                isUpdating: true
+            }
+        case UPDATE_ITEM_SUCCESS:
+            return{
+                ...state,
+                message: "Item successfully updated!",
+                isUpdating: false
+            }
+        case UPDATE_ITEM_FAILURE:
+            return{
+                ...state,
+                error: "Error updating message",
+                isUpdating: false
             }
         default:
           return state
