@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
 
-export const DeleteWithIcon = () => {
+export const DeleteWithIcon = props => {
     return (
         <div>
           <Button
@@ -13,6 +13,7 @@ export const DeleteWithIcon = () => {
             color="secondary"
             className="delete-btn"
             startIcon={<DeleteIcon />}
+            onClick={props.onClick}
           >
             Delete
           </Button>

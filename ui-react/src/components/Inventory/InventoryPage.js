@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getAllItems } from '../../redux/actions/warehouseActions';
+import { getAllItems, deleteItem } from '../../redux/actions/warehouseActions';
 import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
@@ -19,14 +19,16 @@ import {
 } from '../styled/InvPageStyles'
 import { DeleteWithIcon } from '../material-ui/Delete';
 
-
-const InventoryPage = props => {
+// this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
+const InventoryPage = ({ getAllItems, deleteItem, items }) => {
     const history = useHistory();
     // for the warning in console. delete this comment after you address this
-    const { getAllItems } = props;
-    const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png'
+    // const { getAllItems, deleteItem } = props; // destructure redux actions
+    const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     
     const { authState, authService } = useOktaAuth();
+    // state for quick deleting an item by id on this page
+    const [qkDelete, setQkDelete] = useState(NaN)
     const [userInfo, setUserInfo] = useState(null);
     const [superUser, setSuperUser] = useState(false); // state for workaround
     const whitelist = ["00ul53sdvnWjre0aF4x6"];
@@ -50,9 +52,16 @@ const InventoryPage = props => {
           }
         getAllItems();
         // if this messes up items, make another useEffect
-    }, [authState, authService, checkSuperUser()])
+    }, [authState, authService, checkSuperUser()]);
+
+    // admin action to delete item
+    const handleDelete = (id) =>{
+        console.log("clicked")
+        console.log(id)
+        deleteItem(id);
+    };
     
-    console.log(userInfo, superUser)
+    console.log(userInfo, superUser, deleteItem)
 
     return(
         <InvPageContainer>
@@ -74,8 +83,8 @@ const InventoryPage = props => {
             }
             {/* Add ternary for spinner of null if retrieving items */}
             <MappedItems>
-            {props.items.map(item =>{
-                return (
+            {items.map(item =>{
+                return ( 
                     <ItemDiv key={item.id}>
                         <ImgContainer>
                             {item.mainImgUrl ?
@@ -97,7 +106,10 @@ const InventoryPage = props => {
                             <Button disabled>Reserve Now</Button>
                             <Button disabled>See More</Button>
                         </ActionContainer>
-                        {/* <DeleteWithIcon /> */}
+                        <DeleteWithIcon onClick={()=>{
+                            // setQkDelete(item.id)
+                            handleDelete(item.id)
+                        }} />
                     </ItemDiv>
                 )
             })}
@@ -112,4 +124,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { getAllItems })(InventoryPage);
+export default connect(mapStateToProps, { getAllItems, deleteItem })(InventoryPage);

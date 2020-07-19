@@ -4,6 +4,7 @@ import axios from 'axios';
 export const axiosWithAuth = () =>{
     // catch for development
     const token = localStorage.getItem("okta-token-storage")
+    console.log(token)
     
 
     // checks for environment
@@ -17,7 +18,7 @@ export const axiosWithAuth = () =>{
     return axios.create({
         baseURL: url,
         headers:{
-            Authorization: `Bearer ${token.accessToken.accessToken}`
+            Authorization: `Bearer ${token.accessToken}`
         }
     })
 }

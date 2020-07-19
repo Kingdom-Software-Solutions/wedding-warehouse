@@ -41,6 +41,7 @@ export const DetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
+    margin-bottom: 10%;
 `;
 
 export const ActionContainer = styled.div`
