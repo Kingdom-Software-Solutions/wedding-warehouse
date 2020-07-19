@@ -7,14 +7,14 @@ import {
     USER_LOGIN,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    GET_USER,
-    GET_USER_SUCCESS,
-    GET_USER_FAILURE,
-    UPDATE_USER,
-    UPDATE_USER_SUCCESS,
-    UPDATE_USER_FAILURE,
-    DEL_USER,
-    USER_DELETED,
+    // GET_USER,
+    // GET_USER_SUCCESS,
+    // GET_USER_FAILURE,
+    // UPDATE_USER,
+    // UPDATE_USER_SUCCESS,
+    // UPDATE_USER_FAILURE,
+    // DEL_USER,
+    // USER_DELETED,
 } from '../actions/userActions'
 import { initialState } from './userInitialState';
 

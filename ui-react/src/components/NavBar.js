@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { AuthBtn } from '../components/material-ui/AuthBtn';
 
@@ -21,7 +21,7 @@ const NavBar = () => {
 
     return(
         <NavContainer>
-            <NavTitle onClick={()=> history.push("/")}>Mel's 👰 Warehouse</NavTitle>
+            <NavTitle onClick={()=> history.push("/")}>Mel's <span role="img" aria-label="bride">👰</span> Warehouse</NavTitle>
             <NavWrapper>
                 <StyledLink href="/">Home</StyledLink>
                 <StyledLink href="/inventory">Inventory</StyledLink>

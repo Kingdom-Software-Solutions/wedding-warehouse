@@ -4,9 +4,9 @@ import axios from 'axios';
 export const axiosWithAuth = () =>{
     // catch for development
     const token = localStorage.getItem("okta-token-storage")
-    /* global fetch */
+    
 
-
+    // checks for environment
     let url;
     if (process.env.REACT_APP_BASE_URL === "development") {
       url = "http://localhost:5000";

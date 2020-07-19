@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import OktaSignInWidget from './OktaSignInWidget';
-import { useOktaAuth } from '@okta/okta-react';
+// commented to clean build log of warnings, 
+// might be able to yeet this file/component
+// import { Redirect } from 'react-router-dom';
+// import OktaSignInWidget from './OktaSignInWidget';
+// import { useOktaAuth } from '@okta/okta-react';
 
 
 const Login = () => {
-    const { authState, authService } = useOktaAuth();
-    const [ userInfo, setUserInfo ] = useState(null);
-    console.log(authService)
+    // const { authState, authService } = useOktaAuth();
+    // const [ userInfo, setUserInfo ] = useState(null);
+    
     return(
         <>
-        <div>Work in progress 👷🏾‍♂️</div>
+        <div>Work in progress <span role="img" aria-label="construction-worker">👷🏾‍♂️</span></div>
         <form >
 
         <div className="form-element">

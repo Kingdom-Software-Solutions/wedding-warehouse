@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import {
-    mainColor,
-    secondaryColor,
-    tertiaryColor,
+    // uncomment when needed
+    // mainColor,
+    // secondaryColor,
+    // tertiaryColor,
     accentColor
 } from './colors'
 

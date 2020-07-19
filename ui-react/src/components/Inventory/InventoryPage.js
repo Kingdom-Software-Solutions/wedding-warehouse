@@ -22,6 +22,8 @@ import { DeleteWithIcon } from '../material-ui/Delete';
 
 const InventoryPage = props => {
     const history = useHistory();
+    // for the warning in console. delete this comment after you address this
+    const { getAllItems } = props;
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png'
     
     const { authState, authService } = useOktaAuth();
@@ -46,9 +48,9 @@ const InventoryPage = props => {
               setUserInfo(info);
             });
           }
-        props.getAllItems();
+        getAllItems();
         // if this messes up items, make another useEffect
-    }, [authState, authService])
+    }, [authState, authService, checkSuperUser()])
     
     console.log(userInfo, superUser)
 
@@ -70,6 +72,7 @@ const InventoryPage = props => {
                 :
                 null
             }
+            {/* Add ternary for spinner of null if retrieving items */}
             <MappedItems>
             {props.items.map(item =>{
                 return (
