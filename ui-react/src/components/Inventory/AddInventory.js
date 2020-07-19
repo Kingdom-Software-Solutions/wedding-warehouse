@@ -7,6 +7,7 @@ import { AuthBtn } from '../material-ui/AuthBtn';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 import ImageUpload from './CloudinaryWidget';
 import TextField from '@material-ui/core/TextField';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 //styles
@@ -24,7 +25,8 @@ import { MenuItem, Select } from '@material-ui/core';
 
 const AddInventory = props => {
     const dispatch = useDispatch() // won't need with selector
-    const history = useHistory()
+    const history = useHistory();
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     let thisDeptId;
     const [depts, setDepts] = useState([]);
     const [newDept, setNewDept] = useState({
@@ -42,7 +44,7 @@ const AddInventory = props => {
         departmentId: 1,
     });
     // used to show add dept field or not
-    const [toggleDept, setToggleDept] = useState(false);
+    const [toggleDept, setToggleDept] = useState(false)
 
     // get dept for <select> on mount
     useEffect(()=>{
@@ -56,6 +58,7 @@ const AddInventory = props => {
         .catch(err => {
             console.log(err)
         })
+
     },[toggleDept]);
 
 
@@ -83,8 +86,9 @@ const AddInventory = props => {
         })
     }
     const postDept = e =>{
-        dispatch(addDept(newDept));
-        setToggleDept(false)
+ 
+            dispatch(addDept(newDept));
+            setToggleDept(false)
     };
 
     const handleSubmitItem = async e => {

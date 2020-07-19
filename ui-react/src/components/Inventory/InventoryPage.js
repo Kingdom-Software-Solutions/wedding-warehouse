@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getAllItems } from '../../redux/actions/warehouseActions'
+import { getAllItems } from '../../redux/actions/warehouseActions';
+import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 
@@ -22,26 +23,53 @@ import { DeleteWithIcon } from '../material-ui/Delete';
 const InventoryPage = props => {
     const history = useHistory();
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png'
-    console.log(props)
-    // convert to hooks later?
-    useEffect(()=> {
-        props.getAllItems();
-    }, [])
     
+    const { authState, authService } = useOktaAuth();
+    const [userInfo, setUserInfo] = useState(null);
+    const [superUser, setSuperUser] = useState(false); // state for workaround
+    const whitelist = ["00ul53sdvnWjre0aF4x6"];
+
+    // workaround until I can pass superUser attribute from okta
+    const checkSuperUser = (user) => {
+        let verdict = whitelist.includes(user)
+        return verdict ? setSuperUser(true) : null
+    }
+    
+    // convert to hooks later for redux?
+    useEffect(()=> {
+        if (!authState.isAuthenticated) {
+            // When user isn't authenticated, forget any user info
+            setUserInfo(null);
+          } else {
+            authService.getUser().then((info) => {
+              checkSuperUser(info.sub) // uses the sub from the healthy response for workaround
+              setUserInfo(info);
+            });
+          }
+        props.getAllItems();
+        // if this messes up items, make another useEffect
+    }, [authState, authService])
+    
+    console.log(userInfo, superUser)
 
     return(
         <InvPageContainer>
             <h2>Inventory Here</h2>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
-            {/* Add ternary to check if user isAdmin when live to display add inventory button */}
-            <Button
-            color="primary"
-            startIcon={<AddIcon />}
-            href="/inventory/addItem"
-            >
-                Add Inventory
-            </Button>
+            { superUser ? 
+                <>
+                    <Button
+                    color="primary"
+                    startIcon={<AddIcon />}
+                    href="/inventory/addItem"
+                    >
+                    Add Inventory
+                    </Button>
+                </>
+                :
+                null
+            }
             <MappedItems>
             {props.items.map(item =>{
                 return (

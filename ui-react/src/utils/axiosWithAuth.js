@@ -1,7 +1,11 @@
 import axios from 'axios';
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const axiosWithAuth = () =>{
-    const token = window.localStorage.getItem('token');
+    // catch for development
+    const token = localStorage.getItem("okta-token-storage")
+    /* global fetch */
+
 
     let url;
     if (process.env.REACT_APP_BASE_URL === "development") {
@@ -13,7 +17,7 @@ export const axiosWithAuth = () =>{
     return axios.create({
         baseURL: url,
         headers:{
-            Authorization: token
+            Authorization: `Bearer ${token.accessToken.accessToken}`
         }
     })
 }

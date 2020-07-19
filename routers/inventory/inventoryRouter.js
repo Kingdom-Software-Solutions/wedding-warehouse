@@ -1,10 +1,12 @@
 const inventory = require("express").Router();
+const heimdal = require("../middleware/oktaAuth")
 const Models = require("../helpers/models");
 // initalize db variables
 const Inv = Models.Inventory
 // const Review = Models.Reviews
 
 // add an item to inventory
+// when okta can login we can test/use this middleware
 inventory.post("/", (req, res) => {
     let item = req.body;
    

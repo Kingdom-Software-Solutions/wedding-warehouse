@@ -31,6 +31,6 @@ export const NavTitle = styled.h1`
 
 export const StyledLink = styled.a`
     text-decoration: none;
-    margin-left: 5%;
+    margin: 2%;
     color: ${secondaryColor}
 `;
