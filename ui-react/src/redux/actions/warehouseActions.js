@@ -118,7 +118,7 @@ export const DELETE_ITEM_FAILURE = 'DELETE_ITEM_FAILURE';
 
 export const deleteItem = (id) => dispatch => {
     dispatch({ type: DELETE_ITEM_START });
-    axiosWithAuth().put(`/api/inventory/${id}`)
+    axiosWithAuth().delete(`/api/inventory/${id}`)
     .then(res => {
         console.log('Delete item res', res);
         dispatch({ type: DELETE_ITEM_SUCCESS });
