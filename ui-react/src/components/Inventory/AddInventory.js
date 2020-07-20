@@ -7,7 +7,9 @@ import { AuthBtn } from '../material-ui/AuthBtn';
 import { axiosWithEnv } from '../../utils/axiosWithEnv';
 import ImageUpload from './CloudinaryWidget';
 import TextField from '@material-ui/core/TextField';
-
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import { MenuItem, Select } from '@material-ui/core';
 
 //styles
 import {
@@ -19,14 +21,16 @@ import {
     PriceContainer,
     DeptContainer,
     SubmitContainer
-} from '../styled/AddInvStyles'
-import { MenuItem, Select } from '@material-ui/core';
+} from '../styled/AddInvStyles';
+
 
 const AddInventory = props => {
     const dispatch = useDispatch() // won't need with selector
     const history = useHistory();
     let thisDeptId;
     const [depts, setDepts] = useState([]);
+    // state to update isCustomizable with a toggle
+    const [toggleCustom, setToggleCustom] = useState(false);
     const [newDept, setNewDept] = useState({
         name: ""
     });
@@ -35,6 +39,8 @@ const AddInventory = props => {
     const [newItem, setNewItem] = useState({
         itemName: "",
         description: "",
+        quantity: NaN,
+        isCustomizable: false,
         mainImgUrl: "",
         thumbnailUrl: "",
         rentalRate: NaN,
@@ -66,6 +72,13 @@ const AddInventory = props => {
             [e.target.name]: e.target.value
         });
     };
+    // handles customizable change
+    const handleToggleCustom = () => {
+        setNewItem({
+            ...newItem,
+            isCustomizable: !newItem.isCustomizable
+        })
+    }
 
     const handleDeptId = e =>{
         // filters to assign the department id of the selected dept
@@ -84,9 +97,8 @@ const AddInventory = props => {
         })
     }
     const postDept = e =>{
- 
-            dispatch(addDept(newDept));
-            setToggleDept(false)
+        dispatch(addDept(newDept));
+        setToggleDept(false);
     };
 
     const handleSubmitItem = async e => {
@@ -116,6 +128,15 @@ const AddInventory = props => {
                     rowsMax={4} 
                     name="description" 
                     onChange={handleChanges}/>
+                    <TextField
+                    label="Quantity"
+                    name="quantity" onChange={handleChanges}
+                    type="number"/>
+                    { newItem.isCustomizable ? 
+                        <span>Customizable <CheckBoxIcon color="primary" onClick={handleToggleCustom}/></span>
+                        :
+                        <span>Customizable ?<CheckBoxOutlineBlankIcon onClick={handleToggleCustom}/></span>
+                    }
                 </InfoContainer>
                 {/* image uploader here */}
                 <UploadContainer>
