@@ -2,10 +2,6 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
-const OktaJwtVerifier = require('@okta/jwt-verifier');
-const oktaJwtVerifier = new OktaJwtVerifier({
-    issuer: 'https://dev-964935.okta.com/oauth2/default' // required
-  });
 
 const environment = process.env.NODE_ENV
 
@@ -17,6 +13,7 @@ const userRouter = require('../routers/users/userRouter');
 
 const server = express();
 server.use(helmet());
+server.use(cors()); // accept all cors requests
 server.use(express.json());
 server.use(
     morgan(function (tokens, req, res) {
@@ -31,7 +28,6 @@ server.use(
         ].join(" ");
     })
 )
-server.use(cors());
 
 // USE ROUTERS
 server.use('/api/auth', authRouter);
