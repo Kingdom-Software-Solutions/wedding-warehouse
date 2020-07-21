@@ -17,6 +17,7 @@ import {
     FormTitle,
     StyledForm,
     InfoContainer,
+    ToggleContainer,
     UploadContainer,
     PriceContainer,
     DeptContainer,
@@ -132,11 +133,19 @@ const AddInventory = props => {
                     label="Quantity"
                     name="quantity" onChange={handleChanges}
                     type="number"/>
-                    { newItem.isCustomizable ? 
-                        <span>Customizable <CheckBoxIcon color="primary" onClick={handleToggleCustom}/></span>
+                    <ToggleContainer>
+                    { newItem.isCustomizable ?
+                        <> 
+                        <label>Customizable</label> 
+                        <CheckBoxIcon color="primary" onClick={handleToggleCustom}/>
+                        </>
                         :
-                        <span>Customizable ?<CheckBoxOutlineBlankIcon onClick={handleToggleCustom}/></span>
+                        <>
+                        <label>Customizable?</label> 
+                        <CheckBoxOutlineBlankIcon onClick={handleToggleCustom}/>
+                        </>
                     }
+                    </ToggleContainer>
                 </InfoContainer>
                 {/* image uploader here */}
                 <UploadContainer>
