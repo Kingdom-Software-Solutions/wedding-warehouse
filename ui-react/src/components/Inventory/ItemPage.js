@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItem } from '../../redux/actions/warehouseActions';
 import Button from '@material-ui/core/Button';
+import { noImg } from '../../assets/imageAssets';
 
 const ItemPage = () => {
     const { id } = useParams(); // params hook grabs the id of the item
@@ -10,14 +11,15 @@ const ItemPage = () => {
     const item = useSelector(state => state.warehouseReducer.singleItem);
     useEffect(()=> {
         dispatch(getItem(id))
-    },[])
+    },[]);
 
     console.log(item)
     console.log(item.isAvailable)
     return (
         <div>
+            <Button href="/inventory">Back</Button>
             <h2>{item.itemName}</h2>
-            <img src={item.mainImgUrl} />
+            <img src={item.mainImgUrl || noImg} />
             <p>{item.description}</p>
             { item.isCustomizable ?
                 <div>Customizable</div>

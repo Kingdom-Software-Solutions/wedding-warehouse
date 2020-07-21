@@ -9,7 +9,7 @@ import ImageUpload from './CloudinaryWidget';
 import TextField from '@material-ui/core/TextField';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import { MenuItem, Select } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 
 //styles
 import {
