@@ -27,7 +27,12 @@ server.use(
             "ms",
         ].join(" ");
     })
-)
+);
+server.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", process.env.ACCESS_ORIGIN);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 // USE ROUTERS
 server.use('/api/auth', authRouter);
