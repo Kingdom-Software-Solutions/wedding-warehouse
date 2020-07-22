@@ -33,6 +33,17 @@ export const InfoContainer = styled.div`
     flex-direction: column;
     margin-bottom: 2.5%;
 `;
+
+// toggle custom div
+export const ToggleContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    label {
+        margin-right: 2%;
+    }
+`;
 // upload container
 export const UploadContainer = styled.div`
     width: 50%;

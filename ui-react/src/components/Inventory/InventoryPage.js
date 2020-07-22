@@ -148,7 +148,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                         </DetailsContainer>
                         <ActionContainer>
                             <Button disabled>Reserve Now</Button>
-                            <Button disabled>See More</Button>
+                            <Button href={`inventory/item/${item.id}`}>See More</Button>
                         </ActionContainer>
                         { superUser && !toggleEdit ? 
                             <ActionContainer>

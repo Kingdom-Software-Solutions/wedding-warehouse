@@ -10,5 +10,5 @@ export const tertiaryColor = onahau;
 export const accentColor = cindarella;
 
 // ctas
-
+export const success = "#4BB543"
 export const danger = "#ff0033"
