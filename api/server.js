@@ -28,7 +28,7 @@ server.use(
     })
 );
 // Set up a whitelist and check against it:
-var whitelist = ['http://localhost:3000', 'https://mels-warehouse.vercel.app/', 'https://mels-warehouse.vercel.app/inventory']
+var whitelist = ['http://localhost:3000', 'https://mels-warehouse.vercel.app/']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -38,7 +38,8 @@ var corsOptions = {
     }
   }
 }
-server.use(cors(corsOptions)); // accept all cors requests
+server.use(cors());
+server.options(corsOptions, cors()); 
 
 // USE ROUTERS
 server.use('/api/auth', authRouter);
