@@ -13,7 +13,6 @@ const userRouter = require('../routers/users/userRouter');
 
 const server = express();
 server.use(helmet());
-server.use(cors()); // accept all cors requests
 server.use(express.json());
 server.use(
     morgan(function (tokens, req, res) {
@@ -28,11 +27,18 @@ server.use(
         ].join(" ");
     })
 );
-server.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", process.env.ACCESS_ORIGIN);
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+// Set up a whitelist and check against it:
+var whitelist = ['http://localhost:3000', 'https://mels-warehouse.vercel.app/']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+server.use(cors(corsOptions)); // accept all cors requests
 
 // USE ROUTERS
 server.use('/api/auth', authRouter);
