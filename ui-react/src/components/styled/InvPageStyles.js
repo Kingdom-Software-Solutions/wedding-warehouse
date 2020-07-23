@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { accentColor } from './colors';
 // uncomment when you need to call the color scheme
 // import {
 //     mainColor,

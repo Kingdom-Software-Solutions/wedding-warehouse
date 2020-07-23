@@ -6,6 +6,7 @@ import { getItem } from '../../redux/actions/warehouseActions';
 
 import Button from '@material-ui/core/Button';
 import { noImg } from '../../assets/imageAssets';
+import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, Customizable, PriceContainer } from '../styled/ItemDetailsStyles';
 
 
 const ItemPage = () => {
@@ -39,32 +40,40 @@ const ItemPage = () => {
     console.log(item.isAvailable)
     console.log("super user status", superUser)
     return (
-        <div>
-            <Button href="/inventory">Back</Button>
-            <h2>{item.itemName}</h2>
-            <img src={item.mainImgUrl || noImg} />
-            <p>{item.description}</p>
-            { item.isCustomizable ?
-                <div>Customizable</div>
-                :
-                null
-            }
-            <p>Rental Rate: ${item.rentalRate}</p>
-            <p>Purchase: ${item.buyNow}</p>
-            {/* How should I show the quantity */}
-            <p>{item.quantity || 0} units available</p>
-            { item.isAvailable ?
-                <div>
-                    <Button>Reserve to Rent</Button>
-                    <Button>Buy</Button>
-                </div>
-                :
-                <div>
-                    <Button disabled>Not Available</Button>
-                    <Button>Buy</Button>
-                </div>
-            }
-        </div>
+        <ItemPageContainer>
+            <Button className="back-btn" size="large" href="/inventory">Back</Button>
+            <ItemDiv>
+                <ItemName>{item.itemName}</ItemName>
+                <ItemImgContainer>
+                    <ItemImg img src={item.mainImgUrl || noImg}/>
+                </ItemImgContainer>
+                <ItemDetails>
+                    <Detail>{item.description}</Detail>
+                    { item.isCustomizable ?
+                        <Customizable>Customizable</Customizable>
+                        :
+                        null
+                    }
+                    <PriceContainer>
+                        <Detail>Rental Rate: ${item.rentalRate}</Detail>
+                        <Detail>Purchase: ${item.buyNow}</Detail>
+                    </PriceContainer>
+                    {/* How should I show the quantity ? */}
+                    <Detail>{item.quantity || "N/A"} units available</Detail>
+                </ItemDetails>
+                { item.isAvailable ?
+                    <ActionsDiv>
+                        <Button size="large">Reserve to Rent</Button>
+                        <Button size="large">Buy It</Button>
+                    </ActionsDiv>
+                    :
+                    <ActionsDiv>
+                        <Button size="large" disabled>Check Availability</Button>
+                        <Button className="buy-btn" size="large">Buy It</Button>
+                    </ActionsDiv>
+                }
+            </ItemDiv>
+        </ItemPageContainer>
     )
 };
 

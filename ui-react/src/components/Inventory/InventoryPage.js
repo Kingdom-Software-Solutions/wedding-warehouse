@@ -30,7 +30,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const { authState, authService } = useOktaAuth();
     const [userInfo, setUserInfo] = useState(null);
     const [superUser, setSuperUser] = useState(false); // state for workaround
-    const whitelist = ["00ul53sdvnWjre0aF4x6"];
+    const whitelist = ["00ul53sdvnWjre0aF4x6"]; // comes from sub attribute
     // workaround until I can pass superUser attribute from okta
     const checkSuperUser = (user) => {
         let verdict = whitelist.includes(user)
