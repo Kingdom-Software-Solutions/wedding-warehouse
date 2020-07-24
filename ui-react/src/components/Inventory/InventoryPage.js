@@ -86,7 +86,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
 
     return(
         <InvPageContainer>
-            <h2>Inventory Here</h2>
+            <h2>Inventory</h2>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
             { superUser ? 

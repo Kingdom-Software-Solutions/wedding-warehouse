@@ -31,7 +31,7 @@ const AddInventory = props => {
     let thisDeptId;
     const [depts, setDepts] = useState([]);
     // state to update isCustomizable with a toggle
-    const [toggleCustom, setToggleCustom] = useState(false);
+    // const [toggleCustom, setToggleCustom] = useState(false);
     const [newDept, setNewDept] = useState({
         name: ""
     });
@@ -83,9 +83,9 @@ const AddInventory = props => {
 
     const handleDeptId = e =>{
         // filters to assign the department id of the selected dept
-        // this was done because I needed a string value (prior to this I had it setting the deptId on the newItem) for the material ui dropdown component but I need to pass a deptId to the BE so I got my cake and ate it too
+        // needed a string value for the material ui dropdown component but I need to pass a deptId to the BE 
         let thisDeptId = depts.filter(dept => dept.name === e.target.value)
-        console.log(thisDeptId)
+        // console.log(thisDeptId)
         newItem.departmentId = thisDeptId[0].id
         setDeptValue(e.target.value)
     }

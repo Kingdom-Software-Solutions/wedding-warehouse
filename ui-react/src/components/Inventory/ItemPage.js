@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button';
 import { noImg } from '../../assets/imageAssets';
 import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, Customizable, PriceContainer } from '../styled/ItemDetailsStyles';
 
+// add function to handle reserve item
+
+// add tool tip for isCustomizable
+
 
 const ItemPage = () => {
     const { id } = useParams(); // params hook grabs the id of the item
@@ -64,12 +68,12 @@ const ItemPage = () => {
                 { item.isAvailable ?
                     <ActionsDiv>
                         <Button size="large">Reserve to Rent</Button>
-                        <Button size="large">Buy It</Button>
+                        <Button size="large" disabled>Buy It</Button>
                     </ActionsDiv>
                     :
                     <ActionsDiv>
                         <Button size="large" disabled>Check Availability</Button>
-                        <Button className="buy-btn" size="large">Buy It</Button>
+                        <Button className="buy-btn" size="large" disabled>Buy It</Button>
                     </ActionsDiv>
                 }
             </ItemDiv>
