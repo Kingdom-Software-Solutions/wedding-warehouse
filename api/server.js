@@ -12,6 +12,18 @@ const inventoryRouter = require('../routers/inventory/inventoryRouter');
 const userRouter = require('../routers/users/userRouter');
 
 const server = express();
+var whitelist = ['http://localhost:3000', 'https://mels-warehouse.vercel.app/']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+server.use(cors());
+server.options(corsOptions, cors());
 server.use(helmet());
 server.use(express.json());
 server.use(
@@ -26,20 +38,7 @@ server.use(
             "ms",
         ].join(" ");
     })
-);
-// Set up a whitelist and check against it:
-var whitelist = ['http://localhost:3000', 'https://mels-warehouse.vercel.app/']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-server.use(cors());
-server.options(corsOptions, cors()); 
+); 
 
 // USE ROUTERS
 server.use('/api/auth', authRouter);
