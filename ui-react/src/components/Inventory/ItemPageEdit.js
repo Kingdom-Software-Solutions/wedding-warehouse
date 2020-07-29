@@ -1,12 +1,15 @@
 import React,{ useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { updateItem } from '../../redux/actions/warehouseActions'
 import ItemPage from './ItemPage';
 import TextField from '@material-ui/core/TextField';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 const ItemPageEdit = () => {
+    const params = useParams();
+    const dispatch = useDispatch();
     const [editItem, setEditItem] = useState({
         itemName: "",
         description: "",
@@ -16,6 +19,11 @@ const ItemPageEdit = () => {
         buyNow: NaN,
     });
     const [toggleCustomize, setToggleCustomize] = useState();
+
+    const handleUpdate = e => {
+        e.preventDefault();
+        dispatch()
+    }
 
     return(
             <ItemEditForm onSubmit={handleUpdate}>

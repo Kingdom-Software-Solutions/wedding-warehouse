@@ -24,6 +24,8 @@ const OktaProfile = () => {
       { userInfo && 
         <div>
           <p>Welcome back, {userInfo.name}!</p>
+          <div>This page is still a work in progress. In the meantime, take a look at what's in stock <a href="/inventory">here</a>!
+          </div>
         </div>
       }
     </div>
