@@ -8,7 +8,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 const ItemPageEdit = () => {
-    const params = useParams();
+    const params = useParams(); // might pass id down
     const dispatch = useDispatch();
     const [editItem, setEditItem] = useState({
         itemName: "",
@@ -19,6 +19,13 @@ const ItemPageEdit = () => {
         buyNow: NaN,
     });
     const [toggleCustomize, setToggleCustomize] = useState();
+
+    const handleChanges = () => {
+        setEditItem({
+            ...editItem,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const handleUpdate = e => {
         e.preventDefault();
@@ -36,7 +43,8 @@ const ItemPageEdit = () => {
             rowsMax={4} 
             name="description"
             onChange={handleChanges} />
-            <TextField                     label="$ Rental Rate"
+            <TextField            
+            label="$ Rental Rate"
             name="rentalRate" 
             type="number"
             onChange={handleChanges} />
