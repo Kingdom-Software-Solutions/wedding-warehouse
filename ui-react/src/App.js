@@ -15,7 +15,7 @@ import OktaProfile from './components/Users/OktaProfile';
 function App() {
   const { authState } = useOktaAuth();
   // check if user is logged when app mounts. may have to move this in individual components. maybe make a custom hook?
-  // this may be complete uneccessary 👇
+  // this may be completely uneccessary 👇
   useEffect(()=>{
     localStorage.setItem("accessToken", authState.accessToken)
   }, [authState.accessToken])
