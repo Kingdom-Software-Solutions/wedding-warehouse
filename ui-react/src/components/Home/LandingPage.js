@@ -28,20 +28,20 @@ const LandingPage = () => {
     console.log(featured)
 
     return(
-        <div>
-            <h1>🚧 Landing Page 🚧</h1>
+        <div className="landing-wrapper">
+            <h1 className="home-title">🚧 Landing Page 🚧</h1>
             <p>This is page is under construction. Please go <a href="/inventory">HERE</a> to check out the inventory</p>
-            <div>
+            <div className="hero-container">
                 <img src="https://images.unsplash.com/photo-1521459444000-c2192d774976?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="wedding aisle" />
-                <p>Facilitate the perfect day</p>
+                <p className="tag-line">Facilitate the perfect day</p>
             </div>
             <div className="featured">
-                <h3>Featured</h3>
+                <h3 className="featured-section">Featured</h3>
                 {/* Eventually will map through the array when there is enough inventory */}
                 { featured ?
-                    <div>
-                        <h4>{featured.itemName}</h4>
-                        <p>Rent: ${featured.rentalRate}</p>
+                    <div className="featured-item">
+                        <h4 className='item-name'>{featured.itemName}</h4>
+                        <p className="rent-rate">Rent: ${featured.rentalRate}</p>
                         <Button href={`/inventory/item/${featured.id}`}>See More</Button>
                     </div>   
                     :
