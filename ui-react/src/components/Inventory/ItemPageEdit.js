@@ -2,13 +2,13 @@ import React,{ useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateItem } from '../../redux/actions/warehouseActions'
-import ItemPage from './ItemPage';
+import { ItemEditForm } from '../styled/ItemDetailsStyles';
 import TextField from '@material-ui/core/TextField';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import Button from '@material-ui/core/Button';
 
-const ItemPageEdit = () => {
-    const params = useParams(); // might pass id down
+const ItemPageEdit = ({ id, toggleEdit, setToggleEdit }) => {
     const dispatch = useDispatch();
     const [editItem, setEditItem] = useState({
         itemName: "",
@@ -20,20 +20,22 @@ const ItemPageEdit = () => {
     });
     const [toggleCustomize, setToggleCustomize] = useState();
 
-    const handleChanges = () => {
+    const handleChanges = e => {
         setEditItem({
             ...editItem,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.vale
         })
     }
 
     const handleUpdate = e => {
         e.preventDefault();
-        dispatch()
-    }
+        dispatch(updateItem(id, editItem))
+    };
+
+    
 
     return(
-            <ItemEditForm onSubmit={handleUpdate}>
+        <ItemEditForm onSubmit={handleUpdate}>
             <TextField 
             label="Edit Item Name" name="itemName"
             onChange={handleChanges} />
@@ -43,8 +45,7 @@ const ItemPageEdit = () => {
             rowsMax={4} 
             name="description"
             onChange={handleChanges} />
-            <TextField            
-            label="$ Rental Rate"
+            <TextField                     label="$ Rental Rate"
             name="rentalRate" 
             type="number"
             onChange={handleChanges} />

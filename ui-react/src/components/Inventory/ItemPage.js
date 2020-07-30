@@ -2,11 +2,13 @@ import React,{ useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
-import { getItem } from '../../redux/actions/warehouseActions';
-
+import { getItem, deleteItem } from '../../redux/actions/warehouseActions';
 import Button from '@material-ui/core/Button';
 import { noImg } from '../../assets/imageAssets';
-import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, Customizable, PriceContainer } from '../styled/ItemDetailsStyles';
+import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, Customizable, PriceContainer, ActionContainer } from '../styled/ItemDetailsStyles';
+import ItemPageEdit from './ItemPageEdit';
+import { DeleteWithIcon } from '../material-ui/Delete';
+import { EditWithIcon } from '../material-ui/Update';
 
 // add function to handle reserve item
 
@@ -39,10 +41,18 @@ const ItemPage = () => {
         }
         dispatch(getItem(id))
     },[authState, authService,checkSuperUser()]);
+    // local crud state management
+    const [reload, setReload] = useState(false);
+    const [toggleEdit, setToggleEdit] = useState(false);
 
     console.log(item)
     console.log(item.isAvailable)
     console.log("super user status", superUser)
+
+    const handleDelete = (id) =>{
+        dispatch(deleteItem(id));
+    };
+
     return (
         <ItemPageContainer>
             <Button className="back-btn" size="large" href="/inventory">Back</Button>
@@ -76,7 +86,25 @@ const ItemPage = () => {
                         <Button className="buy-btn" size="large" disabled>Buy It</Button>
                     </ActionsDiv>
                 }
+                { superUser && !toggleEdit ? 
+                    <ActionContainer>
+                        <EditWithIcon onClick={()=>{
+                            setToggleEdit(true)
+                        }} />
+                        <DeleteWithIcon onClick={()=>{
+                            setReload(!reload)
+                            handleDelete(item.id)
+                        }} />                            
+                    </ActionContainer>                     
+                :
+                    null
+                }
             </ItemDiv>
+            { toggleEdit ?
+                <ItemPageEdit id={id} toggleEdit={toggleEdit} setToggleEdit={setToggleEdit} /> 
+            :
+                null
+            }
         </ItemPageContainer>
     )
 };
