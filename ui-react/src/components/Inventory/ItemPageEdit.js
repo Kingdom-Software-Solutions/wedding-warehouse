@@ -29,7 +29,7 @@ const ItemPageEdit = ({ id, toggleEdit, setToggleEdit }) => {
     const handleChanges = e => {
         setEditItem({
             ...editItem,
-            [e.target.name]: e.target.vale
+            [e.target.name]: e.target.value
         })
     }
 
@@ -38,7 +38,7 @@ const ItemPageEdit = ({ id, toggleEdit, setToggleEdit }) => {
         dispatch(updateItem(id, editItem))
     };
 
-    
+    console.log(editItem)
 
     return(
         <ItemEditForm onSubmit={handleUpdate}>
