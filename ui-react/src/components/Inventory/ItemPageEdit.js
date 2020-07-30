@@ -8,7 +8,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import Button from '@material-ui/core/Button';
 
-const ItemPageEdit = ({ id, toggleEdit, setToggleEdit }) => {
+const ItemPageEdit = ({ id, reload, setReload, setToggleEdit }) => {
     const dispatch = useDispatch();
     const [editItem, setEditItem] = useState({
         itemName: "",
@@ -36,6 +36,7 @@ const ItemPageEdit = ({ id, toggleEdit, setToggleEdit }) => {
     const handleUpdate = e => {
         e.preventDefault();
         dispatch(updateItem(id, editItem))
+        setReload(!reload)
     };
 
     console.log(editItem)
@@ -80,6 +81,7 @@ const ItemPageEdit = ({ id, toggleEdit, setToggleEdit }) => {
             </ToggleContainer>
             </InfoContainer>
             <Button
+            onClick={handleUpdate}
             color="primary" 
             type="submit">Update</Button>
             <Button onClick={()=> setToggleEdit(false)}>Back</Button>

@@ -29,6 +29,9 @@ const ItemPage = () => {
     };
     const dispatch = useDispatch();
     const item = useSelector(state => state.warehouseReducer.singleItem);
+    // local crud state management
+    const [reload, setReload] = useState(false);
+    const [toggleEdit, setToggleEdit] = useState(false);    
     useEffect(()=> {
         if (!authState.isAuthenticated) {
             // When user isn't authenticated, forget any user info
@@ -40,10 +43,7 @@ const ItemPage = () => {
             });
         }
         dispatch(getItem(id))
-    },[authState, authService,checkSuperUser()]);
-    // local crud state management
-    const [reload, setReload] = useState(false);
-    const [toggleEdit, setToggleEdit] = useState(false);
+    },[authState, authService,checkSuperUser(), reload]);
 
     console.log(item)
     console.log(item.isAvailable)
@@ -101,7 +101,9 @@ const ItemPage = () => {
                 }
             </ItemDiv>
             { toggleEdit ?
-                <ItemPageEdit id={id} toggleEdit={toggleEdit} setToggleEdit={setToggleEdit} /> 
+                <ItemPageEdit id={id}
+                reload={reload} 
+                setReload={setReload} toggleEdit={toggleEdit} setToggleEdit={setToggleEdit} /> 
             :
                 null
             }
