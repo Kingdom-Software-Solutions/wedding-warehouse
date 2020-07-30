@@ -65,6 +65,7 @@ export const ActionsDiv = styled.div`
     }
 `;
 
+// single edit form styles 
 export const ItemEditForm = styled.div`
     display: flex;
     flex-direction: column;
@@ -76,4 +77,23 @@ export const ActionContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 5%;
+`;
+
+// info container
+export const InfoContainer = styled.div`
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.5%;
+`;
+
+// toggle custom div
+export const ToggleContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    label {
+        margin-right: 2%;
+    }
 `;
