@@ -2,7 +2,7 @@ import React,{ useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateItem } from '../../redux/actions/warehouseActions'
-import { ItemEditForm, InfoContainer, ToggleContainer } from '../styled/ItemDetailsStyles';
+import { ItemEditForm, InfoContainer, ToggleContainer } from '../styled/ItemPageStyles';
 import TextField from '@material-ui/core/TextField';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';

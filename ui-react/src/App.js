@@ -13,10 +13,14 @@ import AddInventory from './components/Inventory/AddInventory';
 import OktaProfile from './components/Users/OktaProfile';
 
 function App() {
-  const { authState } = useOktaAuth();
+  const { authState, authService } = useOktaAuth();
   // check if user is logged when app mounts. may have to move this in individual components. maybe make a custom hook?
   // this may be completely uneccessary 👇
   useEffect(()=>{
+    console.log("auth state", authState)
+    console.log("auth service", authService)
+    authService.getIdToken().then(token => console.log("token", token))
+    authService.getUser(authState.accessToken).then(user => console.log('user',user))
     localStorage.setItem("accessToken", authState.accessToken)
   }, [authState.accessToken])
   return (

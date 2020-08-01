@@ -73,6 +73,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
           } else {
             authService.getUser().then((info) => {
               checkSuperUser(info.sub) // uses the sub from the healthy response for workaround to show item CRUD
+              console.log(info)
               setUserInfo(info);
             });
           }

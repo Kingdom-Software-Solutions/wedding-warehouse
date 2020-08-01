@@ -5,7 +5,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import { getItem, deleteItem } from '../../redux/actions/warehouseActions';
 import Button from '@material-ui/core/Button';
 import { noImg } from '../../assets/imageAssets';
-import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, Customizable, PriceContainer, ActionContainer } from '../styled/ItemDetailsStyles';
+import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, Customizable, PriceContainer, ActionContainer } from '../styled/ItemPageStyles';
 import ItemPageEdit from './ItemPageEdit';
 import { DeleteWithIcon } from '../material-ui/Delete';
 import { EditWithIcon } from '../material-ui/Update';
@@ -78,12 +78,12 @@ const ItemPage = () => {
                 { item.isAvailable ?
                     <ActionsDiv>
                         <Button size="large">Reserve to Rent</Button>
-                        <Button size="large" disabled>Buy It</Button>
+                        {/* <Button size="large" disabled>Buy It</Button> */}
                     </ActionsDiv>
                     :
                     <ActionsDiv>
                         <Button size="large" disabled>Check Availability</Button>
-                        <Button className="buy-btn" size="large" disabled>Buy It</Button>
+                        {/* <Button className="buy-btn" size="large" disabled>Buy It</Button> */}
                     </ActionsDiv>
                 }
                 { superUser && !toggleEdit ? 

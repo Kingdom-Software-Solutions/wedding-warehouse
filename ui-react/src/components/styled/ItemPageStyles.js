@@ -57,8 +57,9 @@ export const ItemDetails = styled.div`
 
 export const ActionsDiv = styled.div`
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     margin: 0 auto;
+    max-width: 100%;
     width: 25%;
     button {
         margin: 2%;
