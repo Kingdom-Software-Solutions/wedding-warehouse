@@ -14,13 +14,7 @@ import AddInventory from './components/Inventory/AddInventory';
 import OktaProfile from './components/Users/OktaProfile';
 
 function App() {
-  const { authState, authService } = useOktaAuth();
-  // set active user when app mounts
-  useEffect(()=>{
-    authService.getAccessToken().then(access => console.log("access token", parseJwt(access)))
-  }, [authState.accessToken]);
 
-  // console.log("parsed json", parseJwt())
   return (
     <div className="App">
       <NavBar />

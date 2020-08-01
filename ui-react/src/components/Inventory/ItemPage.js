@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
+import { parseJwt } from '../../utils/parseJwt';
 import { getItem, deleteItem } from '../../redux/actions/warehouseActions';
 import Button from '@material-ui/core/Button';
 import { noImg } from '../../assets/imageAssets';
@@ -10,44 +11,31 @@ import ItemPageEdit from './ItemPageEdit';
 import { DeleteWithIcon } from '../material-ui/Delete';
 import { EditWithIcon } from '../material-ui/Update';
 
+
 // add function to handle reserve item
 
 // add tool tip for isCustomizable
 
-
 const ItemPage = () => {
     const { id } = useParams(); // params hook grabs the id of the item
+    // check super user status
     const { authState, authService } = useOktaAuth();
-    const [userInfo, setUserInfo] = useState(null);
-    const [superUser, setSuperUser] = useState(false);// state for workaround
-    const whitelist = ["00ul53sdvnWjre0aF4x6"];
-    // workaround until I can pass superUser attribute from okta
-    const checkSuperUser = (user) => {
-        console.log("user in function", user)
-        let verdict = whitelist.includes(user)
-        return verdict ? setSuperUser(true) : null
-    };
+    const [superUser, setSuperUser] = useState(false);
     const dispatch = useDispatch();
     const item = useSelector(state => state.warehouseReducer.singleItem);
     // local crud state management
     const [reload, setReload] = useState(false);
     const [toggleEdit, setToggleEdit] = useState(false);    
     useEffect(()=> {
-        if (!authState.isAuthenticated) {
-            // When user isn't authenticated, forget any user info
-            setUserInfo(null);
-            } else {
-            authService.getUser().then((info) => {
-                checkSuperUser(info.sub) // uses the sub from the healthy response for workaround to show item CRUD
-                setUserInfo(info);
+        if (authState.isAuthenticated){
+            authService.getAccessToken()
+            .then((token) => {
+                let user = parseJwt(token)
+                setSuperUser(user.SuperUser) 
             });
-        }
-        dispatch(getItem(id))
-    },[authState, authService,checkSuperUser(), reload]);
-
-    console.log(item)
-    console.log(item.isAvailable)
-    console.log("super user status", superUser)
+        };
+        dispatch(getItem(id));
+    },[authState, authService, superUser, reload]);
 
     const handleDelete = (id) =>{
         dispatch(deleteItem(id));

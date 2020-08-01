@@ -30,15 +30,11 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false); 
-    // const checkSuperUser = (user) => {
-    //     let verdict = whitelist.includes(user)
-    //     return verdict ? setSuperUser(true) : null
-    // };
-    
 
     // local crud state management
+    // state to handle reloading page after quick delete/update
     const [reload, setReload] = useState(false);
-    const [toggleEdit, setToggleEdit] = useState(false); // state to handle reloading page after quick delete/update
+    const [toggleEdit, setToggleEdit] = useState(false); 
     const [update, setUpdate] = useState({
         itemName: "",
         description: "",
@@ -63,8 +59,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
         setToggleEdit(false);
         setReload(!reload)
     };
-    
-    // convert to hooks later for redux?
+
     useEffect(()=> {
         if (authState.isAuthenticated){
             authService.getAccessToken()
@@ -72,14 +67,9 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                 let user = parseJwt(token)
                 setSuperUser(user.SuperUser) 
             });
-        }
+        };
         getAllItems();
-        // if this messes up items, make another useEffect
-        // depends on auth status, super user status and if a crud action was taken
     }, [authState, authService, superUser, reload]);
-    console.log(superUser)
-    // DO NOT PUSH THIS CONSOLE LOG
-    // console.log("DO NOT PUSH ME", userInfo, superUser)
 
     return(
         <InvPageContainer>
@@ -157,7 +147,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                                     setReload(!reload)
                                     handleDelete(item.id)
                                 }} />                            
-                            </ActionContainer>                     
+                            </ActionContainer>                  
                         :
                          null
                         }
