@@ -21,21 +21,20 @@ import { DeleteWithIcon } from '../material-ui/Delete';
 import { EditWithIcon } from '../material-ui/Update';
 import { TextField } from '@material-ui/core';
 import { StyledForm } from '../styled/AddInvStyles';
+import { parseJwt } from '../../utils/parseJwt';
+
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
 const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const history = useHistory();
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
-    
     const { authState, authService } = useOktaAuth();
-    const [userInfo, setUserInfo] = useState(null);
-    const [superUser, setSuperUser] = useState(false); // state for workaround
-    const whitelist = ["00ul53sdvnWjre0aF4x6"]; // comes from sub attribute
-    // workaround until I can pass superUser attribute from okta
-    const checkSuperUser = (user) => {
-        let verdict = whitelist.includes(user)
-        return verdict ? setSuperUser(true) : null
-    };
+    const [superUser, setSuperUser] = useState(false); 
+    // const checkSuperUser = (user) => {
+    //     let verdict = whitelist.includes(user)
+    //     return verdict ? setSuperUser(true) : null
+    // };
+    
 
     // local crud state management
     const [reload, setReload] = useState(false);
@@ -67,21 +66,18 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     
     // convert to hooks later for redux?
     useEffect(()=> {
-        if (!authState.isAuthenticated) {
-            // When user isn't authenticated, forget any user info
-            setUserInfo(null);
-          } else {
-            authService.getUser().then((info) => {
-              checkSuperUser(info.sub) // uses the sub from the healthy response for workaround to show item CRUD
-              console.log(info)
-              setUserInfo(info);
+        if (authState.isAuthenticated){
+            authService.getAccessToken()
+            .then((token) => {
+                let user = parseJwt(token)
+                setSuperUser(user.SuperUser) 
             });
-          }
+        }
         getAllItems();
         // if this messes up items, make another useEffect
         // depends on auth status, super user status and if a crud action was taken
-    }, [authState, authService, checkSuperUser(), reload]);
-
+    }, [authState, authService, superUser, reload]);
+    console.log(superUser)
     // DO NOT PUSH THIS CONSOLE LOG
     // console.log("DO NOT PUSH ME", userInfo, superUser)
 

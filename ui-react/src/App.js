@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route } from "react-router";
+import { parseJwt } from './utils/parseJwt';
 import './App.css';
 import { LoginCallback, SecureRoute, useOktaAuth } from '@okta/okta-react';
 // secure route eliminates the need for Private Route
@@ -14,15 +15,12 @@ import OktaProfile from './components/Users/OktaProfile';
 
 function App() {
   const { authState, authService } = useOktaAuth();
-  // check if user is logged when app mounts. may have to move this in individual components. maybe make a custom hook?
-  // this may be completely uneccessary 👇
+  // set active user when app mounts
   useEffect(()=>{
-    console.log("auth state", authState)
-    console.log("auth service", authService)
-    authService.getIdToken().then(token => console.log("token", token))
-    authService.getUser(authState.accessToken).then(user => console.log('user',user))
-    localStorage.setItem("accessToken", authState.accessToken)
-  }, [authState.accessToken])
+    authService.getAccessToken().then(access => console.log("access token", parseJwt(access)))
+  }, [authState.accessToken]);
+
+  // console.log("parsed json", parseJwt())
   return (
     <div className="App">
       <NavBar />
