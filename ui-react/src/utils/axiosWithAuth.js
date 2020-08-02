@@ -4,7 +4,7 @@ import axios from 'axios';
 export const axiosWithAuth = () =>{
     // catch for development
     const token = localStorage.getItem("okta-token-storage")
-    console.log(token)
+    // console.log(token)
     
 
     // checks for environment
@@ -14,6 +14,8 @@ export const axiosWithAuth = () =>{
     } else {
       url = "https://wedding-warehouse.herokuapp.com/";
     }
+
+    // console.log("BASE URL", url)
 
     return axios.create({
         baseURL: url,
