@@ -12,21 +12,21 @@ import InventoryPage from './components/Inventory/InventoryPage';
 import ItemPage from './components/Inventory/ItemPage';
 import AddInventory from './components/Inventory/AddInventory';
 import OktaProfile from './components/Users/OktaProfile';
+import ReserveItem from './components/Inventory/ReserveItem';
 
 function App() {
   return (
     <div className="App">
       <NavBar />
       <Route exact path="/" component={LandingPage} />
-      {/* Okta Path */}
+      {/* Okta Path 👇 */}
       <Route path="/implicit/callback" component={LoginCallback} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route exact path="/inventory" component={InventoryPage} />
-      {/* Uncomment when auth flow works */}
-      {/* <SecureRoute exact path="/inventory/addItem" component={AddInventory} /> */}
-      <Route exact path="/inventory/addItem" component={AddInventory} />
+      <SecureRoute exact path="/inventory/addItem" component={AddInventory} />
       <Route exact path="/inventory/item/:id" component={ItemPage} />
+      <Route exact path="/reserve/item/:id" component={ReserveItem} />
       <SecureRoute exact path="/profile" component={OktaProfile} />
     </div>
   );
