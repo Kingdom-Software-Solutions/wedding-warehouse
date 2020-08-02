@@ -11,12 +11,7 @@ import Button from '@material-ui/core/Button';
 const ItemPageEdit = ({ id, reload, setReload, setToggleEdit }) => {
     const dispatch = useDispatch();
     const [editItem, setEditItem] = useState({
-        itemName: "",
-        description: "",
-        quantity: NaN,
         isCustomizable: false,
-        rentalRate: NaN,
-        buyNow: NaN,
     });
     const [toggleCustomize, setToggleCustomize] = useState();
     const handleToggleCustom = () => {

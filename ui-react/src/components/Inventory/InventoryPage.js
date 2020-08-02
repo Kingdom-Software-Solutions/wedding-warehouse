@@ -35,11 +35,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     // state to handle reloading page after quick delete/update
     const [reload, setReload] = useState(false);
     const [toggleEdit, setToggleEdit] = useState(false); 
-    const [update, setUpdate] = useState({
-        itemName: "",
-        description: "",
-        rentalRate: NaN
-    })
+    const [update, setUpdate] = useState()
     const [updateId, setUpdateId] = useState(NaN);
 
     // admin action to delete item
