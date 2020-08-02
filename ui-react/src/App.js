@@ -14,30 +14,19 @@ import AddInventory from './components/Inventory/AddInventory';
 import OktaProfile from './components/Users/OktaProfile';
 
 function App() {
-
   return (
     <div className="App">
       <NavBar />
-      <Route exact path="/">
-        <LandingPage />
-      </Route>
+      <Route exact path="/" component={LandingPage} />
       {/* Okta Path */}
       <Route path="/implicit/callback" component={LoginCallback} />
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/register">
-        <Register />
-      </Route>
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
       <Route exact path="/inventory" component={InventoryPage} />
       {/* Uncomment when auth flow works */}
       {/* <SecureRoute exact path="/inventory/addItem" component={AddInventory} /> */}
-      <Route exact path="/inventory/addItem">
-        <AddInventory />
-      </Route>
-      <Route exact path="/inventory/item/:id">
-        <ItemPage />
-      </Route>
+      <Route exact path="/inventory/addItem" component={AddInventory} />
+      <Route exact path="/inventory/item/:id" component={ItemPage} />
       <SecureRoute exact path="/profile" component={OktaProfile} />
     </div>
   );
