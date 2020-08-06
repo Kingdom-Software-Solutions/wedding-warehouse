@@ -13,22 +13,26 @@ const ReserveItem = () => {
     const dispatch = useDispatch();
     const { authState, authService } = useOktaAuth();
     const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date()); // needs to be 3 days in the future at default
     // disable users from selecting in the past or before start date
     // const disabledDates = [yesterday, startDate]
     // first name, last name, email needed 
     const [reserveUser, setReserveUser] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: ""
     })
     // use okta to get current user
     useEffect(() => {
         if (authState.isAuthenticated){
-            authService.getAccessToken()
-            .then((token) => {
-                let user = parseJwt(token)
-                console.log(user)
-                setReserveUser(user)
+            authService.getUser()
+            .then((user) => {
+                setReserveUser({
+                    ...reserveUser,
+                    firstName: user.given_name,
+                    lastName: user.family_name,
+                    email: user.email
+                });
             });
         };
         dispatch(getItem(id));
@@ -41,8 +45,9 @@ const ReserveItem = () => {
         <div>
             <h2>Reserve Item</h2>
             <form>
-                <input name="name" value={reserveUser.userN} />
-                <input name="email" value={reserveUser.email} />
+                <input type="text" name="first" defaultValue={reserveUser.firstName} />
+                <input type="text" name="last" defaultValue={reserveUser.lastName} />
+                <input name="email" defaultValue={reserveUser.email} />
                 {/* Start Date */}
                 <Calendar
                 onChange={onStartChange}
