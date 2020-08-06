@@ -3,6 +3,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('users_rented', tbl => {
         tbl.increments('id').primary();
         tbl.date('rentDate').notNullable();
+        // add a column for return date
         tbl.boolean('returned').defaultTo(false);
         tbl.integer('timesRented');
         tbl.integer('userId', 9)
