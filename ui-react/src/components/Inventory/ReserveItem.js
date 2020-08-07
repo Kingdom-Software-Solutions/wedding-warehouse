@@ -3,10 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
-import { parseJwt } from '../../utils/parseJwt';
 import { getItem } from '../../redux/actions/warehouseActions';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+// import Calendar from 'react-calendar';
+// import 'react-calendar/dist/Calendar.css';
 
 const ReserveItem = () => {
     const { id } = useParams();
@@ -27,6 +26,7 @@ const ReserveItem = () => {
         if (authState.isAuthenticated){
             authService.getUser()
             .then((user) => {
+                console.log(user)
                 setReserveUser({
                     ...reserveUser,
                     firstName: user.given_name,
@@ -38,20 +38,37 @@ const ReserveItem = () => {
         dispatch(getItem(id));
     }, [authService, authState])
     // since users are on okta maybe just have a reservation table that saves a name and uses the in place, users_rented table => rename reservation_rented
-    const onStartChange = (value) =>{
-        setStartDate(value)
+    const onStartChange = (e) =>{
+        e.preventDefault()
+        setStartDate(e.target.value)
     };
+    const onEndChange = e => {
+        e.preventDefault()
+        setEndDate(e.target.value)
+    }
+    // console.log(reserveUser)
     return(
         <div>
             <h2>Reserve Item</h2>
             <form>
+                <label>First Name</label>
                 <input type="text" name="first" defaultValue={reserveUser.firstName} />
+                <label>Last Name</label>
                 <input type="text" name="last" defaultValue={reserveUser.lastName} />
+                <label>Email</label>
                 <input name="email" defaultValue={reserveUser.email} />
                 {/* Start Date */}
-                <Calendar
+                <label>Reserve Start</label>
+                <input type="date"
                 onChange={onStartChange}
                 value={startDate}
+                />
+                {/* End Date */}
+                <label>Reserve End</label>
+                <input 
+                type="date" 
+                name="reserveEnd"
+                onChange={onEndChange}
                 />
             </form>
         </div>
