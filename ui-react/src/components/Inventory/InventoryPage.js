@@ -130,7 +130,12 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                             }
                         </DetailsContainer>
                         <ActionContainer>
-                            <Button disabled>Reserve Now</Button>
+                            {item.isAvailable ?
+                            <Button onClick={() => history.push(`/reserve/item/${item.id}`)}>Reserve Now</Button>
+                            :
+                            <Button disabled>Unavailable</Button>                            
+                            }
+
                             <Button href={`inventory/item/${item.id}`}>See More</Button>
                         </ActionContainer>
                         { superUser && !toggleEdit ? 

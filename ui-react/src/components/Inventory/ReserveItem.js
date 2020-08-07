@@ -4,13 +4,15 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 import { getItem } from '../../redux/actions/warehouseActions';
+import { Button } from '@material-ui/core';
 // import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 
 const ReserveItem = () => {
     const { id } = useParams();
-    const dispatch = useDispatch();
     const { authState, authService } = useOktaAuth();
+    const dispatch = useDispatch();
+    const item = useSelector(state => state.warehouseReducer.singleItem)
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date()); // needs to be 3 days in the future at default
     // disable users from selecting in the past or before start date
@@ -47,9 +49,10 @@ const ReserveItem = () => {
         setEndDate(e.target.value)
     }
     // console.log(reserveUser)
+    console.log(item)
     return(
         <div>
-            <h2>Reserve Item</h2>
+            <h2>Reserve {item.itemName || "Error"}</h2>
             <form>
                 <label>First Name</label>
                 <input type="text" name="first" defaultValue={reserveUser.firstName} />
@@ -61,7 +64,6 @@ const ReserveItem = () => {
                 <label>Reserve Start</label>
                 <input type="date"
                 onChange={onStartChange}
-                value={startDate}
                 />
                 {/* End Date */}
                 <label>Reserve End</label>
@@ -70,7 +72,16 @@ const ReserveItem = () => {
                 name="reserveEnd"
                 onChange={onEndChange}
                 />
+                <Button color="secondary"
+                onClick={() => window.history.back()}
+                >
+                    Back
+                </Button>
+                <Button color="primary">
+                    Finalize
+                </Button>
             </form>
+            {/* Add checkout to reserve and pay online here in later release */}
         </div>
     )
 };

@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 import { parseJwt } from '../../utils/parseJwt';
@@ -19,6 +19,7 @@ import { EditWithIcon } from '../material-ui/Update';
 const ItemPage = () => {
     const { id } = useParams(); // params hook grabs the id of the item
     // check super user status
+    const history = useHistory()
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false);
     const dispatch = useDispatch();
@@ -65,12 +66,14 @@ const ItemPage = () => {
                 </ItemDetails>
                 { item.isAvailable ?
                     <ActionsDiv>
-                        <Button size="large">Reserve to Rent</Button>
+                        <Button size="large"
+                        onClick={() => history.push(`/reserve/item/${id}`)}
+                        >Reserve to Rent</Button>
                         {/* <Button size="large" disabled>Buy It</Button> */}
                     </ActionsDiv>
                     :
                     <ActionsDiv>
-                        <Button size="large" disabled>Check Availability</Button>
+                        <Button size="large" disabled>Currently Unavailable</Button>
                         {/* <Button className="buy-btn" size="large" disabled>Buy It</Button> */}
                     </ActionsDiv>
                 }
