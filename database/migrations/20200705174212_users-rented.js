@@ -1,15 +1,12 @@
 
 exports.up = function(knex) {
-    return knex.schema.createTable('users_rented', tbl => {
+  // This table was refactored and therefore doesn't completely match the migration name
+    return knex.schema.createTable('reservations_inventory', tbl => {
         tbl.increments('id').primary();
-        tbl.date('rentDate').notNullable();
-        // add a column for return date
-        tbl.boolean('returned').defaultTo(false);
-        tbl.integer('timesRented');
-        tbl.integer('userId', 9)
+        tbl.integer('reservationsId', 9)
         .unsigned()
         .references('id')
-        .inTable('users')
+        .inTable('reservations')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
         tbl.integer('inventoryId', 9)
@@ -22,5 +19,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('users_rented')
+  return knex.schema.dropTableIfExists('reservations_inventory')
 };

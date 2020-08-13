@@ -135,7 +135,6 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                             :
                             <Button disabled>Unavailable</Button>                            
                             }
-
                             <Button href={`inventory/item/${item.id}`}>See More</Button>
                         </ActionContainer>
                         { superUser && !toggleEdit ? 

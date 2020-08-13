@@ -51,9 +51,12 @@ class Model {
 const Department = new Model("departments");
 const Inventory = new Model("inventory");
 const Users = new Model("users");
+// reservations may need some special home
+const Reservations = new Model("reservations")
 
 module.exports = {
     Department,
     Inventory,
-    Users
+    Users,
+    Reservations
 }

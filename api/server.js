@@ -10,6 +10,7 @@ const authRouter = require('../routers/auth/authRouter');
 const deptRouter = require('../routers/departments/deptRouter');
 const inventoryRouter = require('../routers/inventory/inventoryRouter');
 const userRouter = require('../routers/users/userRouter');
+const reservationsRouter = require('../routers/inventory/reservationsRouter');
 
 const server = express();
 var whitelist = ['http://localhost:3000', 'https://mels-warehouse.vercel.app/']
