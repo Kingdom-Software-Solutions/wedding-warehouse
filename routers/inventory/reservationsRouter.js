@@ -7,10 +7,11 @@ const Inv = Models.Inventory
 
 
 // make item reservation
-reservation.post("/", (req, res) => {
+reservation.post("/:id", (req, res) => {
     // when an item is reserved change isAvailable to false
-    const item = req.body
-    const { isAvailable } = req.body
+    const { id } = req.params
+    const reservation = req.body
+
     // need the id of the item
     // post a new Reservation
     // pass the userId if applicable to tie that reservation to the user?
@@ -18,25 +19,28 @@ reservation.post("/", (req, res) => {
         // tied by email
     // Needs to update the item to !isAvailable in item table
 
-    if(item) {
-        Inv.updateById(item.id, isAvailable)
+    Inv.findById(id).then(item =>{
+        item.isAvailable = false;
+        Inv.updateById(id, isAvailable)
         .then(updated => {
             res.status(200).json({message: "Item successfully updated!", updated})
         })
         .catch(err => {
             res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
-        })
-        Reserve.insert(item)
-        .then(reservation => {
-            res.status(201).json({message: "Reservation successful!", reservation})
-        })
-        .catch(err => {
-            res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
-        })
-    } else {
-        res.status(400).json({error: "Missing itemId"})
-    }
-})
+        });
+    });
+    // insert the new reservation to db
+    Reserve.insert(reservation)
+    .then(reservation => {
+        // add model to tie together reservation and item using
+        const reserveId = reservation.id // will pass id to reserve model
+        
+        res.status(201).json({message: "Reservation successful!", reservation})
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+    });
+});
 
 
 // cancel reservation (patch or put)

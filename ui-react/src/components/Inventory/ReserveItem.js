@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 import { getItem } from '../../redux/actions/warehouseActions';
 import { Button } from '@material-ui/core';
+import { reserveItem } from '../../redux/actions/reserveActions';
 // import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 
@@ -19,9 +20,9 @@ const ReserveItem = () => {
     // const disabledDates = [yesterday, startDate]
     // first name, last name, email needed 
     const [reserveUser, setReserveUser] = useState({
-        firstName: "",
-        lastName: "",
-        email: ""
+        renterFirstName: "",
+        renterLastName: "",
+        renterEmail: ""
     })
     // use okta to get current user
     useEffect(() => {
@@ -48,12 +49,22 @@ const ReserveItem = () => {
         e.preventDefault()
         setEndDate(e.target.value)
     }
+    const handleSubmit = e => {
+        e.preventDefault();
+        // add reserve item dispatch
+        // needs to match BE table
+        newReservation = reserveUser
+        newReservation.rentDate = startDate;
+        newReservation.returnDate = endDate;
+        // pass the item id and the new reservations to BE
+        dispatch(reserveItem(id, newReservation))
+    };
     // console.log(reserveUser)
     console.log(item)
     return(
         <div>
             <h2>Reserve {item.itemName || "Error"}</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>First Name</label>
                 <input type="text" name="first" defaultValue={reserveUser.firstName} />
                 <label>Last Name</label>
@@ -77,7 +88,7 @@ const ReserveItem = () => {
                 >
                     Back
                 </Button>
-                <Button color="primary">
+                <Button type="submit" color="primary">
                     Finalize
                 </Button>
             </form>

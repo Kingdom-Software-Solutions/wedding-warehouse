@@ -164,4 +164,4 @@ export const getItem = (id) => dispatch => {
         console.log('Get item error');
         dispatch({ type: GET_ITEM_FAILURE })
     });
-}
+};
