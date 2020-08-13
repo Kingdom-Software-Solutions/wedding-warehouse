@@ -43,9 +43,10 @@ server.use(
 
 // USE ROUTERS
 server.use('/api/auth', authRouter);
-server.use('/api/users', userRouter)
+server.use('/api/users', userRouter);
 server.use('/api/departments', deptRouter);
 server.use('/api/inventory', inventoryRouter);
+server.use('api/reservations', reservationsRouter);
 
 
 
