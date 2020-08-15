@@ -7,9 +7,9 @@ export const RESERVE_ITEM_FAILURE = 'RESERVE_ITEM_FAILURE';
 
 export const reserveItem = (id, newReservation) => dispatch =>{
     dispatch({ type: RESERVE_ITEM_START });
-    axiosWithEnv().post(`/api/reserve/${id}`, newReservation)
+    axiosWithEnv().post('/api/reservations', newReservation)
     .then(res => {
-        dispatch({ type: RESERVE_ITEM_SUCCESS, payload: updatedItem });        
+        dispatch({ type: RESERVE_ITEM_SUCCESS, payload: newReservation });        
     })
     .catch(err => {
         dispatch({ type: RESERVE_ITEM_FAILURE });        

@@ -7,10 +7,12 @@ const Inv = Models.Inventory
 
 
 // make item reservation
-reservation.post("/:id", (req, res) => {
+reservation.post("/", (req, res) => {
     // when an item is reserved change isAvailable to false
-    const { id } = req.params
     const reservation = req.body
+    const { itemId } = reservation
+    console.log("ITEM ID", reservation.itemId)
+    console.log("REQ.BODY", req.body)
 
     // need the id of the item
     // post a new Reservation
@@ -19,16 +21,23 @@ reservation.post("/:id", (req, res) => {
         // tied by email
     // Needs to update the item to !isAvailable in item table
 
-    Inv.findById(id).then(item =>{
+    Inv.findById(itemId).then(item =>{
+        console.log("THE ITEM", item)
         item.isAvailable = false;
-        Inv.updateById(id, isAvailable)
+        Inv.updateById(itemId, item)
         .then(updated => {
-            res.status(200).json({message: "Item successfully updated!", updated})
+            // res.status(200).json({message: "Item successfully updated!", updated})
+            console.log("updated", updated)
         })
         .catch(err => {
-            res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+            // res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
+            console.log(err)
         });
+    })
+    .catch(err => {
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
     });
+
     // insert the new reservation to db
     Reserve.insert(reservation)
     .then(reservation => {
@@ -44,3 +53,5 @@ reservation.post("/:id", (req, res) => {
 
 
 // cancel reservation (patch or put)
+
+module.exports = reservation

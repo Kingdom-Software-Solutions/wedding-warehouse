@@ -48,29 +48,38 @@ const ReserveItem = () => {
     const onEndChange = e => {
         e.preventDefault()
         setEndDate(e.target.value)
+    };
+    const handleChanges = e => {
+        e.preventDefault();
+        setReserveUser({
+            ...reserveUser,
+            [e.target.name]: e.target.value
+        })
     }
     const handleSubmit = e => {
         e.preventDefault();
         // add reserve item dispatch
         // needs to match BE table
-        newReservation = reserveUser
+        let newReservation = reserveUser
+        newReservation.itemId = id
         newReservation.rentDate = startDate;
         newReservation.returnDate = endDate;
+        console.log(newReservation)
         // pass the item id and the new reservations to BE
         dispatch(reserveItem(id, newReservation))
     };
-    // console.log(reserveUser)
-    console.log(item)
+    console.log("reserveUser", reserveUser)
+    console.log("item", item)
     return(
         <div>
             <h2>Reserve {item.itemName || "Error"}</h2>
             <form onSubmit={handleSubmit}>
                 <label>First Name</label>
-                <input type="text" name="first" defaultValue={reserveUser.firstName} />
+                <input type="text" name="renterFirstName" defaultValue={reserveUser.firstName} onChange={handleChanges} />
                 <label>Last Name</label>
-                <input type="text" name="last" defaultValue={reserveUser.lastName} />
+                <input type="text" name="renterLastName" defaultValue={reserveUser.lastName} onChange={handleChanges} />
                 <label>Email</label>
-                <input name="email" defaultValue={reserveUser.email} />
+                <input name="renterEmail" defaultValue={reserveUser.email} onChange={handleChanges} />
                 {/* Start Date */}
                 <label>Reserve Start</label>
                 <input type="date"
