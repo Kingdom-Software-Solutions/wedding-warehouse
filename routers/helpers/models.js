@@ -46,6 +46,7 @@ class Model {
     };
 }
 
+
 // Class objects for the tables to be used in the router
 
 const Department = new Model("departments");

@@ -6,7 +6,7 @@ import { AuthBtn } from '../material-ui/AuthBtn';
 import { TextField } from '@material-ui/core';
 
 // IMPLEMENT OKTA IN REGISTRATION?
-//https://developer.okta.com/docs/reference/api/users/#create-user-with-password
+//https://developer.okta.com/docs/reference/api/users/#create-user-with-password // have dispatch post to okta then insert new user in db. 
 
 const Register = (props) => {
     console.log(props)
