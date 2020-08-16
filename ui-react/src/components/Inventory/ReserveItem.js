@@ -22,7 +22,9 @@ const ReserveItem = () => {
     const [reserveUser, setReserveUser] = useState({
         renterFirstName: "",
         renterLastName: "",
-        renterEmail: ""
+        renterEmail: "",
+        // status to tell the BE whether to tie this reservation to a user or not
+        userStatus: ""
     })
     // use okta to get current user
     useEffect(() => {
@@ -34,7 +36,8 @@ const ReserveItem = () => {
                     ...reserveUser,
                     firstName: user.given_name,
                     lastName: user.family_name,
-                    email: user.email
+                    email: user.email,
+                    userStatus: "loggedIn"
                 });
             });
         };
@@ -64,7 +67,10 @@ const ReserveItem = () => {
         newReservation.itemId = id
         newReservation.rentDate = startDate;
         newReservation.returnDate = endDate;
-        console.log(newReservation)
+        if(!authState.isAuthenticated){
+            newReservation.userStatus = "Guest"
+        }
+        // console.log(newReservation)
         // pass the item id and the new reservations to BE
         dispatch(reserveItem(id, newReservation))
     };

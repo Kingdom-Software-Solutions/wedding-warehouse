@@ -53,10 +53,12 @@ const Inventory = new Model("inventory");
 const Users = new Model("users");
 // reservations may need some special home
 const Reservations = new Model("reservations")
+const ResInvConnect = new Model("reservations_inventory")
 
 module.exports = {
     Department,
     Inventory,
     Users,
-    Reservations
+    Reservations,
+    ResInvConnect
 }
