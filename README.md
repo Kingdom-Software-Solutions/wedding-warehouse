@@ -115,6 +115,7 @@ The frontend is not being actively hosted at this time. I was experimenting with
 * [Express](https://expressjs.com/) - The web framework used
 * [npm](https://docs.npmjs.com/) - Dependency Management
 * [React](https://reactjs.org/docs/getting-started.html) - JS Library for building the interface
+* [Knex.js](http://knexjs.org/) - SQL Query builder
 
 ## Contributing
 
