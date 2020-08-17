@@ -86,33 +86,35 @@ EXAMPLE TO BE ADDED LATER
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+There are currently no automated tests setup in this project.
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+There are currently no e2e tests in this project
 
 ```
-Give an example
+EXAMPLE OF COMMANDS WILL REPLACE THIS PLACEHOLDER
 ```
 
 ### And coding style tests
 
-Explain what these tests test and why
+There are no coding style tests at this time.
 
 ```
-Give an example
+EXAMPLE ADDED LATER
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+The backend is deployed using [Heroku](https://devcenter.heroku.com/categories/reference). Deployed api url is https://wedding-warehouse.herokuapp.com/ . The backend has been setup with CI and will build with every push to the master branch. 
+
+The frontend is not being actively hosted at this time. I was experimenting with [Vercel's](https://vercel.com) Teams but ran out of the free trial and will not revisit hosting until the MVP has been met.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Express](https://expressjs.com/) - The web framework used
+* [npm](https://docs.npmjs.com/) - Dependency Management
+* [React](https://reactjs.org/docs/getting-started.html) - JS Library for building the interface
 
 ## Contributing
 
@@ -124,7 +126,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Landon Turner** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -134,6 +136,4 @@ No license
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* None yet, hope to add some soon! 
