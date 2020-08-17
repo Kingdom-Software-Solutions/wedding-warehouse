@@ -118,7 +118,7 @@ The frontend is not being actively hosted at this time. I was experimenting with
 
 ## Contributing
 
-Please read [CONTRIBUTING.md]{) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/Kingdom-Software-Solutions/wedding-warehouse/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to Mel's Warehouse.
 
 ## Versioning
 
