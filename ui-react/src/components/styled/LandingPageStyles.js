@@ -41,7 +41,49 @@ export const HeroTextDiv = styled.div`
 export const HeroText = styled.p`
     color: ${mainColor};
     font-family: 'Marck Script', cursive;
-    font-size: 4rem;
+    font-size: 5rem;
     text-shadow: -1px 1px 0 ${accentColor};
-    
+`;
+
+export const FeatSectionDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+export const FeatSectionTitle = styled.h3`
+    align-self: flex-start;
+    font-size: 2rem;
+    margin-left: 5%;
+`;
+
+export const ItemImg = styled.img`
+    width: 100%;
+    object-fit: contain;
+`;
+
+export const FeaturedDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // border: 1px solid ${accentColor};
+    width: 25%;
+    margin: 0 auto;
+    margin-bottom: 10%;
+    box-shadow: 1px 1px ${accentColor};
+
+`;
+
+export const SpinnerDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+export const ItemTitle = styled.h4`
+
+`;
+
+export const ItemRent = styled.p`
+
 `;

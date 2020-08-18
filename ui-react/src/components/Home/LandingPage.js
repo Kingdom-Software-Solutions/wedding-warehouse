@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllItems } from '../../redux/actions/warehouseActions';
-import { HeroContainer, HeroImage, HeroText, HeroTextDiv, LandingContainer } from '../styled/LandingPageStyles'
+import { HeroContainer, HeroImage, HeroText, HeroTextDiv, LandingContainer, ItemTitle, ItemRent, FeatSectionDiv, FeatSectionTitle, FeaturedDiv, SpinnerDiv, ItemImg } from '../styled/LandingPageStyles'
 import { Button } from '@material-ui/core';
 import Spinner from '../material-ui/Spinner';
 
@@ -44,19 +44,22 @@ const LandingPage = () => {
                 >Find Items</Button>
                 </HeroTextDiv>
             </HeroContainer>
-            <div className="featured">
-                <h3 className="featured-section">Featured</h3>
+            <FeatSectionDiv className="featured">
+                <FeatSectionTitle className="featured-title">Featured</FeatSectionTitle>
                 {/* Eventually will map through the array when there is enough inventory */}
                 { featured ?
-                    <div className="featured-item">
-                        <h4 className='item-name'>{featured.itemName}</h4>
-                        <p className="rent-rate">Rent: ${featured.rentalRate}</p>
+                    <FeaturedDiv className="featured-item">
+                        <ItemImg src={featured.mainImgUrl} />
+                        <ItemTitle className='item-name'>{featured.itemName}</ItemTitle>
+                        <ItemRent className="rent-rate">Rent: ${featured.rentalRate}</ItemRent>
                         <Button href={`/inventory/item/${featured.id}`}>See More</Button>
-                    </div>   
+                    </FeaturedDiv>   
                     :
-                        <Spinner />   
+                    <SpinnerDiv>
+                        <Spinner />
+                    </SpinnerDiv>   
                 }
-            </div>
+            </FeatSectionDiv>
 
         </LandingContainer>
     )
