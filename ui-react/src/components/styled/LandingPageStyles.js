@@ -7,22 +7,23 @@ export const LandingContainer = styled.div`
 `;
 export const HeroContainer = styled.div`
     // width: 100%;
-    postion: relative;
+    postion: absolute;
     text-align: center;
     // THIS HAS TO BE NESTED FOR CSS TO WORK
     .hero-details{
         margin: 0 auto;
         position: absolute;
-        top: 50%;
+        line-height: inherit;
+        top: 500px; // this needs to be px so it can remain vertically fixed
         left: 50%;
-        transform: translate(-50%, -90%);        
+        transform: translate(-50%, -90%);     
     };
 `;
 
 export const HeroImage = styled.img`
     width: 100%;
     max-height: 600px;
-    height: auto;
+    height: 50%;
     opacity: 50%;
     object-fit: cover;
     border-top: 2px solid ${mainColor};

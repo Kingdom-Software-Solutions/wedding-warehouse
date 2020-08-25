@@ -14,10 +14,13 @@ const ReserveItem = () => {
     const { authState, authService } = useOktaAuth();
     const dispatch = useDispatch();
     const item = useSelector(state => state.warehouseReducer.singleItem)
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date()); // needs to be 3 days in the future at default
-    // disable users from selecting in the past or before start date
-    // const disabledDates = [yesterday, startDate]
+    // Date and Time State
+    const today = new Date().toISOString().split('T')[0];
+    const returnDefault = new Date();
+    // needs to be 3 days in the future at default for return date
+    returnDefault.setDate(returnDefault.getDate() + 3)
+    const [startDate, setStartDate] = useState(today);
+    const [endDate, setEndDate] = useState(returnDefault.toISOString().split('T')[0]); 
     // first name, last name, email needed 
     const [reserveUser, setReserveUser] = useState({
         renterFirstName: "",
@@ -43,7 +46,8 @@ const ReserveItem = () => {
         };
         dispatch(getItem(id));
     }, [authService, authState])
-    // since users are on okta maybe just have a reservation table that saves a name and uses the in place, users_rented table => rename reservation_rented
+
+    // Date and Time change handlers
     const onStartChange = (e) =>{
         e.preventDefault()
         setStartDate(e.target.value)
@@ -74,8 +78,8 @@ const ReserveItem = () => {
         // pass the item id and the new reservations to BE
         dispatch(reserveItem(id, newReservation))
     };
-    console.log("reserveUser", reserveUser)
-    console.log("item", item)
+    // console.log("reserveUser", reserveUser)
+    // console.log("item", item)
     return(
         <div>
             <h2>Reserve {item.itemName || "Error"}</h2>
@@ -90,6 +94,7 @@ const ReserveItem = () => {
                 <label>Reserve Start</label>
                 <input type="date"
                 onChange={onStartChange}
+                min={today}
                 />
                 {/* End Date */}
                 <label>Reserve End</label>
@@ -97,6 +102,7 @@ const ReserveItem = () => {
                 type="date" 
                 name="reserveEnd"
                 onChange={onEndChange}
+                min={startDate}
                 />
                 <Button color="secondary"
                 onClick={() => window.history.back()}
@@ -107,7 +113,7 @@ const ReserveItem = () => {
                     Finalize
                 </Button>
             </form>
-            {/* Add checkout to reserve and pay online here in later release */}
+            {/* Add checkout to pay online here in later release */}
         </div>
     )
 };

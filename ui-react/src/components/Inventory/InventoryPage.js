@@ -27,6 +27,7 @@ import { parseJwt } from '../../utils/parseJwt';
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
 const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const history = useHistory();
+    const today = new Date(); // used to check if items are ready today
     const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false); 
@@ -69,9 +70,9 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
 
     return(
         <InvPageContainer>
-            <h2>Inventory</h2>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
+            {/* Add button to suggestion form (stretch) */}
             { superUser ? 
                 <>
                     <Button
@@ -103,7 +104,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                             <h3>{item.itemName}</h3>
                             <p>{item.description}</p>
                             {/* add customizable with "i" icon */}
-                            <span>Rent: ${item.rentalRate}</span>
+                            <span>Rent per Day: ${item.rentalRate}</span>
                             {/* <span>Buy ${item.buyNow}</span> */}
                             {toggleEdit ? 
                               <StyledForm onSubmit={handleUpdate}>

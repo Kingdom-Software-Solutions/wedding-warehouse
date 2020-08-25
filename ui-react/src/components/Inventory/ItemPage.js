@@ -20,6 +20,7 @@ const ItemPage = () => {
     const { id } = useParams(); // params hook grabs the id of the item
     // check super user status
     const history = useHistory()
+    const today = new Date() // today's date to check if item is avialable now
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false);
     const dispatch = useDispatch();
