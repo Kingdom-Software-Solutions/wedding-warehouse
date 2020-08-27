@@ -116,6 +116,7 @@ The frontend is not being actively hosted at this time. I was experimenting with
 * [npm](https://docs.npmjs.com/) - Dependency Management
 * [React](https://reactjs.org/docs/getting-started.html) - JS Library for building the interface
 * [Knex.js](http://knexjs.org/) - SQL Query builder
+* [styled-components](https://styled-components.com/docs) - Uses components as a low-level styling construct
 
 ## Contributing
 
