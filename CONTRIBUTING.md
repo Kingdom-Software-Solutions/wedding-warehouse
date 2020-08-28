@@ -1,5 +1,7 @@
 # Contributing
 
+THIS IS A TEMPLATE AND I HAVE NOT ESTABLISHED ANY OF THIS YET LOL GO NUTS JUST TELL ME WHAT YOU'RE CHANGING AND WHY. MAKE A BRANCH AND PR IT IS REALLY ALL I ASK.
+
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change. 
 
