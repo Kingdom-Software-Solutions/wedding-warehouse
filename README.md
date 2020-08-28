@@ -126,11 +126,10 @@ Please read [CONTRIBUTING.md](https://github.com/Kingdom-Software-Solutions/wedd
 
 We do not use versioning yet. 
 
-## Authors
+## Authors/Contributors
 
 * **Landon Turner** - *Initial work* 
 
-See also the list of [contributors](https://github.com/wedding-warehouse/contributors) who participated in this project. (THIS FEATURE IN THE REPO HASN'T BEEN ENABLED YET)
 
 ## License
 
