@@ -1,5 +1,14 @@
 import styled from 'styled-components';
-import { accentColor, mainColor, tertiaryColor, success } from './colors';
+import { 
+    accentColor, 
+    mainColor, 
+    pinkLady,
+    spicyMix,
+    floralWhite,
+    floralWhiteLite,
+    jon,
+    acadia
+ } from './colors';
 
 export const LandingContainer = styled.div`
     display: flex;
