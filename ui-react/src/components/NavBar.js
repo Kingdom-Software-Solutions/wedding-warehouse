@@ -1,10 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
-import { AuthBtn } from '../components/material-ui/AuthBtn';
+import { Button } from '@material-ui/core';
 
 // styles
 import { NavContainer, NavWrapper, NavTitle , StyledLink} from './styled/NavStyles';
+import { Logo } from './component-library/logo';
 
 // IF YOU DISCOVER YOU NEED TO SIGN USERS OUT OF OKTA, REFERENCE HERE: https://developer.okta.com/docs/guides/sign-users-out/react/sign-out-of-okta/
 
@@ -21,26 +22,27 @@ const NavBar = () => {
 
     return(
         <NavContainer>
-            <NavTitle onClick={()=> history.push("/")}>Mel's <span role="img" aria-label="bride">👰</span> Warehouse</NavTitle>
+            <Logo />
             <NavWrapper>
                 <StyledLink href="/">Home</StyledLink>
+                <StyledLink href="#about">About</StyledLink>
                 <StyledLink href="/inventory">Inventory</StyledLink>
+            </NavWrapper>
                 {/* Need a better way to verify a user is logged in */}
                 { authState.isPending ?
                     <div>Loading authentication</div>
                 :
                 ( !authState.isAuthenticated ? 
                     <div>
-                        <AuthBtn onClick={login}>Login/Register</AuthBtn>
+                        <Button onClick={login}>Login | Signup</Button>
                     </div>
                     :
                     <>
                     <StyledLink href="/profile">Profile</StyledLink>
-                    <AuthBtn onClick={logout}>Logout</AuthBtn>
+                    <Button onClick={logout}>Logout</Button>
                     </>
                 )
                 }
-            </NavWrapper>
         </NavContainer>
     )
 }

@@ -2,22 +2,27 @@ import styled from 'styled-components';
 import {
     mainColor,
     secondaryColor,
-    // uncomment if needed
-    // tertiaryColor,
+    pinkLady,
+    spicyMix,
+    floralWhite,
+    floralWhiteLite,
+    jon,
+    acadia,
     accentColor
 } from './colors'
 
 export const NavContainer = styled.div`
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 100%
 `;
 
 export const NavWrapper = styled.nav`
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
     align-items: center;
-    width: 75%;
+    width: 40%;
     a:hover {
         color: ${mainColor}
     }
@@ -32,6 +37,5 @@ export const NavTitle = styled.h1`
 
 export const StyledLink = styled.a`
     text-decoration: none;
-    margin: 2%;
     color: ${secondaryColor}
 `;
