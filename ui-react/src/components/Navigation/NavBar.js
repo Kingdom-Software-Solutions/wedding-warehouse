@@ -4,8 +4,8 @@ import { useOktaAuth } from '@okta/okta-react';
 import { Button } from '@material-ui/core';
 
 // styles
-import { NavContainer, NavWrapper, NavTitle , StyledLink} from './styled/NavStyles';
-import { Logo } from './component-library/logo';
+import { NavContainer, NavWrapper , StyledLink} from '../styled/NavStyles';
+import { Logo } from '../component-library/logo';
 
 // IF YOU DISCOVER YOU NEED TO SIGN USERS OUT OF OKTA, REFERENCE HERE: https://developer.okta.com/docs/guides/sign-users-out/react/sign-out-of-okta/
 
