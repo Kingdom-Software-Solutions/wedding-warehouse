@@ -1,34 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllItems } from '../../redux/actions/warehouseActions';
-import { HeroContainer, HeroImage, HeroText, HeroTextDiv, LandingContainer, ItemTitle, ItemRent, FeatSectionDiv, FeatSectionTitle, FeaturedDiv, SpinnerDiv, ItemImg } from '../styled/LandingPageStyles'
+import { HeroContainer, HeroImage, HeroText, HeroTextDiv, LandingContainer } from '../styled/LandingPageStyles';
 import { Button } from '@material-ui/core';
-import Spinner from '../material-ui/Spinner';
-
-// SHOULD THIS JUST BE AN INVENTORY PAGE?
 
 const LandingPage = () => {
     const history = useHistory()
-    const dispatch = useDispatch();
-    const items = useSelector(state => state.warehouseReducer.items)
-    const [featured, setFeatured] = useState();
-
-    const getFeaturedItem = () => {
-        const featIndex = Math.floor(Math.random() * Math.floor(items.length));
-        // find by index and set the item
-        setFeatured(items[featIndex]);
-    };
-    // get items from store
-    useEffect(()=>{
-        dispatch(getAllItems());
-    },[]);
-    // pick one of the items from store
-    useEffect(()=>{
-        getFeaturedItem()
-    },[items])
-
-    console.log(featured)
 
     return(
         <LandingContainer className="landing-wrapper">
@@ -44,23 +20,15 @@ const LandingPage = () => {
                 >Find Items</Button>
                 </HeroTextDiv>
             </HeroContainer>
-            <FeatSectionDiv className="featured">
-                <FeatSectionTitle className="featured-title">Featured</FeatSectionTitle>
-                {/* Eventually will map through the array when there is enough inventory */}
-                { featured ?
-                    <FeaturedDiv className="featured-item">
-                        <ItemImg src={featured.mainImgUrl} />
-                        <ItemTitle className='item-name'>{featured.itemName}</ItemTitle>
-                        <ItemRent className="rent-rate">Rent: ${featured.rentalRate}</ItemRent>
-                        <Button href={`/inventory/item/${featured.id}`}>See More</Button>
-                    </FeaturedDiv>   
-                    :
-                    <SpinnerDiv>
-                        <Spinner />
-                    </SpinnerDiv>   
-                }
-            </FeatSectionDiv>
-
+            <div>
+                <h3>About Here</h3>
+            </div>
+            {/* <div>Testimonial Section here post launch</div>     */}
+            <footer>
+                <div>Logo Here</div>
+                <div>Social Icons Here</div>
+                <button>Login | Signup</button>
+            </footer>
         </LandingContainer>
     )
 }
