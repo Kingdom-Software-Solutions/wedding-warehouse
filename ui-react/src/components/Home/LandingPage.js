@@ -4,20 +4,15 @@ import { HeroContainer, HeroImage, HeroText, HeroTextDiv, LandingContainer } fro
 import { Button } from '@material-ui/core';
 import About from './AboutSection';
 import HeroSection from './HeroSection';
+import Footer from './Footer';
 
 const LandingPage = () => {
-    const history = useHistory()
-
     return(
         <LandingContainer className="landing-wrapper">
             <HeroSection />
             <About />
             {/* <div>Testimonial Section here post launch</div>     */}
-            <footer>
-                <div>Logo Here</div>
-                <div>Social Icons Here</div>
-                <button>Login | Signup</button>
-            </footer>
+            <Footer />
         </LandingContainer>
     )
 }

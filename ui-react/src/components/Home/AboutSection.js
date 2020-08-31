@@ -20,11 +20,12 @@ const About = () => {
                 <p>Rent specific items you need at a reasonable price, instead of buying something you'll never need again.</p>
                 <Button disabled>Shop By Price</Button>
             </div>
-            Uncomment after testimonials exist
+            {/* Uncomment after testimonials exist
             <div>
                 <h4>Unbeatable Service</h4>
                 <p>We believe our reputation speaks for itself. Read what our client's have to say about their experience with Mel's Warehouse</p>
-            </div>
+                <Button disabled>Read More</Button>
+            </div> */}
         </div>
     );
 };
