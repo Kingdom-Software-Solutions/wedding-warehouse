@@ -129,6 +129,7 @@ We do not use versioning yet.
 ## Authors/Contributors
 
 * **Landon Turner** - *Initial work* 
+* **[Aja Blanco](https://github.com/ajablanco)** Initial UX design
 
 
 ## License
