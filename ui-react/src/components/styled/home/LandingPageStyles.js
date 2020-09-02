@@ -49,18 +49,12 @@ export const HeroTextDiv = styled.div`
 `;
 
 export const HeroText = styled.p`
-    color: ${floralWhiteLite};
-    font-size: 5rem;
+    font-size: 4.6rem;
     text-shadow: -1px 1px 0 ${acadia};
+    margin: 0 auto;
 `;
 
-// ABOUT STYLES
-
-export const AboutContainer = styled.div`
-    margin: -5px;
-    background-color: ${pinkLady};
-    color: ${jon};
-    #logo {
-        color: ${acadia}
-    }
+export const HeroSubText = styled.p`
+    font-size: 1.25rem;
+    text-shadow: -1px 1px 0 ${acadia};
 `;

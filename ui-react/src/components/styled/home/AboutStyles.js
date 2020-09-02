@@ -18,3 +18,9 @@ color: ${jon};
     color: ${acadia}
 }
 `;
+
+export const SubSectionDiv = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+`;
