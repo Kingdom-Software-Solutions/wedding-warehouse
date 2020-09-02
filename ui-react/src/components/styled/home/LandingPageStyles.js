@@ -8,7 +8,7 @@ import {
     floralWhiteLite,
     jon,
     acadia
- } from './colors';
+ } from '../colors';
 
 export const LandingContainer = styled.div`
     display: flex;

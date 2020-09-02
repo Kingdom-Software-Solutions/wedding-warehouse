@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { HeroContainer, HeroImage, HeroText, HeroTextDiv } from '../styled/LandingPageStyles';
+import { HeroContainer, HeroImage, HeroText, HeroTextDiv } from '../styled/home/LandingPageStyles';
 import { Button } from '@material-ui/core';
 
 const HeroSection = () => {

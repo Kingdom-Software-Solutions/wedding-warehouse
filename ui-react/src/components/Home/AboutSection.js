@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Logo } from '../component-library/logo';
 import { Button } from '@material-ui/core';
-import { AboutContainer } from '../styled/LandingPageStyles';
+import { AboutContainer } from '../styled/home/LandingPageStyles';
 
 const About = () => {
     const history = useHistory();

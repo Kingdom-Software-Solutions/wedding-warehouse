@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { HeroContainer, HeroImage, HeroText, HeroTextDiv, LandingContainer } from '../styled/LandingPageStyles';
-import { Button } from '@material-ui/core';
+import { LandingContainer } from '../styled/home/LandingPageStyles';
 import About from './AboutSection';
 import HeroSection from './HeroSection';
 import Footer from './Footer';
