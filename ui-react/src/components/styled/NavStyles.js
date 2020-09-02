@@ -15,7 +15,17 @@ export const NavContainer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 100%
+    width: 100%;
+    background-color: ${jon};
+    // override basic logo styles 
+    #logo{
+        color: ${floralWhiteLite};
+    }
+    .okta-cta {
+        color: ${floralWhiteLite};
+        font-family: 'Ledger', serif;
+    }
+
 `;
 
 export const NavWrapper = styled.nav`
@@ -37,5 +47,5 @@ export const NavTitle = styled.h1`
 
 export const StyledLink = styled.a`
     text-decoration: none;
-    color: ${secondaryColor}
+    color: ${floralWhiteLite};
 `;

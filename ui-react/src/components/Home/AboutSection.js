@@ -2,11 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Logo } from '../component-library/logo';
 import { Button } from '@material-ui/core';
+import { AboutContainer } from '../styled/LandingPageStyles';
 
 const About = () => {
     const history = useHistory();
     return(
-        <div id="about">
+        <AboutContainer id="about">
             <Logo />
             <h3>About</h3>
             <p>At Mel's Warehouse you'll find a plethora of high-quality wedding props and decor that suit just about any need. From centerpieces or chalk boards, we have it all... at a very affordable price.</p>
@@ -26,7 +27,7 @@ const About = () => {
                 <p>We believe our reputation speaks for itself. Read what our client's have to say about their experience with Mel's Warehouse</p>
                 <Button disabled>Read More</Button>
             </div> */}
-        </div>
+        </AboutContainer>
     );
 };
 

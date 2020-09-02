@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 // styles
 import { NavContainer, NavWrapper , StyledLink} from '../styled/NavStyles';
 import { Logo } from '../component-library/logo';
+import { floralWhiteLite } from '../styled/colors';
 
 // IF YOU DISCOVER YOU NEED TO SIGN USERS OUT OF OKTA, REFERENCE HERE: https://developer.okta.com/docs/guides/sign-users-out/react/sign-out-of-okta/
 
@@ -34,12 +35,12 @@ const NavBar = () => {
                 :
                 ( !authState.isAuthenticated ? 
                     <div>
-                        <Button onClick={login}>Login | Signup</Button>
+                        <Button className="okta-cta" onClick={login}>Login | Signup</Button>
                     </div>
                     :
                     <>
                     <StyledLink href="/profile">Profile</StyledLink>
-                    <Button onClick={logout}>Logout</Button>
+                    <Button className="okta-cta" onClick={logout}>Logout</Button>
                     </>
                 )
                 }

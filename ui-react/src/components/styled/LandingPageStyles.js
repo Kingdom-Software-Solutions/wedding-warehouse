@@ -15,10 +15,11 @@ export const LandingContainer = styled.div`
     flex-direction: column;
 `;
 export const HeroContainer = styled.div`
-    // width: 100%;
+    width: 100%;
     postion: absolute;
-    text-align: center;
+    text-align: left;
     // THIS HAS TO BE NESTED FOR CSS TO WORK
+    color: ${floralWhiteLite};
     .hero-details{
         margin: 0 auto;
         position: absolute;
@@ -32,11 +33,8 @@ export const HeroContainer = styled.div`
 export const HeroImage = styled.img`
     width: 100%;
     max-height: 600px;
-    height: 50%;
-    opacity: 50%;
+    opacity: 90%;
     object-fit: cover;
-    border-top: 2px solid ${mainColor};
-    border-bottom: 2px solid ${mainColor}
 `;
 
 export const HeroTextDiv = styled.div`
@@ -44,56 +42,25 @@ export const HeroTextDiv = styled.div`
     // flex-direction: column;
     // align-items: center;
     .hero-cta{
-        color: ${mainColor}
-    }
+        color: ${floralWhiteLite};
+        border: 1 px ${floralWhiteLite};
+        font-family: 'Ledger', serif;
+    };
 `;
 
 export const HeroText = styled.p`
-    color: ${mainColor};
-    font-family: 'Marck Script', cursive;
+    color: ${floralWhiteLite};
     font-size: 5rem;
-    text-shadow: -1px 1px 0 ${accentColor};
+    text-shadow: -1px 1px 0 ${acadia};
 `;
 
-export const FeatSectionDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`;
+// ABOUT STYLES
 
-export const FeatSectionTitle = styled.h3`
-    align-self: flex-start;
-    font-size: 2rem;
-    margin-left: 5%;
-`;
-
-export const ItemImg = styled.img`
-    width: 100%;
-    object-fit: contain;
-`;
-
-export const FeaturedDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    // border: 1px solid ${accentColor};
-    width: 25%;
-    margin: 0 auto;
-    margin-bottom: 10%;
-    box-shadow: 1px 1px ${accentColor};
-
-`;
-
-export const SpinnerDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-export const ItemTitle = styled.h4`
-
-`;
-
-export const ItemRent = styled.p`
-
+export const AboutContainer = styled.div`
+    margin: -5px;
+    background-color: ${pinkLady};
+    color: ${jon};
+    #logo {
+        color: ${acadia}
+    }
 `;

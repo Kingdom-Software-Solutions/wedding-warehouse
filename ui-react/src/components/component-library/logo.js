@@ -4,7 +4,7 @@ import { StyledLogo } from '../styled/componentStyles';
 export const Logo = () => {
     return(
         <>
-        <StyledLogo>M | W</StyledLogo>
+        <StyledLogo id="logo">M | W</StyledLogo>
         </>
     )
 }
