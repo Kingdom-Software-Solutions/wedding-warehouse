@@ -19,12 +19,16 @@ export const AboutContainer = styled.div`
         margin-top: 1.5%;
         color: ${acadia}
     }
+    padding: 1%;
+    width:100%;
 `;
 
 export const SectionTitleDiv = styled.div`
     // display: flex;
     // flex-direction: column;
     // align-items: center
+    width: 80%;
+    margin: 0 auto;
 `;
 
 export const SubSectionDiv = styled.div`
