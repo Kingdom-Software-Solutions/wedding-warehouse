@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Logo } from '../component-library/logo';
 import { Button } from '@material-ui/core';
-import { AboutContainer, SubSectionDiv } from '../styled/home/AboutStyles';
+import { AboutContainer, SubSectionDiv, AboutTitle, AboutText, SectionTitleDiv } from '../styled/home/AboutStyles';
 import GradeIcon from '@material-ui/icons/Grade';
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
 import EmojiEmotionsSharpIcon from '@material-ui/icons/EmojiEmotionsSharp';
@@ -11,9 +11,11 @@ const About = () => {
     const history = useHistory();
     return(
         <AboutContainer id="about">
-            <Logo />
-            <h3>About</h3>
-            <p>At Mel's Warehouse you'll find a plethora of high-quality wedding props and decor that suit just about any need. From centerpieces or chalk boards, we have it all... at a very affordable price.</p>
+            <SectionTitleDiv>
+                <Logo className="logo-about" />
+                <AboutTitle>About</AboutTitle>
+                <AboutText>At Mel's Warehouse you'll find a plethora of high-quality wedding props and decor that suit just about any need. From centerpieces or chalk boards, we have it all... at a very affordable price.</AboutText>
+            </SectionTitleDiv>
             <SubSectionDiv>
                 <div>
                     <GradeIcon style={{ fontSize: 40 }}  />

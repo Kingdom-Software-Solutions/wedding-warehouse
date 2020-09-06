@@ -39,10 +39,9 @@ export const NavWrapper = styled.nav`
 `;
 
 export const NavTitle = styled.h1`
-    text-decoration: none;
-    font-family: 'Marck Script', cursive;
-    color: ${mainColor};
-    border-bottom: 2px solid ${accentColor};
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.5rem;
+    color: ${floralWhiteLite};
 `;
 
 export const StyledLink = styled.a`

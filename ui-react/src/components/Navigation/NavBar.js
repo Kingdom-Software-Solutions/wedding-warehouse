@@ -4,7 +4,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import { Button } from '@material-ui/core';
 
 // styles
-import { NavContainer, NavWrapper , StyledLink} from '../styled/NavStyles';
+import { NavContainer, NavWrapper , StyledLink, NavTitle} from '../styled/NavStyles';
 import { Logo } from '../component-library/logo';
 import { floralWhiteLite } from '../styled/colors';
 
@@ -23,7 +23,8 @@ const NavBar = () => {
 
     return(
         <NavContainer>
-            <Logo />
+            {/* <Logo /> */}
+            <NavTitle>Mel's | Warehouse</NavTitle>
             <NavWrapper>
                 <StyledLink href="/">Home</StyledLink>
                 <StyledLink href="#about">About</StyledLink>
