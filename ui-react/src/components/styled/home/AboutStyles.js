@@ -42,3 +42,19 @@ export const AboutTitle = styled.h3`
 export const AboutText = styled.p`
     font-size: 1.5rem;
 `;
+
+// Is there a better name for this? 🤔
+export const FeatureBox = styled.div`
+    width: 25%;
+    background-color: ${floralWhite};
+    margin: 2.5% 0;
+    padding: 1%;
+`;
+
+export const FeatureTitle = styled.h4`
+    font-size: 2rem;
+`;
+
+export const FeatureText = styled.p`
+    font-size: 1rem;
+`;

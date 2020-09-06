@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Logo } from '../component-library/logo';
 import { Button } from '@material-ui/core';
-import { AboutContainer, SubSectionDiv, AboutTitle, AboutText, SectionTitleDiv } from '../styled/home/AboutStyles';
+import { AboutContainer, SubSectionDiv, AboutTitle, AboutText, SectionTitleDiv, FeatureBox, FeatureTitle, FeatureText } from '../styled/home/AboutStyles';
 import GradeIcon from '@material-ui/icons/Grade';
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
 import EmojiEmotionsSharpIcon from '@material-ui/icons/EmojiEmotionsSharp';
@@ -17,18 +17,18 @@ const About = () => {
                 <AboutText>At Mel's Warehouse you'll find a plethora of high-quality wedding props and decor that suit just about any need. From centerpieces or chalk boards, we have it all... at a very affordable price.</AboutText>
             </SectionTitleDiv>
             <SubSectionDiv>
-                <div>
+                <FeatureBox>
                     <GradeIcon style={{ fontSize: 40 }}  />
-                    <h4>Quality Items</h4>
-                    <p>It's all about the details and finding the right item makes all the difference. Some of our stock is even customizable.</p>
+                    <FeatureTitle>Quality Items</FeatureTitle>
+                    <FeatureText>It's all about the details and finding the right item makes all the difference. Some of our stock is even customizable.</FeatureText>
                     <Button className="about-cta" onClick={() => history.push("/inventory")}>View Inventory</Button>
-                </div>
-                <div>
+                </FeatureBox>
+                <FeatureBox>
                     <AttachMoneyOutlinedIcon style={{ fontSize: 40 }} />
-                    <h4>Affordable prices</h4>
-                    <p>Rent specific items you need at a reasonable price, instead of buying something you'll never need again.</p>
+                    <FeatureTitle>Affordable prices</FeatureTitle>
+                    <FeatureText>Rent specific items you need at a reasonable price, instead of buying something you'll never need again.</FeatureText>
                     <Button className="about-cta" disabled>Shop By Price</Button>
-                </div>
+                </FeatureBox>
                 {/* Uncomment after testimonials exist
                 <div>
                     <h4>Unbeatable Service</h4>
