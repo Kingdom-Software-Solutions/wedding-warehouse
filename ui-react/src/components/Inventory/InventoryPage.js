@@ -22,6 +22,7 @@ import { EditWithIcon } from '../material-ui/Update';
 import { TextField } from '@material-ui/core';
 import { StyledForm } from '../styled/AddInvStyles';
 import { parseJwt } from '../../utils/parseJwt';
+import InvNav from '../Navigation/InvNavBar';
 
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
@@ -69,10 +70,13 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     }, [authState, authService, superUser, reload]);
 
     return(
+        <>
+        <InvNav />
         <InvPageContainer>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
             {/* Add button to suggestion form (stretch) */}
+            <h2>Inventory</h2>
             { superUser ? 
                 <>
                     <Button
@@ -157,6 +161,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
             })}
             </MappedItems>
         </InvPageContainer>
+        </>
     )
 };
 

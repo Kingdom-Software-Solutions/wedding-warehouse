@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { accentColor } from './colors';
-// uncomment when you need to call the color scheme
-// import {
-//     mainColor,
-//     secondaryColor,
-//     tertiaryColor,
-//     accentColor
-// } from './colors'
+import {
+    pinkLady,
+    spicyMix,
+    floralWhite,
+    floralWhiteLite,
+    jon,
+    acadia
+} from './colors';
+
 
 export const InvPageContainer = styled.div`
     display: flex;

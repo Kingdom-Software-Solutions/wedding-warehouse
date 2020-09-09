@@ -6,6 +6,8 @@ body {
   font-family: 'Ledger', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Background color set to floral white lite */
+  background-color: #FFFBF6;
 }
 
 code {
