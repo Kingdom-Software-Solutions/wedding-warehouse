@@ -4,7 +4,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import { Button } from '@material-ui/core';
 
 // styles
-import { NavContainer, NavWrapper , StyledLink, NavTitle} from '../styled/NavStyles';
+import { NavContainer, NavWrapper , StyledLink, NavTitle} from '../styled/navigation/NavStyles';
 import { Logo } from '../component-library/logo';
 import { floralWhiteLite } from '../styled/colors';
 

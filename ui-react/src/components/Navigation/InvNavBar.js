@@ -4,7 +4,8 @@ import { useOktaAuth } from '@okta/okta-react';
 import { Button } from '@material-ui/core';
 import ShoppingCartSharpIcon from '@material-ui/icons/ShoppingCartSharp';
 import { Logo } from '../component-library/logo';
-import { StyledLink } from '../styled/NavStyles';
+import { StyledLink } from '../styled/navigation/NavStyles';
+import { InvNavContainer, UserActionDiv, LogoDiv } from '../styled/navigation/InvNavStyles';
 
 const InvNav = () => {
     const history = useHistory();
@@ -14,12 +15,13 @@ const InvNav = () => {
         authService.logout('/');
     };
     return(
-        <div>
-            <a href="/">
+        <InvNavContainer>
+            <LogoDiv onClick={() => history.push("/")}>
                 <Logo  />
-            </a>
-            <ShoppingCartSharpIcon />
-                {/* Need a better way to verify a user is logged in */}
+            </LogoDiv>
+            <UserActionDiv>
+                <ShoppingCartSharpIcon className="cart-icon" />
+                {/* Need a better way to verify a user is logged in? */}
                 { authState.isPending ?
                     <div>Loading authentication</div>
                 :
@@ -34,7 +36,8 @@ const InvNav = () => {
                     </>
                 )
                 }
-        </div>
+            </UserActionDiv>
+        </InvNavContainer>
     );
 };
 

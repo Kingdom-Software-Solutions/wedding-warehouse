@@ -9,7 +9,7 @@ import {
     jon,
     acadia,
     accentColor
-} from './colors'
+} from '../colors'
 
 export const NavContainer = styled.div`
     display: flex;
@@ -25,6 +25,9 @@ export const NavContainer = styled.div`
         color: ${floralWhiteLite};
         font-family: 'Ledger', serif;
     }
+    .okta-cta:hover {
+        color: ${pinkLady}
+    }
 
 `;
 
@@ -34,7 +37,7 @@ export const NavWrapper = styled.nav`
     align-items: center;
     width: 40%;
     a:hover {
-        color: ${mainColor}
+        color: ${pinkLady}
     }
 `;
 
