@@ -6,12 +6,18 @@ import {
     floralWhiteLite,
     jon,
     acadia
-} from './colors';
+} from '../colors';
 
 
 export const InvPageContainer = styled.div`
     display: flex;
     flex-direction: column;
+`;
+
+export const InvPageTitle = styled.h2`
+    color: ${spicyMix};
+    font-size: 3rem;
+    margin-top: 0;
 `;
 
 export const MappedItems = styled.div`
@@ -29,13 +35,12 @@ export const ItemDiv = styled.div`
 // box in the images
 export const ImgContainer = styled.div`
     max-width: 100%;
+    max-height: 100%;
 `;
 
 export const StyledImg = styled.img`
-    max-width: 100%;
-    max-height: 100%;
-    height: 200px;
-    width: 200px;
+    height: 300px;
+    width: 300px;
     object-fit: contain;
 `;
 

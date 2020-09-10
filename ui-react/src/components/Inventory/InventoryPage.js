@@ -15,8 +15,9 @@ import {
     ImgContainer,
     StyledImg,
     DetailsContainer,
-    ActionContainer
-} from '../styled/InvPageStyles'
+    ActionContainer,
+    InvPageTitle
+} from '../styled/inventory/InvPageStyles'
 import { DeleteWithIcon } from '../material-ui/Delete';
 import { EditWithIcon } from '../material-ui/Update';
 import { TextField } from '@material-ui/core';
@@ -76,7 +77,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
             {/* Add button to suggestion form (stretch) */}
-            <h2>Inventory</h2>
+            <InvPageTitle>Inventory</InvPageTitle>
             { superUser ? 
                 <>
                     <Button
@@ -90,7 +91,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                 :
                 null
             }
-            {/* Add loading bar when inventory not showing */}
+            {/* Add loading bar when inventory not showing 👇 */}
             <MappedItems>
             {items.map(item =>{
                 return ( 
@@ -106,7 +107,11 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                         </ImgContainer>
                         <DetailsContainer>
                             <h3>{item.itemName}</h3>
-                            <p>{item.description}</p>
+                            {item.isCustomizable ? 
+                            <p>Customizable</p>
+                            :
+                            null
+                            }
                             {/* add customizable with "i" icon */}
                             <span>Rent per Day: ${item.rentalRate}</span>
                             {/* <span>Buy ${item.buyNow}</span> */}
@@ -115,13 +120,8 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                                   <TextField 
                                   label="Edit Item Name" name="itemName"
                                   onChange={handleChanges} />
-                                  <TextField                     id="standard-multiline-flexible"
-                                  label="Description"
-                                  multiline
-                                  rowsMax={4} 
-                                  name="description"
-                                  onChange={handleChanges} />
-                                  <TextField                     label="$ Rental Rate"
+                                  <TextField                     
+                                  label="$ Rental Rate"
                                   name="rentalRate" 
                                   type="number"
                                   onChange={handleChanges} />
@@ -135,11 +135,6 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                             }
                         </DetailsContainer>
                         <ActionContainer>
-                            {item.isAvailable ?
-                            <Button onClick={() => history.push(`/reserve/item/${item.id}`)}>Reserve Now</Button>
-                            :
-                            <Button disabled>Unavailable</Button>                            
-                            }
                             <Button href={`inventory/item/${item.id}`}>See More</Button>
                         </ActionContainer>
                         { superUser && !toggleEdit ? 
