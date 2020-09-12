@@ -34,14 +34,13 @@ export const ItemDiv = styled.div`
 `;
 // box in the images
 export const ImgContainer = styled.div`
-    max-width: 100%;
-    max-height: 100%;
+    object-fit: contain;
 `;
 
 export const StyledImg = styled.img`
-    height: 300px;
+    height: 200px;
     width: 300px;
-    object-fit: contain;
+    border-radius: 5%;
 `;
 
 export const DetailsContainer = styled.div`
