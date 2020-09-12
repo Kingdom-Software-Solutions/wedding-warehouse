@@ -5,7 +5,16 @@ import { getAllItems, deleteItem, updateItem } from '../../redux/actions/warehou
 import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
+import { noImg } from '../../assets/imageAssets';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { DeleteWithIcon } from '../material-ui/Delete';
+import { EditWithIcon } from '../material-ui/Update';
+import { TextField } from '@material-ui/core';
+import { StyledForm } from '../styled/AddInvStyles';
+import { parseJwt } from '../../utils/parseJwt';
 
+import InvNav from '../Navigation/InvNavBar';
 
 // page styles
 import {
@@ -16,21 +25,15 @@ import {
     StyledImg,
     DetailsContainer,
     ActionContainer,
-    InvPageTitle
+    InvPageTitle,
 } from '../styled/inventory/InvPageStyles'
-import { DeleteWithIcon } from '../material-ui/Delete';
-import { EditWithIcon } from '../material-ui/Update';
-import { TextField } from '@material-ui/core';
-import { StyledForm } from '../styled/AddInvStyles';
-import { parseJwt } from '../../utils/parseJwt';
-import InvNav from '../Navigation/InvNavBar';
+
 
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
 const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const history = useHistory();
     const today = new Date(); // used to check if items are ready today
-    const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false); 
 
@@ -97,6 +100,9 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                 return ( 
                     <ItemDiv key={item.id}>
                         <ImgContainer>
+                            <Badge anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                            badgeContent={<AddCircleIcon fontSize="large" className="add-cart"/>}
+                            >
                             {item.mainImgUrl ?
                             <StyledImg src={item.mainImgUrl}
                             alt="item image"/>
@@ -104,6 +110,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                             <StyledImg src={noImg}
                             alt="item image"/>
                             }
+                            </Badge>
                         </ImgContainer>
                         <DetailsContainer>
                             <h3>{item.itemName}</h3>

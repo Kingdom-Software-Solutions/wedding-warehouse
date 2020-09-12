@@ -19,6 +19,7 @@ export const InvNavContainer = styled.div`
     // override basic logo styles 
     #logo{
         font-size: 2rem;
+        font-weight: bold;
         color: ${spicyMix};
     }
     .okta-cta {

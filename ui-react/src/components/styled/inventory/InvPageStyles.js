@@ -34,14 +34,23 @@ export const ItemDiv = styled.div`
 `;
 // box in the images
 export const ImgContainer = styled.div`
+    max-height: 100%;
+    max-width: 100%;
     object-fit: contain;
+    .add-cart {
+        color: ${pinkLady}
+    }
 `;
 
 export const StyledImg = styled.img`
-    height: 200px;
-    width: 300px;
+    max-height: 100%;
+    max-width: 100%;
+    height: 12vw;
+    width: 20vw;
+    margin: 0 auto;
     border-radius: 5%;
 `;
+
 
 export const DetailsContainer = styled.div`
     display: flex;
