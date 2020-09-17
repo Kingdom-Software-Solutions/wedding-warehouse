@@ -28,7 +28,6 @@ export const NavContainer = styled.div`
     .okta-cta:hover {
         color: ${pinkLady}
     }
-
 `;
 
 export const NavWrapper = styled.nav`

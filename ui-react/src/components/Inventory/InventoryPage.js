@@ -26,6 +26,9 @@ import {
     DetailsContainer,
     ActionContainer,
     InvPageTitle,
+    ItemName,
+    RentRate,
+    CustomizableItem
 } from '../styled/inventory/InvPageStyles'
 
 
@@ -113,14 +116,14 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                             </Badge>
                         </ImgContainer>
                         <DetailsContainer>
-                            <h3>{item.itemName}</h3>
+                            <ItemName>{item.itemName}</ItemName>
                             {item.isCustomizable ? 
-                            <p>Customizable</p>
+                            <CustomizableItem>Customizable</CustomizableItem>
                             :
                             null
                             }
                             {/* add customizable with "i" icon */}
-                            <span>Rent per Day: ${item.rentalRate}</span>
+                            <RentRate>Rent per Day: ${item.rentalRate}</RentRate>
                             {/* <span>Buy ${item.buyNow}</span> */}
                             {toggleEdit ? 
                               <StyledForm onSubmit={handleUpdate}>

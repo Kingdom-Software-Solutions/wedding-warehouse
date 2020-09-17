@@ -5,7 +5,8 @@ import {
     floralWhite,
     floralWhiteLite,
     jon,
-    acadia
+    acadia,
+    success
 } from '../colors';
 
 
@@ -55,6 +56,7 @@ export const StyledImg = styled.img`
 export const DetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     text-align: center;
     margin-bottom: 5%;
 `;
@@ -63,4 +65,21 @@ export const ActionContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 5%;
+`;
+
+export const ItemName = styled.h3`
+    font-size: 1.25rem;
+`;
+
+export const RentRate = styled.p`
+    font-size: 1.35rem;
+    font-weight: bold;
+    color: ${spicyMix};
+`;
+
+export const CustomizableItem = styled.p`
+    font-size: .75rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: ${success};
 `;
