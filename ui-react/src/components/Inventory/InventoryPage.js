@@ -4,8 +4,18 @@ import { connect } from 'react-redux';
 import { getAllItems, deleteItem, updateItem } from '../../redux/actions/warehouseActions';
 import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
+import Customizable from '../material-ui/CustomizablePopover';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
+import { noImg } from '../../assets/imageAssets';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { DeleteWithIcon } from '../material-ui/Delete';
+import { EditWithIcon } from '../material-ui/Update';
+import { TextField } from '@material-ui/core';
+import { StyledForm } from '../styled/AddInvStyles';
+import { parseJwt } from '../../utils/parseJwt';
 
+import InvNav from '../Navigation/InvNavBar';
 
 // page styles
 import {
@@ -15,20 +25,20 @@ import {
     ImgContainer,
     StyledImg,
     DetailsContainer,
-    ActionContainer
-} from '../styled/InvPageStyles'
-import { DeleteWithIcon } from '../material-ui/Delete';
-import { EditWithIcon } from '../material-ui/Update';
-import { TextField } from '@material-ui/core';
-import { StyledForm } from '../styled/AddInvStyles';
-import { parseJwt } from '../../utils/parseJwt';
+    ActionContainer,
+    InvPageTitle,
+    ItemName,
+    RentRate,
+    CustomizableDiv,
+    RentDiv,
+    NullCustomizable,
+} from '../styled/inventory/InvPageStyles'
 
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
 const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const history = useHistory();
     const today = new Date(); // used to check if items are ready today
-    const noImg = 'https://res.cloudinary.com/kss-image-cloud/image/upload/v1594874741/no-image_zrmqjk.png' // move this out into it's own export so it can be reused
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false); 
 
@@ -69,10 +79,13 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     }, [authState, authService, superUser, reload]);
 
     return(
+        <>
+        <InvNav />
         <InvPageContainer>
             {/* Add dropdown filter by department (stretch) */}
             {/* Add search to filter by item (stretch) */}
             {/* Add button to suggestion form (stretch) */}
+            <InvPageTitle>Inventory</InvPageTitle>
             { superUser ? 
                 <>
                     <Button
@@ -86,12 +99,15 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                 :
                 null
             }
-            {/* Add loading bar when inventory not showing */}
+            {/* Add loading bar when inventory not showing 👇 */}
             <MappedItems>
             {items.map(item =>{
                 return ( 
                     <ItemDiv key={item.id}>
                         <ImgContainer>
+                            <Badge anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                            badgeContent={<AddCircleIcon fontSize="large" className="add-cart"/>}
+                            >
                             {item.mainImgUrl ?
                             <StyledImg src={item.mainImgUrl}
                             alt="item image"/>
@@ -99,25 +115,31 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                             <StyledImg src={noImg}
                             alt="item image"/>
                             }
+                            </Badge>
                         </ImgContainer>
                         <DetailsContainer>
-                            <h3>{item.itemName}</h3>
-                            <p>{item.description}</p>
-                            {/* add customizable with "i" icon */}
-                            <span>Rent per Day: ${item.rentalRate}</span>
-                            {/* <span>Buy ${item.buyNow}</span> */}
+                            <ItemName>{item.itemName}</ItemName>
+                            <CustomizableDiv>
+                                {item.isCustomizable ? 
+                                <>
+                                <Customizable />
+                                </>
+                                :
+                                // needs to stay empty for styling
+                                <NullCustomizable>Not Customizable</NullCustomizable>
+                                }
+                            </CustomizableDiv>
+                            <RentDiv>
+                                <RentRate>Rent per Day: ${item.rentalRate}</RentRate>
+                                {/* <span>Buy ${item.buyNow}</span> */}
+                            </RentDiv>
                             {toggleEdit ? 
                               <StyledForm onSubmit={handleUpdate}>
                                   <TextField 
                                   label="Edit Item Name" name="itemName"
                                   onChange={handleChanges} />
-                                  <TextField                     id="standard-multiline-flexible"
-                                  label="Description"
-                                  multiline
-                                  rowsMax={4} 
-                                  name="description"
-                                  onChange={handleChanges} />
-                                  <TextField                     label="$ Rental Rate"
+                                  <TextField                     
+                                  label="$ Rental Rate"
                                   name="rentalRate" 
                                   type="number"
                                   onChange={handleChanges} />
@@ -130,14 +152,9 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                                 null
                             }
                         </DetailsContainer>
-                        <ActionContainer>
-                            {item.isAvailable ?
-                            <Button onClick={() => history.push(`/reserve/item/${item.id}`)}>Reserve Now</Button>
-                            :
-                            <Button disabled>Unavailable</Button>                            
-                            }
+                        {/* <ActionContainer>
                             <Button href={`inventory/item/${item.id}`}>See More</Button>
-                        </ActionContainer>
+                        </ActionContainer> */}
                         { superUser && !toggleEdit ? 
                             <ActionContainer>
                                 <EditWithIcon onClick={()=>{
@@ -157,6 +174,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
             })}
             </MappedItems>
         </InvPageContainer>
+        </>
     )
 };
 

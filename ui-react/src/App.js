@@ -4,7 +4,7 @@ import { parseJwt } from './utils/parseJwt';
 import './App.css';
 import { LoginCallback, SecureRoute, useOktaAuth } from '@okta/okta-react';
 // secure route eliminates the need for Private Route
-import NavBar from './components/NavBar';
+import NavBar from './components/Navigation/NavBar';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register'
 import LandingPage from './components/Home/LandingPage';
@@ -13,11 +13,12 @@ import ItemPage from './components/Inventory/ItemPage';
 import AddInventory from './components/Inventory/AddInventory';
 import OktaProfile from './components/Users/OktaProfile';
 import ReserveItem from './components/Inventory/ReserveItem';
+import { AppWrapper } from './components/styled/AppStyles';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
+    <AppWrapper className="App">
+      {/* <NavBar /> */}
       <Route exact path="/" component={LandingPage} />
       {/* Okta Path 👇 */}
       <Route path="/implicit/callback" component={LoginCallback} />
@@ -28,7 +29,7 @@ function App() {
       <Route exact path="/inventory/item/:id" component={ItemPage} />
       <Route exact path="/reserve/item/:id" component={ReserveItem} />
       <SecureRoute exact path="/profile" component={OktaProfile} />
-    </div>
+    </AppWrapper>
   );
 }
 

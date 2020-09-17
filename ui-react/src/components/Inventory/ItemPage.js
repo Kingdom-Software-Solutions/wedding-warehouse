@@ -6,15 +6,13 @@ import { parseJwt } from '../../utils/parseJwt';
 import { getItem, deleteItem } from '../../redux/actions/warehouseActions';
 import Button from '@material-ui/core/Button';
 import { noImg } from '../../assets/imageAssets';
-import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, Customizable, PriceContainer, ActionContainer } from '../styled/ItemPageStyles';
+import { ItemPageContainer, ItemDiv, ItemImgContainer, ItemImg, ItemDetails, ActionsDiv, ItemName, Detail, PriceContainer, ActionContainer } from '../styled/ItemPageStyles';
 import ItemPageEdit from './ItemPageEdit';
 import { DeleteWithIcon } from '../material-ui/Delete';
 import { EditWithIcon } from '../material-ui/Update';
+import Customizable from '../material-ui/CustomizablePopover';
 
-
-// add function to handle reserve item
-
-// add tool tip for isCustomizable
+import InvNav from '../Navigation/InvNavBar';
 
 const ItemPage = () => {
     const { id } = useParams(); // params hook grabs the id of the item
@@ -44,6 +42,8 @@ const ItemPage = () => {
     };
 
     return (
+        <>
+        <InvNav />
         <ItemPageContainer>
             <Button className="back-btn" size="large" href="/inventory">Back</Button>
             <ItemDiv>
@@ -54,13 +54,13 @@ const ItemPage = () => {
                 <ItemDetails>
                     <Detail>{item.description}</Detail>
                     { item.isCustomizable ?
-                        <Customizable>Customizable</Customizable>
+                        <Customizable />
                         :
                         null
                     }
                     <PriceContainer>
                         <Detail>Rental Rate: ${item.rentalRate}</Detail>
-                        <Detail>Purchase: ${item.buyNow}</Detail>
+                        {/* <Detail>Purchase: ${item.buyNow}</Detail> */}
                     </PriceContainer>
                     {/* How should I show the quantity ? */}
                     <Detail>{item.quantity || "N/A"} units available</Detail>
@@ -100,6 +100,7 @@ const ItemPage = () => {
                 null
             }
         </ItemPageContainer>
+        </>
     )
 };
 
