@@ -56,8 +56,11 @@ export const StyledImg = styled.img`
 export const DetailsContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
     text-align: center;
+    line-height: 50%;
+    align-items: stretch;
+    // width: 100%;
+    margin-top: 15%;
     margin-bottom: 5%;
 `;
 
@@ -75,11 +78,43 @@ export const RentRate = styled.p`
     font-size: 1.35rem;
     font-weight: bold;
     color: ${spicyMix};
+    // tricky little hack along with line-height in the details div
+    // makes the details div even with each mapped item
+    padding-top: 2%;
 `;
 
 export const CustomizableItem = styled.p`
-    font-size: .75rem;
+    font-size: .85rem;
     margin-top: 0;
     margin-bottom: 0;
+    align-self: flex-end;
     color: ${success};
+
+`;
+
+export const CustomInfo = styled.span`
+
+`
+
+export const NullCustomizable = styled.p`
+    // crude hack to make items even, forgive me lol
+    // color matches the background
+    font-size: .7rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: ${floralWhite}
+`;
+
+export const CustomizableDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // info styling for customizable items
+    .custom:hover {
+        cursor: help;
+        color: ${spicyMix}
+    }
+`;
+
+export const RentDiv = styled.div`
 `;

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getAllItems, deleteItem, updateItem } from '../../redux/actions/warehouseActions';
 import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
+import Customizable from '../material-ui/CustomizablePopover';
 import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import { noImg } from '../../assets/imageAssets';
@@ -28,9 +29,10 @@ import {
     InvPageTitle,
     ItemName,
     RentRate,
-    CustomizableItem
+    CustomizableDiv,
+    RentDiv,
+    NullCustomizable,
 } from '../styled/inventory/InvPageStyles'
-
 
 
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
@@ -117,14 +119,20 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                         </ImgContainer>
                         <DetailsContainer>
                             <ItemName>{item.itemName}</ItemName>
-                            {item.isCustomizable ? 
-                            <CustomizableItem>Customizable</CustomizableItem>
-                            :
-                            null
-                            }
-                            {/* add customizable with "i" icon */}
-                            <RentRate>Rent per Day: ${item.rentalRate}</RentRate>
-                            {/* <span>Buy ${item.buyNow}</span> */}
+                            <CustomizableDiv>
+                                {item.isCustomizable ? 
+                                <>
+                                <Customizable />
+                                </>
+                                :
+                                // needs to stay empty for styling
+                                <NullCustomizable>Not Customizable</NullCustomizable>
+                                }
+                            </CustomizableDiv>
+                            <RentDiv>
+                                <RentRate>Rent per Day: ${item.rentalRate}</RentRate>
+                                {/* <span>Buy ${item.buyNow}</span> */}
+                            </RentDiv>
                             {toggleEdit ? 
                               <StyledForm onSubmit={handleUpdate}>
                                   <TextField 
