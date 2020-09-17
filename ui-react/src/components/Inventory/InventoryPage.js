@@ -152,9 +152,9 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                                 null
                             }
                         </DetailsContainer>
-                        <ActionContainer>
+                        {/* <ActionContainer>
                             <Button href={`inventory/item/${item.id}`}>See More</Button>
-                        </ActionContainer>
+                        </ActionContainer> */}
                         { superUser && !toggleEdit ? 
                             <ActionContainer>
                                 <EditWithIcon onClick={()=>{
