@@ -4,10 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Cart = () => {
     const history = useHistory();
-    
+    const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cartReducer.items)
+    console.log(cartItems)
     return(
         <div>
-            Cart
+            <h2>Your Cart</h2>
+            {cartItems.map(item => {
+                <div key={item.id}>
+                    <p>{item.itemName}</p>
+                    <p>{item.rental}</p>
+                </div>
+            })}
         </div>
     )
 };

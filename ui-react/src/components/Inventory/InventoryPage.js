@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { addCart } from '../../redux/actions/cartActions';
 import { getAllItems, deleteItem, updateItem } from '../../redux/actions/warehouseActions';
 import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
@@ -38,6 +39,7 @@ import {
 // this component uses connect to map state to props as opposed to the useDispatch and useSector hooks
 const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const history = useHistory();
+    const dispatch = useDispatch(); // refactor this page to use hook please
     const today = new Date(); // used to check if items are ready today
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false); 
@@ -65,6 +67,10 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
         updateItem(updateId, update) // dispatch call
         setToggleEdit(false);
         setReload(!reload)
+    };
+
+    const handleAddCart = (item) => {
+        dispatch(addCart(item))
     };
 
     useEffect(()=> {
@@ -107,6 +113,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
                         <ImgContainer>
                             <Badge anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             badgeContent={<AddCircleIcon fontSize="large" className="add-cart"/>}
+                            onClick={handleAddCart(item)}
                             >
                             {item.mainImgUrl ?
                             <StyledImg src={item.mainImgUrl}
