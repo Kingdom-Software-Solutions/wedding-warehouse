@@ -19,13 +19,15 @@ const Cart = props => {
             <span onClick={handleCloseCart}>X</span>
             <h2>Your Cart</h2>
             {cartItems.map(item => {
-                <>
-                <div key={item.id}>
-                    <p>{item.itemName}</p>
-                    <p>{item.rental}</p>
-                </div>
-                <span>X</span>
-                </>
+                return(
+                    <div key={item.id}>
+                    <div >
+                        <p>{item.itemName}</p>
+                        <p>{item.rental}</p>
+                    </div>
+                    <span>X</span>
+                    </div>
+                )
             })}
             <button>Clear Items</button>
             <button>Checkout</button>

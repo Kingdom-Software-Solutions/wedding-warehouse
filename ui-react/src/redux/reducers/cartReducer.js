@@ -8,12 +8,10 @@ import { initialState } from './cartInitialState';
 
 export const cartReducer = (state = initialState, action) => {
     const { type, payload } = action;
+    const { items } = state;
     switch(type){
         case ADD_ITEM:
-            return {
-                ...state,
-                items: items.push(payload)
-            }
+            items.push(payload)
         case REMOVE_ITEM:
             // should be handled in action or no? Start with this
             const updated = items.filter(item => item.id !== payload)

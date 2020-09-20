@@ -19,6 +19,11 @@ const InvNav = () => {
     const logout = async () => {
         authService.logout('/');
     };
+
+    const handleOpenCart = e => {
+        e.preventDefault();
+        setOpenCart(true)
+    }
     return(
         <InvNavContainer>
             <LogoDiv onClick={() => history.push("/")}>
@@ -26,10 +31,12 @@ const InvNav = () => {
             </LogoDiv>
             <UserActionDiv>
             {openCart ?
-                <Cart />
+                <Cart openCart={openCart} setOpenCart={setOpenCart} />
                 :
                 <Badge badgeContent={0} color="primary">
-                    <ShoppingCartSharpIcon className="cart-icon" />
+                    <ShoppingCartSharpIcon
+                    className="cart-icon"
+                    onClick={handleOpenCart} />
                 </Badge>
             }
                 {/* Need a better way to verify a user is logged in? */}

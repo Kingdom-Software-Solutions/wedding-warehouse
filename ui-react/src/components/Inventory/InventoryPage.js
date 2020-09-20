@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
-import { addCart } from '../../redux/actions/cartActions';
+import { addToCart } from '../../redux/actions/cartActions';
 import { getAllItems, deleteItem, updateItem } from '../../redux/actions/warehouseActions';
 import { useOktaAuth } from '@okta/okta-react';
 import AddIcon from '@material-ui/icons/Add';
@@ -69,8 +69,10 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
         setReload(!reload)
     };
 
-    const handleAddCart = (item) => {
-        dispatch(addCart(item))
+    const handleAddCart = item => () => {
+        // pass the item in the first function then call it 
+        // keeps the dispatch but running on mount
+        dispatch(addToCart(item))
     };
 
     useEffect(()=> {
