@@ -5,24 +5,16 @@ import { removeFromCart, clearCart } from '../../redux/actions/cartActions';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
 import { CartContainer, TopBar } from '../styled/navigation/CartStyles';
+import { calculateTotal } from '../../utils/calculateTotal';
 
 const Cart = props => {
     const history = useHistory();
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cartReducer.items)
-    // formats currency string for total
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2
-      });
-      const [total, setTotal] = useState(formatter.format(0));
+    const [total, setTotal] = useState("$0.00");
 
     useEffect(() => {
-        // dynamically set the total
-        let add = 0.00;
-        cartItems.forEach(item => add += item.rentalRate);
-        setTotal(formatter.format(add))
+        setTotal(calculateTotal(cartItems))
     }, [cartItems])
 
     // add event handlers to remove item and clear cart 
