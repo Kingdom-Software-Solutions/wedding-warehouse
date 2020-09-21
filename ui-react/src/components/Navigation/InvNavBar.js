@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 import { Button } from '@material-ui/core';
 import ShoppingCartSharpIcon from '@material-ui/icons/ShoppingCartSharp';
@@ -8,11 +9,13 @@ import { Logo } from '../component-library/logo';
 import { StyledLink } from '../styled/navigation/NavStyles';
 import { InvNavContainer, UserActionDiv, LogoDiv } from '../styled/navigation/InvNavStyles';
 import Cart from './Cart';
+import { cartReducer } from '../../redux/reducers/cartReducer';
 
 
 
 const InvNav = () => {
     const history = useHistory();
+    const badgeCount = useSelector(state => state.cartReducer.items.length)
     const [openCart, setOpenCart] = useState(false)
     const { authState, authService } = useOktaAuth();
     const login = () => authService.login("/inventory")
@@ -24,6 +27,7 @@ const InvNav = () => {
         e.preventDefault();
         setOpenCart(true)
     }
+
     return(
         <InvNavContainer>
             <LogoDiv onClick={() => history.push("/")}>
@@ -33,7 +37,7 @@ const InvNav = () => {
             {openCart ?
                 <Cart openCart={openCart} setOpenCart={setOpenCart} />
                 :
-                <Badge badgeContent={0} color="primary">
+                <Badge badgeContent={badgeCount} color="primary">
                     <ShoppingCartSharpIcon
                     className="cart-icon"
                     onClick={handleOpenCart} />
