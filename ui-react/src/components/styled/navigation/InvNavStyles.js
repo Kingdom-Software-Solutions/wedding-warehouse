@@ -27,11 +27,17 @@ export const InvNavContainer = styled.div`
         font-family: 'Ledger', serif;
     }
     .cart-icon {
-        // space cart out
-        margin: 0 2%;
+        // fixed to mirror cart popout but both can be changed depending on feedback
+        // position: fixed;
+        // z-index: 10;
+        // top: 8.5%;
         color: ${spicyMix}  
     }
 
+`;
+
+export const CartDiv = styled.div`
+    margin-left: 5%;
 `;
 
 export const LogoDiv = styled.div`

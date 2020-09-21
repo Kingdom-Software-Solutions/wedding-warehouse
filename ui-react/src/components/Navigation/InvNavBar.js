@@ -7,7 +7,7 @@ import ShoppingCartSharpIcon from '@material-ui/icons/ShoppingCartSharp';
 import Badge from '@material-ui/core/Badge';
 import { Logo } from '../component-library/logo';
 import { StyledLink } from '../styled/navigation/NavStyles';
-import { InvNavContainer, UserActionDiv, LogoDiv } from '../styled/navigation/InvNavStyles';
+import { InvNavContainer, UserActionDiv, LogoDiv, CartDiv } from '../styled/navigation/InvNavStyles';
 import Cart from './Cart';
 import { cartReducer } from '../../redux/reducers/cartReducer';
 
@@ -34,15 +34,6 @@ const InvNav = () => {
                 <Logo  />
             </LogoDiv>
             <UserActionDiv>
-            {openCart ?
-                <Cart openCart={openCart} setOpenCart={setOpenCart} />
-                :
-                <Badge badgeContent={badgeCount} color="primary">
-                    <ShoppingCartSharpIcon
-                    className="cart-icon"
-                    onClick={handleOpenCart} />
-                </Badge>
-            }
                 {/* Need a better way to verify a user is logged in? */}
                 { authState.isPending ?
                     <div>Loading authentication</div>
@@ -58,6 +49,17 @@ const InvNav = () => {
                     </>
                 )
                 }
+                <CartDiv>
+                {openCart ?
+                <Cart className="cart-icon" openCart={openCart} setOpenCart={setOpenCart} />
+                :
+                <Badge badgeContent={badgeCount} color="primary">
+                    <ShoppingCartSharpIcon
+                    className="cart-icon"
+                    onClick={handleOpenCart} />
+                </Badge>
+                }
+                </CartDiv>
             </UserActionDiv>
         </InvNavContainer>
     );
