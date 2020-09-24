@@ -18,7 +18,6 @@ const Cart = props => {
     }, [cartItems])
 
     // add event handlers to remove item and clear cart 
-    // INVESTIGATE REDUX PERSIST TO KEEP ITEMS IN CART EVEN AFTER REFRESH
     const handleCloseCart = e => {
         props.setOpenCart(false)
     }
@@ -47,7 +46,7 @@ const Cart = props => {
             })}
             <p>Total per day: {total}</p>
             <button onClick={handleClearCart}>Clear Items</button>
-            <button>Checkout</button>
+            <button onClick={() => history.push("/checkout")}>Checkout</button>
         </CartContainer>
     )
 };

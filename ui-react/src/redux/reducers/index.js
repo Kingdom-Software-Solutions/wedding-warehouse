@@ -10,6 +10,7 @@ import { cartReducer } from './cartReducer';
 const persistConfig = {
     key: 'root',
     storage,
+    // might be able to add okta user state to only make one call and make code more DRY for okta
     whitelist: ['cartReducer'] //Add any new reducers to this array for perisitence to work
 }
 
