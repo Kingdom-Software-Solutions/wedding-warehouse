@@ -17,16 +17,28 @@ const Checkout = () => {
     const cart = useSelector(state => state.cartReducer.items)
     const [rentStart, setRentStart] = useState();
     const [rentEnd, setRentEnd] = useState();
-    const [reserveUser, setReserveUser] = useState(activeUser)
+    const [reserveUser, setReserveUser] = useState(activeUser || {
+        renterFirstName: "",
+        renterLastName: "",
+        renterEmail: "",        
+    })
     const [total, setTotal] = useState("$0.00");
 
     useEffect(() => {
        // pull that items reservations and check them, if there is one, grey out the item and remove it's rent per day from the total
-            // build a utility function to do this and run here so we don't bloat this component => in /utils/checkAvailability
+            // build a utility OR CUSTOM HOOK? function to do this and run here so we don't bloat this component => in /utils/checkAvailability
             // THIS SHOULD LIVE ON THE INVENTORY PAGE AND SAVE USERS FROM ADDING THINGS THAT WON'T BE AVAILABLE. 
             // IF THIS CODE IS STILL HERE AFTER THERE IS A MODAL ON INVENTORY PAGE LOAD ASKING FOR DATE, SOMETHING IS WRONG. KEEP DATE IN STATE
         setTotal(calculateTotal(cart))
-    }, [cart, rentStart, rentEnd])
+    }, [cart, rentStart, rentEnd]); // rent start and rentEnd will rerender price if item is unavailable
+
+    const handleChanges = e => {
+        e.preventDefault();
+        setReserveUser({
+            ...reserveUser,
+            [e.target.name]: e.target.value
+        })
+    }
 
     // Date and Time change handlers
     const onStartChange = (e) =>{
@@ -53,7 +65,9 @@ const Checkout = () => {
         e.preventDefault();
         // add reserve item dispatch
         // needs to match BE table => exception is id which will be parsed from cart
+        console.log(`RENT START: ${rentStart} and  RENT END: ${rentEnd} on submit`)
         let newReservation = reserveUser;
+        console.log(newReservation)
         newReservation.rentDate = rentStart;
         newReservation.returnDate = rentEnd;
         newReservation.items = cart; // pass an array to parse in BE
@@ -66,12 +80,24 @@ const Checkout = () => {
     const handleBack = () => {
         window.history.back()
     };
-
+    console.log(rentStart, rentEnd)
     console.log(reserveUser)
     return(
         <div>
             <a onClick={handleBack}>Back</a>
             <h2>Checkout</h2>
+            { !activeUser ?
+                <> 
+                    <label>First Name:</label>
+                    <input name="renterFirstName" onChange={handleChanges} />
+                    <label>Last Name: </label>
+                    <input name="renterLastName" onChange={handleChanges} />
+                    <label>Email: </label>
+                    <input name="renterEmail" type="email" onChange={handleChanges} />
+                </>
+            :
+                null
+            }
             <div className='rent-dates'>
                 <label>Pick-up Date</label>
                 <input type="date" onChange={onStartChange} />

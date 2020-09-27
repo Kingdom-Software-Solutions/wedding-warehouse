@@ -9,9 +9,9 @@ const Connect = Models.ResInvConnect
 
 // make reservation (Checkout)
 reservation.post("/", (req, res) => {
-    // receiving an array of items
-    const { items } = req.body;
-    console.log("ITEMS", items)
+ 
+    const { items } = req.body; // items in user cart from FE
+
     const reservation = {
         renterFirstName: req.body.renterFirstName,
         renterLastname: req.body.renterLastName,
@@ -23,19 +23,13 @@ reservation.post("/", (req, res) => {
     // insert the new reservation to db
     Reserve.insert(reservation)
     .then(reservation => {
-        // receiving an array of items
-        // tie together reservation and each individual item using ids
-        let connection = {
-            reservationsId: reservation.id
-        }
         console.log("RESERVATION", reservation)
-        // const connection = {
-        //     reservationsId: reservation.id,
-        //     inventoryId: itemId
-        // };
         // for each item in array => add id and create connection
         items.forEach(item => {
-            connection.inventoryId = item.id;
+            let connection = {
+                reservationsId: reservation.id,
+                inventoryId: item.id
+            }
             console.log("connected object", connection)
             // begin connect
             Connect.insert(connection)
@@ -54,6 +48,8 @@ reservation.post("/", (req, res) => {
         res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})
     });
 });
+
+// get reservations by date range 😰
 
 
 // cancel reservation (patch or put)
