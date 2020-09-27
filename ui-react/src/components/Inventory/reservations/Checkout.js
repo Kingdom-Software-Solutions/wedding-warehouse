@@ -7,15 +7,17 @@ import { reserveItem } from '../../../redux/actions/reserveActions';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
 import { calculateTotal } from '../../../utils/calculateTotal';
+import { useGetUser } from '../../../okta/getOktaUser';
 
 const Checkout = () => {
     const { authState, authService } = useOktaAuth();
+    const activeUser = useGetUser()
     const history = useHistory()
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cartReducer.items)
     const [rentStart, setRentStart] = useState();
     const [rentEnd, setRentEnd] = useState();
-    const [reserveUser, setReserveUser] = useState()
+    const [reserveUser, setReserveUser] = useState(activeUser)
     const [newReservation, setNewReservation] = useState();
     const [total, setTotal] = useState("$0.00");
 
@@ -64,7 +66,9 @@ const Checkout = () => {
     };
     const handleBack = () => {
         window.history.back()
-    }
+    };
+
+    console.log(reserveUser)
     return(
         <div>
             <a onClick={handleBack}>Back</a>
