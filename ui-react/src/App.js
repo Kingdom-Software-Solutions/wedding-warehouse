@@ -26,7 +26,7 @@ function App() {
       <Route exact path="/inventory" component={InventoryPage} />
       <SecureRoute exact path="/inventory/addItem" component={AddInventory} />
       <Route exact path="/inventory/item/:id" component={ItemPage} />
-      <Route exact path="/checkout" component={Checkout} />
+      <Route path="/checkout" component={Checkout} />
       <SecureRoute exact path="/profile" component={OktaProfile} />
     </AppWrapper>
   );
