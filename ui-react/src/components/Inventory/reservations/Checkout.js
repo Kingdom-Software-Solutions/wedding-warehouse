@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
 import { removeFromCart, clearCart } from '../../../redux/actions/cartActions';
-import { reserveItem } from '../../../redux/actions/reserveActions';
+import { reserveItems } from '../../../redux/actions/reserveActions';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
 import { calculateTotal } from '../../../utils/calculateTotal';
@@ -18,7 +18,6 @@ const Checkout = () => {
     const [rentStart, setRentStart] = useState();
     const [rentEnd, setRentEnd] = useState();
     const [reserveUser, setReserveUser] = useState(activeUser)
-    const [newReservation, setNewReservation] = useState();
     const [total, setTotal] = useState("$0.00");
 
     useEffect(() => {
@@ -54,7 +53,7 @@ const Checkout = () => {
         e.preventDefault();
         // add reserve item dispatch
         // needs to match BE table => exception is id which will be parsed from cart
-        let newReservation = reserveUser
+        let newReservation = reserveUser;
         newReservation.rentDate = rentStart;
         newReservation.returnDate = rentEnd;
         newReservation.items = cart; // pass an array to parse in BE
@@ -62,7 +61,7 @@ const Checkout = () => {
             newReservation.userStatus = "Guest"
         }
         
-        dispatch(reserveItem(newReservation)) // change action to reservation
+        dispatch(reserveItems(newReservation)) // change action to reservation
     };
     const handleBack = () => {
         window.history.back()
