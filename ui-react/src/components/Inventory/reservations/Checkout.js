@@ -20,6 +20,7 @@ const Checkout = () => {
     const dates = useSelector(state => state.reserveReducer.dates);
     const conflicts = useSelector(state => state.reserveReducer.conflicts)
 
+    const today = new Date().toISOString().split('T')[0];
     const [rentStart, setRentStart] = useState(dates.pickUp);
     const [rentEnd, setRentEnd] = useState(dates.returnal);
     const [reserveUser, setReserveUser] = useState(activeUser || {
@@ -71,7 +72,7 @@ const Checkout = () => {
         newReservation.rentDate = rentStart;
         newReservation.returnDate = rentEnd;
         newReservation.items = cart; // pass an array to parse in BE
-        
+
         if(!authState.isAuthenticated){
             newReservation.userStatus = "Guest"
         }
@@ -105,9 +106,9 @@ const Checkout = () => {
             }
             <div className='rent-dates'>
                 <label>Pick-up Date</label>
-                <input type="date" onChange={onStartChange} value={rentStart} />
+                <input type="date" onChange={onStartChange} value={rentStart} min={today} />
                 <label>Return Date</label>
-                <input type="date" onChange={onEndChange} value={rentEnd} />
+                <input type="date" onChange={onEndChange} value={rentEnd} min={rentStart} />
                 <button onClick={handleCheckAvailability}>Check Availability</button>
             </div>
             
