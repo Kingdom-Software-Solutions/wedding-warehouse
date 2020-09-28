@@ -67,7 +67,7 @@ reservation.post("/availability/all", (req, res) => {
         const { start, end } = daterange;
         reservations.forEach(reservation => {
             // checks each reservation in db to see if there is a reservation in the desired daterange that conflicts (also checks return status)
-            let { rentStart, returnDate } = reservation
+            let { rentStart, returnDate, returned } = reservation
             let checkStart = moment(rentStart).isBetween(start, end)
             let checkEnd = moment(returnDate).isBetween(start, end)
             console.log(`checkStart ${checkStart}, checkEnd: ${checkEnd}`)

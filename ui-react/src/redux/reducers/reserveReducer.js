@@ -3,9 +3,9 @@ import {
     RESERVE_ITEM_SUCCESS,
     RESERVE_ITEM_FAILURE,
     SET_DATES,
-    RESERVE_AVAILABILITY_START,
-    RESERVE_AVAILABILITY_SUCCESS,
-    RESERVE_AVAILABILITY_FAILURE
+    CHECK_AVAILABILITY_START,
+    CHECK_AVAILABILITY_SUCCESS,
+    CHECK_AVAILABILITY_FAILURE
 } from '../actions/reserveActions';
 
 const initialState = {
@@ -46,18 +46,18 @@ export const reserveReducer = (state = initialState, action) => {
                 pickUp: start,
                 returnal: end
             }
-        case RESERVE_AVAILABILITY_START:
+        case CHECK_AVAILABILITY_START:
             return {
                 ...state,
                 isChecking: true
             }
-        case RESERVE_AVAILABILITY_SUCCESS:
+        case CHECK_AVAILABILITY_SUCCESS:
             return {
                 ...state,
                 isChecking: false,
                 conflicts: payload
             }
-        case RESERVE_AVAILABILITY_FAILURE:
+        case CHECK_AVAILABILITY_FAILURE:
             return {
                 ...state,
                 isChecking: false,

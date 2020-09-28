@@ -26,21 +26,21 @@ export const setReserveDates = (reserveStart, reserveEnd) => dispatch => {
 }
 
 // check item availability
-export const RESERVE_AVAILABILITY_START = 'RESERVE_ITEM_START';
-export const RESERVE_AVAILABILITY_SUCCESS = 'RESERVE_ITEM_SUCCESS';
-export const RESERVE_AVAILABILITY_FAILURE = 'RESERVE_ITEM_FAILURE';
+export const CHECK_AVAILABILITY_START = 'CHECK_AVAILABILITY_START';
+export const CHECK_AVAILABILITY_SUCCESS = 'CHECK_AVAILABILITY_SUCCESS';
+export const CHECK_AVAILABILITY_FAILURE = 'CHECK_AVAILABILITY_FAILURE';
 
 export const checkAvailability = (dateStart, dateEnd) => dispatch => {
     const daterange = {
         rentDate: dateStart,
         returnDate: dateEnd
     };
-    dispatch({ type: RESERVE_AVAILABILITY_START });
+    dispatch({ type: CHECK_AVAILABILITY_START });
     axiosWithEnv().post('/api/reservations/availability/all', daterange)
     .then(res => {
-        dispatch({ type: RESERVE_AVAILABILITY_SUCCESS, payload: res})
+        dispatch({ type: CHECK_AVAILABILITY_SUCCESS, payload: res})
     })
     .catch(err => {
-        dispatch({ type: RESERVE_AVAILABILITY_FAILURE})
+        dispatch({ type: CHECK_AVAILABILITY_FAILURE})
     })
 }
