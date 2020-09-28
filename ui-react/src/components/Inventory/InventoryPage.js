@@ -41,7 +41,6 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
     const history = useHistory();
     const dispatch = useDispatch(); // refactor this page to use hook please
     const cartContents = useSelector(state => state.cartReducer.items)
-    const today = new Date(); // used to check if items are ready today
     const { authState, authService } = useOktaAuth();
     const [superUser, setSuperUser] = useState(false); 
 

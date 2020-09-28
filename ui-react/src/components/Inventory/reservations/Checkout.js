@@ -15,8 +15,9 @@ const Checkout = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cartReducer.items)
-    const [rentStart, setRentStart] = useState();
-    const [rentEnd, setRentEnd] = useState();
+    const dates = useSelector(state => state.reserveReducer.dates);
+    const [rentStart, setRentStart] = useState(dates.pickUp);
+    const [rentEnd, setRentEnd] = useState(dates.returnal);
     const [reserveUser, setReserveUser] = useState(activeUser || {
         renterFirstName: "",
         renterLastName: "",
@@ -26,9 +27,10 @@ const Checkout = () => {
 
     useEffect(() => {
        // pull that items reservations and check them, if there is one, grey out the item and remove it's rent per day from the total
+       // SHOULD ADD A FINAL CHECK IN FINALIZE TO HANDLE CONFLICTS OF TWO PEOPLE TRYING TO RENT THE SAME THING AT THE SAME TIME
+    //    "/daterange/all" <-- reservation endpoint to get all reservations in daterange
             // build a utility OR CUSTOM HOOK? function to do this and run here so we don't bloat this component => in /utils/checkAvailability
             // THIS SHOULD LIVE ON THE INVENTORY PAGE AND SAVE USERS FROM ADDING THINGS THAT WON'T BE AVAILABLE. 
-            // IF THIS CODE IS STILL HERE AFTER THERE IS A MODAL ON INVENTORY PAGE LOAD ASKING FOR DATE, SOMETHING IS WRONG. KEEP DATE IN STATE
         setTotal(calculateTotal(cart))
     }, [cart, rentStart, rentEnd]); // rent start and rentEnd will rerender price if item is unavailable
 
@@ -57,10 +59,7 @@ const Checkout = () => {
         dispatch(clearCart())
     }
     const handleFinalize = e => {
-        // will eventually integrate with paypal or stripe to take online payments 
-        // mvp will just need to show a modal explaining what happens next and how to pay
-        // if logged in redirect user back to profile
-        // if guest, redirect back to inventory
+        // will eventually integrate with paypal or stripe to take online payments with a widget
         alert("Feature not complete")
         e.preventDefault();
         // add reserve item dispatch
@@ -74,8 +73,10 @@ const Checkout = () => {
         if(!authState.isAuthenticated){
             newReservation.userStatus = "Guest"
         }
-        
         dispatch(reserveItems(newReservation)) // change action to reservation
+        // Add modal logic to open here
+        // if logged in go to profile
+        // otherwise send guest to inventory
     };
     const handleBack = () => {
         window.history.back()
@@ -100,9 +101,9 @@ const Checkout = () => {
             }
             <div className='rent-dates'>
                 <label>Pick-up Date</label>
-                <input type="date" onChange={onStartChange} />
+                <input type="date" onChange={onStartChange} value={rentStart} />
                 <label>Return Date</label>
-                <input type="date" onChange={onEndChange} />
+                <input type="date" onChange={onEndChange} value={rentEnd} />
             </div>
             
             {cart.map(item =>{

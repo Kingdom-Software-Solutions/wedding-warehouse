@@ -52,7 +52,7 @@ reservation.post("/", (req, res) => {
 
 // get all reservations by date range 😰 may need to be a post
 // is there a better name for this endpoint?
-reservation.post("/daterange/all", (req, res) => {
+reservation.post("/availability/all", (req, res) => {
     // pass desired rent start and return
     const { rentDate, returnDate } = req.body;
     const daterange = {
