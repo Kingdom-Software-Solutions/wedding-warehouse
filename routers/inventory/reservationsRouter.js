@@ -1,6 +1,7 @@
 const reservation = require("express").Router();
 const heimdal = require("../middleware/oktaAuth")
 const Models = require("../helpers/models");
+const SpecialModels = require("./reservations-models");
 var moment = require('moment');
 
 // initalize db variables
@@ -68,14 +69,24 @@ reservation.post("/availability/all", (req, res) => {
         reservations.forEach(reservation => {
             // checks each reservation in db to see if there is a reservation in the desired daterange that conflicts (also checks return status)
             let { rentStart, returnDate, returned } = reservation
+            // THIS NEEDS TO BE FIXED TO CHECK THE SAME DAY NOT JUST INBETWEEN
             let checkStart = moment(rentStart).isBetween(start, end)
             let checkEnd = moment(returnDate).isBetween(start, end)
             console.log(`checkStart ${checkStart}, checkEnd: ${checkEnd}`)
             if( checkStart === true || checkEnd === true || returned === false ){
                 console.log("at least one of these was true")
-                inDateRange.push(reservation)
+                // grab all items in reservation
+                SpecialModels.findReservationItems(reservation.id)
+                .then(items => {
+                    console.log("IN DATE RANGE IN LOOP", inDateRange)
+                    inDateRange = inDateRange.concat(items)
+                })
+                .catch(err => {
+                    res.status(500).json({errorMessage: "Error getting reservations in daterange. This one's on us.", error: err})
+                })
             }
         })
+        console.log("IN DATE RANGE AT END", inDateRange)
         res.status(200).json(inDateRange)
     })
     .catch(err =>{

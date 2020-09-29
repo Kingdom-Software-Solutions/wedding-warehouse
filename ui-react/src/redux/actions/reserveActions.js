@@ -38,7 +38,7 @@ export const checkAvailability = (dateStart, dateEnd) => dispatch => {
     dispatch({ type: CHECK_AVAILABILITY_START });
     axiosWithEnv().post('/api/reservations/availability/all', daterange)
     .then(res => {
-        dispatch({ type: CHECK_AVAILABILITY_SUCCESS, payload: res})
+        dispatch({ type: CHECK_AVAILABILITY_SUCCESS, payload: res.data })
     })
     .catch(err => {
         dispatch({ type: CHECK_AVAILABILITY_FAILURE})

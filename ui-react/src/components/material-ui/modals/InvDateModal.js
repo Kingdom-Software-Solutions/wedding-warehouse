@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { checkAvailability } from '../../../redux/actions/reserveActions';
 import Modal from '@material-ui/core/Modal';
 
 function rand() {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal() {
+const InvDateModal = () => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -67,4 +68,6 @@ export default function SimpleModal() {
       </Modal>
     </div>
   );
-}
+};
+
+export default InvDateModal;

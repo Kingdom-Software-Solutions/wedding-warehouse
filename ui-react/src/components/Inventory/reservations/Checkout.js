@@ -19,7 +19,6 @@ const Checkout = () => {
     const cart = useSelector(state => state.cartReducer.items)
     const dates = useSelector(state => state.reserveReducer.dates);
     const conflicts = useSelector(state => state.reserveReducer.conflicts)
-
     const today = new Date().toISOString().split('T')[0];
     const [rentStart, setRentStart] = useState(dates.pickUp);
     const [rentEnd, setRentEnd] = useState(dates.returnal);
@@ -113,14 +112,24 @@ const Checkout = () => {
             </div>
             
             {cart.map(item =>{
-                return(
-                    <div key={item.id}>
-                        <img src={item.thumbnailUrl} alt="thumbnail" />
-                        <p>{item.itemName}</p>
-                        <p>{item.rentalRate}</p>
-                        <CancelIcon onClick={handleRemoveItem(item.id)} />
-                    </div>
-                )
+                console.log(conflicts, 'conflicts')
+                let inConflicts = conflicts.filter(conflict => conflict.id === item.id)
+                if(inConflicts.length > 0){
+                    return (
+                        <div>
+                            <p>{`${item.itemName} is not available in your date range`}</p>
+                        </div>
+                    )
+                } else{
+                    return(
+                        <div key={item.id}>
+                            <img src={item.thumbnailUrl} alt="thumbnail" />
+                            <p>{item.itemName}</p>
+                            <p>{item.rentalRate}</p>
+                            <CancelIcon onClick={handleRemoveItem(item.id)} />
+                        </div>
+                    )
+                }
             })}
             <p>Total per Day: {total}</p>
             <button onClick={handleClearCart}>Clear Items</button>

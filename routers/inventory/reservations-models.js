@@ -21,8 +21,15 @@ function findById(id) {
     .first();
 };
 
+function findReservationItems(id) {
+    return db('reservations').select("*")
+    .join('reservations_inventory', 'reservations.id', 'reservations_inventory.reservationsId')
+    .join('inventory', 'reservations_inventory.inventoryId', 'inventory.id').where("reservations.id", id)
+}
+
 module.exports ={
     findAll,
     connect,
+    findReservationItems
     // findById
 }
