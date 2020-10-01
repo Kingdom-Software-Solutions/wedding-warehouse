@@ -1,7 +1,7 @@
 const reservation = require("express").Router();
 const heimdal = require("../middleware/oktaAuth")
 const Models = require("../helpers/models");
-const SpecialModels = require("./reservations-models");
+const ReserveModels = require("./reservations-models");
 var moment = require('moment');
 
 // initalize db variables
@@ -51,8 +51,9 @@ reservation.post("/", (req, res) => {
     });
 });
 
-// get all reservations by date range 😰 may need to be a post
+// get all reservations by date range 😰 
 // is there a better name for this endpoint?
+// returns an array of item id's that are unavailable in that daterange
 reservation.post("/availability/all", (req, res) => {
     // pass desired rent start and return
     const { rentDate, returnDate } = req.body;
@@ -60,42 +61,37 @@ reservation.post("/availability/all", (req, res) => {
         start: rentDate,
         end: returnDate
     }
-    // get all reservations from table? that will be hefty, but I need something to parse. There will be a cart... If I get all of them, it may be slower but easier to refactor into the inventory page because that will need to check any and all reservations.
-    // get all the reservations and save them in a cache by date?
-    Reserve.find()
+    // have the endpoint return the date range 
+    let conflictingReservations = []
+    ReserveModels.findAllReserveItems()
     .then(reservations =>{
+        let itemCache = {} // cache to prevent saving duplicate items 
         let inDateRange = [] // memory to house reservations in daterange
+        
         const { start, end } = daterange;
+        let conflictedItemIds = []
         reservations.forEach(reservation => {
             // checks each reservation in db to see if there is a reservation in the desired daterange that conflicts (also checks return status)
             let { rentStart, returnDate, returned } = reservation
-            // THIS NEEDS TO BE FIXED TO CHECK THE SAME DAY NOT JUST INBETWEEN
-            let checkStart = moment(rentStart).isBetween(start, end)
-            let checkEnd = moment(returnDate).isBetween(start, end)
-            console.log(`checkStart ${checkStart}, checkEnd: ${checkEnd}`)
-            if( checkStart === true || checkEnd === true || returned === false ){
+            // This function is initialized at the bottom of this file
+            let reserveConflict = checkConflicts(rentStart, returnDate, start, end)
+            if( reserveConflict || returned === false ){
                 console.log("at least one of these was true")
                 // grab all items in reservation
-                SpecialModels.findReservationItems(reservation.id)
-                .then(items => {
-                    console.log("IN DATE RANGE IN LOOP", inDateRange)
-                    inDateRange = inDateRange.concat(items)
-                })
-                .catch(err => {
-                    res.status(500).json({errorMessage: "Error getting reservations in daterange. This one's on us.", error: err})
-                })
-            }
+                if(!(reservation.inventoryId in itemCache)){
+                    itemCache[reservation.inventoryId] = reservation.itemName
+                    conflictedItemIds.push(reservation.inventoryId)
+                }  
+            } 
         })
-        console.log("IN DATE RANGE AT END", inDateRange)
-        res.status(200).json(inDateRange)
+        console.log(conflictedItemIds)
+        // PASSES BACK AN ARRAY OF CONFLICTED ITEM IDS
+        res.status(200).json(conflictedItemIds)
     })
     .catch(err =>{
         console.log("ERROR GETTING RESERVATIONS", err)
         res.status(500).json({errorMessage: "Error getting reservations in daterange. This one's on us.", error: err})
     })
-        // save them in cache or list => prob list first
-        // for each reservation, see if the reservation start or end date is inbetween the dates passed
-        // if they are, add that reservation to a list to return
 })
 
 // get reservations of one item by daterange
@@ -103,5 +99,33 @@ reservation.post("/availability/all", (req, res) => {
 // get reservations of items in cart
 
 // cancel reservation (patch or put)
+
+
+// FUNCTIONS
+function checkConflicts(rentStart, returnDate, startDateRange, endDateRange){
+    console.log(`start date is between? ${moment(endDateRange).isBetween(rentStart, returnDate)} ...or the same? ${moment(rentStart).isSame(startDateRange)}`,  )
+
+    if(moment(startDateRange).isBetween(rentStart, returnDate) || moment(rentStart).isSame(startDateRange) || moment(endDateRange).isBetween(rentStart, returnDate) || moment(returnDate).isSame(endDateRange) ){
+        console.log("conflict worked")
+        return true
+    } else {
+        return false
+    }
+}
+
+function getConflicts(id){
+    let conflicts = [];
+    ReserveModels.findReservationItems(id)
+    .then(items => {
+        console.log("found items")
+        // conflicts.push(items)
+        // console.log(conflicts)
+    })
+    .catch(err => {
+        return `error getting conflicts ${err}`
+    })
+    console.log(`conflicts in funct ${conflicts}`)
+    return conflicts
+}
 
 module.exports = reservation

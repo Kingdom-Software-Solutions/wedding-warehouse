@@ -66,7 +66,7 @@ const Checkout = () => {
     const handleFinalize = e => {
         // will eventually integrate with paypal or stripe to take online payments with a widget
         e.preventDefault();
-        // NEED TO CHECK FOR CONFLICTS ONE LAST TIME HERE, PASS ERROR TO CHECKOUT MODAL IF THERE IS ONE
+        // ADD CHECK AVAILABILITY HERE
         let newReservation = reserveUser;
         newReservation.rentDate = rentStart;
         newReservation.returnDate = rentEnd;
@@ -81,6 +81,7 @@ const Checkout = () => {
         // post payment widget:
             // modal should say payment was successful then do redirect
     };
+    // ADD DISPATCH CLEAR CART HERE
     const handleBack = () => {
         window.history.back()
     };
@@ -113,7 +114,8 @@ const Checkout = () => {
             
             {cart.map(item =>{
                 console.log(conflicts, 'conflicts')
-                let inConflicts = conflicts.filter(conflict => conflict.id === item.id)
+                // getting an array from the BE of just the item ids
+                let inConflicts = conflicts.filter(conflict => conflict === item.id)
                 if(inConflicts.length > 0){
                     return (
                         <div>

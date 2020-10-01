@@ -21,6 +21,13 @@ function findById(id) {
     .first();
 };
 
+function findAllReserveItems(){
+    const reservation = db('reservations').select("reservations.rentStart", "reservations.returnDate", "inventory.id as inventoryId", "inventory.itemName")
+    .join('reservations_inventory', 'reservations.id', 'reservations_inventory.reservationsId')
+    .join('inventory', 'reservations_inventory.inventoryId', 'inventory.id')
+    return reservation
+}
+
 function findReservationItems(id) {
     return db('reservations').select("*")
     .join('reservations_inventory', 'reservations.id', 'reservations_inventory.reservationsId')
@@ -28,7 +35,7 @@ function findReservationItems(id) {
 }
 
 module.exports ={
-    findAll,
+    findAllReserveItems,
     connect,
     findReservationItems
     // findById
