@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { store, persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Security } from '@okta/okta-react';
 import { configOkta } from './okta/config-okta';
 import * as serviceWorker from './serviceWorker';
@@ -15,11 +16,13 @@ const config = configOkta;
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <Security {...config}>
-          <App />
-        </Security>
-      </Router>
+        <Router>
+          <PersistGate persistor={persistor}>
+            <Security {...config}>
+              <App />
+            </Security>
+          </PersistGate>
+        </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

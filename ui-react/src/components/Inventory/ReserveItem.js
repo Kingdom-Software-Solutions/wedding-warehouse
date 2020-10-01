@@ -1,4 +1,4 @@
-// RESERVE ITEM FORM
+// RESERVE ITEM FORM (DEPRECATED)(DO NOT DELETE UNTIL CHECKOUT IS BUILT)
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
