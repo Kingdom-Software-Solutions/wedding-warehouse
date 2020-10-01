@@ -1,6 +1,6 @@
 # Contributing
 
-THIS IS A TEMPLATE AND I HAVE NOT ESTABLISHED ANY OF THIS YET LOL GO NUTS JUST TELL ME WHAT YOU'RE CHANGING AND WHY. MAKE A BRANCH AND PR IT IS REALLY ALL I ASK.
+TL;DR => DON'T BE A JERK, SHARE MEMES, TELL ME WHAT YOU'RE CHANGING AND WHY. MAKE A BRANCH AND PR IT FOR APPROVALS IS REALLY ALL I ASK.
 
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change. 
@@ -39,6 +39,7 @@ include:
 * Gracefully accepting constructive criticism
 * Focusing on what is best for the community
 * Showing empathy towards other community members
+* Sharing good (and tasteful) memes
 
 Examples of unacceptable behavior by participants include:
 
@@ -75,7 +76,7 @@ further defined and clarified by project maintainers.
 ### Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at [INSERT EMAIL ADDRESS]. All
+reported by contacting the project team at [landonlewisturner@gmail.com]. All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
