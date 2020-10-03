@@ -9,7 +9,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { calculateTotal } from '../../../utils/calculateTotal';
 import { useGetUser } from '../../../okta/getOktaUser';
 import CheckoutModal from '../../material-ui/modals/CheckoutModal';
-import { BackLink, CheckoutContainer, CheckoutTitle, ConflictContainer, ConflictMessage, GuestFormContainer, CheckoutCartContainer, ReserveDateContainer, CheckoutItemContainer, CheckoutImageContainer, CheckoutInfoContainer, CheckoutItemImage, CheckoutItemName, CheckoutItemRate, FinalTotalPerDay, GuestLabel, GuestInput, DatePickerContainer, DateInput, DateLabel } from '../../styled/inventory/CheckoutStyles';
+import { BackLink, CheckoutContainer, CheckoutTitle, ConflictContainer, ConflictMessage, GuestFormContainer, CheckoutCartContainer, ReserveDateContainer, CheckoutItemContainer, CheckoutImageContainer, CheckoutInfoContainer, CheckoutItemImage, CheckoutItemName, CheckoutItemRate, FinalTotalPerDay, GuestLabel, GuestInput, DatePickerContainer, DateInput, DateLabel, GuestInputContainer, DateInputContainer, MasterInputContainer } from '../../styled/inventory/CheckoutStyles';
 import { Button } from '@material-ui/core';
 import { danger } from '../../styled/colors';
 
@@ -97,29 +97,42 @@ const Checkout = () => {
             <CheckoutTitle>Checkout</CheckoutTitle>
             {/* Login state is passed to the modal to determine redirect */}
             { finished ? <CheckoutModal loginState={authState.isAuthenticated} /> : null }
-            { !activeUser ?
-                // Added form div here due to rendering null if a registered user
-                // when adding validations, may be easier to do styled.form
-                <GuestFormContainer> 
-                    <GuestLabel>First Name:</GuestLabel>
-                    <GuestInput name="renterFirstName" onChange={handleChanges} />
-                    <GuestLabel>Last Name: </GuestLabel>
-                    <GuestInput name="renterLastName" onChange={handleChanges} />
-                    <GuestLabel>Email: </GuestLabel>
-                    <GuestInput name="renterEmail" type="email" onChange={handleChanges} />
-                </GuestFormContainer>
-            :
-                null
-            }
-            <ReserveDateContainer className='rent-dates'>
-                <DatePickerContainer>
-                    <DateLabel>Pick-up Date:</DateLabel>
-                    <DateInput type="date" onChange={onStartChange} value={rentStart} min={today} />
-                    <DateLabel>Return Date:</DateLabel>
-                    <DateInput type="date" onChange={onEndChange} value={rentEnd} min={rentStart} />
-                </DatePickerContainer>
-                <Button color="secondary" onClick={handleCheckAvailability}>Check Availability</Button>
-            </ReserveDateContainer>
+            <MasterInputContainer>
+                { !activeUser ?
+                    // Added form div here due to rendering null if a registered user
+                    // when adding validations, may be easier to do styled.form
+                    <GuestFormContainer> 
+                        <GuestInputContainer>
+                            <GuestLabel>First Name:</GuestLabel>
+                            <GuestInput name="renterFirstName" onChange={handleChanges} />
+                        </GuestInputContainer>
+                        <GuestInputContainer>
+                            <GuestLabel>Last Name: </GuestLabel>
+                            <GuestInput name="renterLastName" onChange={handleChanges} />
+                        </GuestInputContainer>
+                        <GuestInputContainer>
+                            <GuestLabel>Email: </GuestLabel>
+                            <GuestInput name="renterEmail" type="email" onChange={handleChanges} />
+                        </GuestInputContainer>
+                    </GuestFormContainer>
+                :
+                    null // should prob put users name here
+                }
+                <ReserveDateContainer className='rent-dates'>
+                    <DatePickerContainer>
+                        <DateInputContainer>
+                            <DateLabel>Pick-up Date:</DateLabel>
+                            <DateInput type="date" onChange={onStartChange} value={rentStart} min={today} />
+                        </DateInputContainer>
+                        <DateInputContainer>
+                            <DateLabel>Return Date:</DateLabel>
+                            <DateInput type="date" onChange={onEndChange} value={rentEnd} min={rentStart} />
+                        </DateInputContainer>
+                    </DatePickerContainer>
+
+                    <Button className="availablity-button" color="secondary" onClick={handleCheckAvailability}>Check Availability</Button>
+                </ReserveDateContainer>
+            </MasterInputContainer>
             <CheckoutCartContainer>
                 {cart.map(item =>{
                     console.log(conflicts, 'conflicts')
@@ -128,8 +141,8 @@ const Checkout = () => {
                     if(inConflicts.length > 0){
                         return (
                             <ConflictContainer>
-                                <ConflictMessage>{`${item.itemName} is not available in your date range`}</ConflictMessage>
-                                <CancelIcon color={danger} onClick={handleRemoveItem(item.id)} />
+                                <ConflictMessage>{`${item.itemName} is not available in this date range`}</ConflictMessage>
+                                <CancelIcon htmlColor={danger} onClick={handleRemoveItem(item.id)} />
                             </ConflictContainer>
                         )
                     } else{

@@ -21,19 +21,40 @@ export const BackLink = styled.div`
 `;
 
 export const CheckoutTitle = styled.h2`
+    color: ${spicyMix};
+    font-size: 3rem;
+`;
 
+export const MasterInputContainer = styled.div`
+    width: 80%;
+    margin: 0 auto;
 `;
 
 export const GuestFormContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-bottom: 1%;
+`;
 
+export const GuestInputContainer = styled.div`
+    display: flex;
+    width: 605px;
+    margin: 0 auto;
+    margin-bottom: 1%;
 `;
 
 export const GuestLabel = styled.label`
-
+    white-space: nowrap; // keeps the name on one line
+    text-align: left;
+    margin-right: 5px;
+    width: 110px;
 `;
 
 export const GuestInput = styled.input`
-
+    max-width: 100%;
+    align-self: flex-end;
+    flex-grow: 2;
 `;
 
 export const NameContainer = styled.div`
@@ -41,15 +62,27 @@ export const NameContainer = styled.div`
 `;
 
 export const ReserveDateContainer = styled.div`
-
+   margin-bottom: 5%;
+   .availablity-button {
+       margin-left: 460px;
+   }
 `;
 
 export const DatePickerContainer = styled.div`
-
+    display: flex;
+    justify-content: space-evenly;
+    width: 800px;
+    margin: 0 auto;
 `;
 
-export const DateLabel = styled.label`
+export const DateInputContainer = styled.div`
+    margin: 2% 0;
+`;
 
+
+
+export const DateLabel = styled.label`
+    margin-right: 2px;
 `;
 
 export const DateInput = styled.input`
