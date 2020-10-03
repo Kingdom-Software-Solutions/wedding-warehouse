@@ -90,7 +90,7 @@ export const DateInput = styled.input`
 `;
 
 export const ConflictContainer = styled.div`
-
+    display: flex;
 `;
 
 export const ConflictMessage = styled.p`
@@ -98,11 +98,15 @@ export const ConflictMessage = styled.p`
 `;
 
 export const CheckoutCartContainer = styled.div`
-
+    display: flex;
+    flex-direction: column;
 `;
 
 export const CheckoutItemContainer = styled.div`
-
+    display: flex;
+    justify-content: space-evenly;
+    width: 500px;
+    margin: 0 auto;
 `;
 export const CheckoutImageContainer = styled.div`
     max-height: 100%;
@@ -111,11 +115,16 @@ export const CheckoutImageContainer = styled.div`
 `;
 
 export const CheckoutItemImage = styled.img`
-
+    max-height: 100%;
+    max-width: 100%;
+    height: 5vw;
+    width: 9vw;
+    margin: 0 auto;
+    border-radius: 5%;
 `;
 
 export const CheckoutInfoContainer = styled.div`
-
+    display: flex;
 `;
 
 export const CheckoutItemName = styled.p`

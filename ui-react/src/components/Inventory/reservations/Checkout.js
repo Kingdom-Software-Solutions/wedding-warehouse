@@ -12,6 +12,7 @@ import CheckoutModal from '../../material-ui/modals/CheckoutModal';
 import { BackLink, CheckoutContainer, CheckoutTitle, ConflictContainer, ConflictMessage, GuestFormContainer, CheckoutCartContainer, ReserveDateContainer, CheckoutItemContainer, CheckoutImageContainer, CheckoutInfoContainer, CheckoutItemImage, CheckoutItemName, CheckoutItemRate, FinalTotalPerDay, GuestLabel, GuestInput, DatePickerContainer, DateInput, DateLabel, GuestInputContainer, DateInputContainer, MasterInputContainer } from '../../styled/inventory/CheckoutStyles';
 import { Button } from '@material-ui/core';
 import { danger } from '../../styled/colors';
+import { noImg } from '../../../assets/imageAssets';
 
 const Checkout = () => {
     const { authState, authService } = useOktaAuth();
@@ -35,6 +36,7 @@ const Checkout = () => {
     const [finished, setFinished] = useState(false)
 
     useEffect(() => {
+        // should we filter conflicts out of cart here?
         setTotal(calculateTotal(cart))
     }, [cart, rentStart, rentEnd, conflicts]); // rent start and rentEnd will rerender price if item is unavailable
 
@@ -70,20 +72,25 @@ const Checkout = () => {
         // will eventually integrate with paypal or stripe to take online payments with a widget
         e.preventDefault();
         // ADD CHECK AVAILABILITY HERE
+        dispatch(checkAvailability(rentStart, rentEnd))
             // if it returns anything, there was a conflict and a modal should appear that either continues without the conflicted items or reloads the checkout page.
-        let newReservation = reserveUser;
-        newReservation.rentDate = rentStart;
-        newReservation.returnDate = rentEnd;
-        newReservation.items = cart; // pass an array to parse in BE
-
-        if(!authState.isAuthenticated){
-            newReservation.userStatus = "Guest"
+        if(conflicts.length > 1){
+            alert("There was a conflict with your items")
+        } else {
+            let newReservation = reserveUser;
+            newReservation.rentDate = rentStart;
+            newReservation.returnDate = rentEnd;
+            newReservation.items = cart; // pass an array to parse in BE
+    
+            if(!authState.isAuthenticated){
+                newReservation.userStatus = "Guest"
+            }
+            dispatch(reserveItems(newReservation)) 
+            // Add modal logic to open here until online payment is built
+            setFinished(true)
+            // post payment widget:
+                // modal should say payment was successful then do redirect
         }
-        dispatch(reserveItems(newReservation)) 
-        // Add modal logic to open here until online payment is built
-        setFinished(true)
-        // post payment widget:
-            // modal should say payment was successful then do redirect
     };
     // ADD DISPATCH CLEAR CART HERE
     const handleBack = () => {
@@ -133,7 +140,7 @@ const Checkout = () => {
                     <Button className="availablity-button" color="secondary" onClick={handleCheckAvailability}>Check Availability</Button>
                 </ReserveDateContainer>
             </MasterInputContainer>
-            <CheckoutCartContainer>
+            <CheckoutCartContainer className="item-container">
                 {cart.map(item =>{
                     console.log(conflicts, 'conflicts')
                     // getting an array from the BE of just the item ids
@@ -147,9 +154,9 @@ const Checkout = () => {
                         )
                     } else{
                         return(
-                            <CheckoutItemContainer key={item.id}>
+                            <CheckoutItemContainer className="checkout-item" key={item.id}>
                                 <CheckoutImageContainer>
-                                    <CheckoutItemImage src={item.thumbnailUrl} alt="thumbnail" />
+                                    <CheckoutItemImage src={item.mainImgUrl ? item.mainImgUrl : noImg } alt="thumbnail" />
                                 </CheckoutImageContainer>
                                 <CheckoutInfoContainer>
                                     <CheckoutItemName>{item.itemName}</CheckoutItemName>
@@ -162,8 +169,8 @@ const Checkout = () => {
                 })}
             </CheckoutCartContainer>
             <FinalTotalPerDay>Total per Day: <span className="total-amount">{total}</span></FinalTotalPerDay>
-            <Button onClick={handleClearCart}>Clear Items</Button>
-            <Button onClick={handleFinalize}>Finalize Checkout</Button>
+            <Button className="action clear" onClick={handleClearCart}>Clear Items</Button>
+            <Button className="action finalize" onClick={handleFinalize}>Finalize Checkout</Button>
         </CheckoutContainer>
     )
 };
