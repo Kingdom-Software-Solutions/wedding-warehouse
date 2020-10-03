@@ -28,3 +28,7 @@ export const TopBar = styled.div`
     display: flex
     align-items: center;
 `;
+
+export const CartItem = styled.div`
+
+`;

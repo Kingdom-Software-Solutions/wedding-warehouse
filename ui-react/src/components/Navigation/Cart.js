@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart, clearCart } from '../../redux/actions/cartActions';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
-import { CartContainer, TopBar } from '../styled/navigation/CartStyles';
+import { CartContainer, CartItem, TopBar } from '../styled/navigation/CartStyles';
 import { calculateTotal } from '../../utils/calculateTotal';
+import { priceFormatter } from '../../utils/priceFormatter';
 
 const Cart = props => {
     const history = useHistory();
@@ -35,13 +36,14 @@ const Cart = props => {
             </TopBar>
             {cartItems.map(item => {
                 return(
-                    <div key={item.id}>
-                    <div >
-                        <p>{item.itemName}</p>
-                        <p>{item.rental}</p>
-                    </div>
-                    <CancelIcon onClick={handleRemoveItem(item.id)} />
-                    </div>
+                    <CartItem key={item.id}>
+                        <div >
+                            <img src={item.thumbnailUrl} />
+                            <p>{item.itemName}</p>
+                            <p>{priceFormatter(item.rentalRate)}</p>
+                        </div>
+                        <CancelIcon onClick={handleRemoveItem(item.id)} />
+                    </CartItem>
                 )
             })}
             <p>Total per day: {total}</p>
