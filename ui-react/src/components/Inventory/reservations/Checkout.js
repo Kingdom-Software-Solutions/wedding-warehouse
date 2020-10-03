@@ -35,7 +35,6 @@ const Checkout = () => {
     const [finished, setFinished] = useState(false)
 
     useEffect(() => {
-       // pull that items reservations and check them, if there is one, grey out the item and remove it's rent per day from the total
         setTotal(calculateTotal(cart))
     }, [cart, rentStart, rentEnd, conflicts]); // rent start and rentEnd will rerender price if item is unavailable
 
