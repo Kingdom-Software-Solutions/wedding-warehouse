@@ -9,10 +9,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import { calculateTotal } from '../../../utils/calculateTotal';
 import { useGetUser } from '../../../okta/getOktaUser';
 import CheckoutModal from '../../material-ui/modals/CheckoutModal';
+import { BackLink, CheckoutContainer, CheckoutTitle, ConflictContainer, ConflictMessage, GuestFormContainer, CheckoutCartContainer, ReserveDateContainer, CheckoutItemContainer, CheckoutImageContainer, CheckoutInfoContainer, CheckoutItemImage, CheckoutItemName, CheckoutItemRate, FinalTotalPerDay, GuestLabel, GuestInput, DatePickerContainer, DateInput, DateLabel } from '../../styled/inventory/CheckoutStyles';
+import { Button } from '@material-ui/core';
+import { danger } from '../../styled/colors';
 
 const Checkout = () => {
     const { authState, authService } = useOktaAuth();
-    const activeUser = useGetUser()
+    // custom hook to auto set the user if logged in
+    const activeUser = useGetUser() 
     const history = useHistory()
     const dispatch = useDispatch()
 
@@ -67,6 +71,7 @@ const Checkout = () => {
         // will eventually integrate with paypal or stripe to take online payments with a widget
         e.preventDefault();
         // ADD CHECK AVAILABILITY HERE
+            // if it returns anything, there was a conflict and a modal should appear that either continues without the conflicted items or reloads the checkout page.
         let newReservation = reserveUser;
         newReservation.rentDate = rentStart;
         newReservation.returnDate = rentEnd;
@@ -88,55 +93,66 @@ const Checkout = () => {
 
     console.log(conflicts)
     return(
-        <div>
-            <a onClick={handleBack}>Back</a>
-            <h2>Checkout</h2>
+        <CheckoutContainer>
+            <BackLink onClick={handleBack}>Back</BackLink>
+            <CheckoutTitle>Checkout</CheckoutTitle>
+            {/* Login state is passed to the modal to determine redirect */}
             { finished ? <CheckoutModal loginState={authState.isAuthenticated} /> : null }
             { !activeUser ?
-                <> 
-                    <label>First Name:</label>
-                    <input name="renterFirstName" onChange={handleChanges} />
-                    <label>Last Name: </label>
-                    <input name="renterLastName" onChange={handleChanges} />
-                    <label>Email: </label>
-                    <input name="renterEmail" type="email" onChange={handleChanges} />
-                </>
+                // Added form div here due to rendering null if a registered user
+                // when adding validations, may be easier to do styled.form
+                <GuestFormContainer> 
+                    <GuestLabel>First Name:</GuestLabel>
+                    <GuestInput name="renterFirstName" onChange={handleChanges} />
+                    <GuestLabel>Last Name: </GuestLabel>
+                    <GuestInput name="renterLastName" onChange={handleChanges} />
+                    <GuestLabel>Email: </GuestLabel>
+                    <GuestInput name="renterEmail" type="email" onChange={handleChanges} />
+                </GuestFormContainer>
             :
                 null
             }
-            <div className='rent-dates'>
-                <label>Pick-up Date</label>
-                <input type="date" onChange={onStartChange} value={rentStart} min={today} />
-                <label>Return Date</label>
-                <input type="date" onChange={onEndChange} value={rentEnd} min={rentStart} />
-                <button onClick={handleCheckAvailability}>Check Availability</button>
-            </div>
-            
-            {cart.map(item =>{
-                console.log(conflicts, 'conflicts')
-                // getting an array from the BE of just the item ids
-                let inConflicts = conflicts.filter(conflict => conflict === item.id)
-                if(inConflicts.length > 0){
-                    return (
-                        <div>
-                            <p>{`${item.itemName} is not available in your date range`}</p>
-                        </div>
-                    )
-                } else{
-                    return(
-                        <div key={item.id}>
-                            <img src={item.thumbnailUrl} alt="thumbnail" />
-                            <p>{item.itemName}</p>
-                            <p>{item.rentalRate}</p>
-                            <CancelIcon onClick={handleRemoveItem(item.id)} />
-                        </div>
-                    )
-                }
-            })}
-            <p>Total per Day: {total}</p>
-            <button onClick={handleClearCart}>Clear Items</button>
-            <button onClick={handleFinalize}>Finalize Checkout</button>
-        </div>
+            <ReserveDateContainer className='rent-dates'>
+                <DatePickerContainer>
+                    <DateLabel>Pick-up Date:</DateLabel>
+                    <DateInput type="date" onChange={onStartChange} value={rentStart} min={today} />
+                    <DateLabel>Return Date:</DateLabel>
+                    <DateInput type="date" onChange={onEndChange} value={rentEnd} min={rentStart} />
+                </DatePickerContainer>
+                <Button color="secondary" onClick={handleCheckAvailability}>Check Availability</Button>
+            </ReserveDateContainer>
+            <CheckoutCartContainer>
+                {cart.map(item =>{
+                    console.log(conflicts, 'conflicts')
+                    // getting an array from the BE of just the item ids
+                    let inConflicts = conflicts.filter(conflict => conflict === item.id)
+                    if(inConflicts.length > 0){
+                        return (
+                            <ConflictContainer>
+                                <ConflictMessage>{`${item.itemName} is not available in your date range`}</ConflictMessage>
+                                <CancelIcon color={danger} onClick={handleRemoveItem(item.id)} />
+                            </ConflictContainer>
+                        )
+                    } else{
+                        return(
+                            <CheckoutItemContainer key={item.id}>
+                                <CheckoutImageContainer>
+                                    <CheckoutItemImage src={item.thumbnailUrl} alt="thumbnail" />
+                                </CheckoutImageContainer>
+                                <CheckoutInfoContainer>
+                                    <CheckoutItemName>{item.itemName}</CheckoutItemName>
+                                    <CheckoutItemRate>{item.rentalRate}</CheckoutItemRate>
+                                    <CancelIcon htmlColor={danger} onClick={handleRemoveItem(item.id)} />
+                                </CheckoutInfoContainer>
+                            </CheckoutItemContainer>
+                        )
+                    }
+                })}
+            </CheckoutCartContainer>
+            <FinalTotalPerDay>Total per Day: <span className="total-amount">{total}</span></FinalTotalPerDay>
+            <Button onClick={handleClearCart}>Clear Items</Button>
+            <Button onClick={handleFinalize}>Finalize Checkout</Button>
+        </CheckoutContainer>
     )
 };
 
