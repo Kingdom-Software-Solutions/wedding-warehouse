@@ -4,8 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart, clearCart } from '../../redux/actions/cartActions';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
-import { CartContainer, TopBar } from '../styled/navigation/CartStyles';
+import { ButtonContainer, CartContainer, CartItem, CartTitle, DetailsImage, ImageContainer, ItemDetails, ItemName, ItemRate, TopBar, TotalPerDay } from '../styled/navigation/CartStyles';
 import { calculateTotal } from '../../utils/calculateTotal';
+import { priceFormatter } from '../../utils/priceFormatter';
+import { noImg } from '../../assets/imageAssets';
+import { InfoContainer } from '../styled/AddInvStyles';
+import { danger } from '../styled/colors';
+import { Button } from '@material-ui/core';
 
 const Cart = props => {
     const history = useHistory();
@@ -30,23 +35,34 @@ const Cart = props => {
     return(
         <CartContainer>
             <TopBar>
-                <h2>Your Cart</h2>
-                <CloseIcon onClick={handleCloseCart}>Close X</CloseIcon>
+                <CartTitle>Your Cart</CartTitle>
+                <CloseIcon onClick={handleCloseCart} />
             </TopBar>
             {cartItems.map(item => {
                 return(
-                    <div key={item.id}>
-                    <div >
-                        <p>{item.itemName}</p>
-                        <p>{item.rental}</p>
-                    </div>
-                    <CancelIcon onClick={handleRemoveItem(item.id)} />
-                    </div>
+                    <CartItem key={item.id}>
+                        <ItemDetails>
+                            <ImageContainer>
+                                {item.thumbnailUrl ?
+                                    <DetailsImage src={item.thumbnailUrl} />
+                                :
+                                    <DetailsImage src={noImg} />
+                                }
+                            </ImageContainer>
+                            <InfoContainer>
+                                <ItemName>{item.itemName}</ItemName>
+                                <ItemRate>{priceFormatter(item.rentalRate)}</ItemRate>
+                            </InfoContainer>
+                        <CancelIcon htmlColor={danger} fontSize="small" className="remove-item" onClick={handleRemoveItem(item.id)} />
+                        </ItemDetails>
+                    </CartItem>
                 )
             })}
-            <p>Total per day: {total}</p>
-            <button onClick={handleClearCart}>Clear Items</button>
-            <button onClick={() => history.push("/checkout")}>Checkout</button>
+            <TotalPerDay>Total per day: <span className="total-amount">{total}</span></TotalPerDay>
+            <ButtonContainer>
+                <Button className="action clear" onClick={handleClearCart}>Clear Items</Button>
+                <Button className="action checkout" onClick={() => history.push("/checkout")}>Checkout</Button>
+            </ButtonContainer>
         </CartContainer>
     )
 };
