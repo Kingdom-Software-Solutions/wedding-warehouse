@@ -38,7 +38,7 @@ ESPECIALLY the `NODE_ENV` and `REACT_APP_BASE_URL`
 In the base directory, `wedding-warehouse`:
 ```
 NODE_ENV=development
-PORT=5000
+PORT=4000
 OKTA_TOKEN=<SEE ADMIN>
 OKTA_DOMAIN=<SEE ADMIN>
 ACCESS_ORIGIN=http://localhost:3000
@@ -66,7 +66,7 @@ npm run server
 [nodemon] watching path(s): *.*
 [nodemon] watching extensions: js,mjs,json
 [nodemon] starting `node index.js`
-Server running in development mode on port 5000
+Server running in development mode on port 4000
 ```
 
 Open a new terminal tab and cd into ui-react. Run npm i again to download frontend dependencies
