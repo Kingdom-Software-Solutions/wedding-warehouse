@@ -9,10 +9,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { calculateTotal } from '../../../utils/calculateTotal';
 import { useGetUser } from '../../../okta/getOktaUser';
 import CheckoutModal from '../../material-ui/modals/CheckoutModal';
-import { BackLink, CheckoutContainer, CheckoutTitle, ConflictContainer, ConflictMessage, GuestFormContainer, CheckoutCartContainer, ReserveDateContainer, CheckoutItemContainer, CheckoutImageContainer, CheckoutInfoContainer, CheckoutItemImage, CheckoutItemName, CheckoutItemRate, FinalTotalPerDay, GuestLabel, GuestInput, DatePickerContainer, DateInput, DateLabel, GuestInputContainer, DateInputContainer, MasterInputContainer } from '../../styled/inventory/CheckoutStyles';
+import { BackLink, CheckoutContainer, CheckoutTitle, ConflictContainer, ConflictMessage, GuestFormContainer, CheckoutCartContainer, ReserveDateContainer, CheckoutItemContainer, CheckoutImageContainer, CheckoutInfoContainer, CheckoutItemImage, CheckoutItemName, CheckoutItemRate, FinalTotalPerDay, GuestLabel, GuestInput, DatePickerContainer, DateInput, DateLabel, GuestInputContainer, DateInputContainer, MasterInputContainer, CheckoutActions, RemoveText } from '../../styled/inventory/CheckoutStyles';
 import { Button } from '@material-ui/core';
 import { danger } from '../../styled/colors';
 import { noImg } from '../../../assets/imageAssets';
+import { priceFormatter } from '../../../utils/priceFormatter';
 
 const Checkout = () => {
     const { authState, authService } = useOktaAuth();
@@ -137,7 +138,7 @@ const Checkout = () => {
                         </DateInputContainer>
                     </DatePickerContainer>
 
-                    <Button className="availablity-button" color="secondary" onClick={handleCheckAvailability}>Check Availability</Button>
+                    <Button className="availablity-button" onClick={handleCheckAvailability}>Check Availability</Button>
                 </ReserveDateContainer>
             </MasterInputContainer>
             <CheckoutCartContainer className="item-container">
@@ -148,7 +149,8 @@ const Checkout = () => {
                     if(inConflicts.length > 0){
                         return (
                             <ConflictContainer>
-                                <ConflictMessage>{`${item.itemName} is not available in this date range`}</ConflictMessage>
+                                <ConflictMessage>{`${item.itemName} is not available in this date range!`}</ConflictMessage>
+                                <RemoveText>Remove</RemoveText>
                                 <CancelIcon htmlColor={danger} onClick={handleRemoveItem(item.id)} />
                             </ConflictContainer>
                         )
@@ -160,7 +162,7 @@ const Checkout = () => {
                                 </CheckoutImageContainer>
                                 <CheckoutInfoContainer>
                                     <CheckoutItemName>{item.itemName}</CheckoutItemName>
-                                    <CheckoutItemRate>{item.rentalRate}</CheckoutItemRate>
+                                    <CheckoutItemRate>{priceFormatter(item.rentalRate)}</CheckoutItemRate>
                                     <CancelIcon htmlColor={danger} onClick={handleRemoveItem(item.id)} />
                                 </CheckoutInfoContainer>
                             </CheckoutItemContainer>
@@ -169,8 +171,10 @@ const Checkout = () => {
                 })}
             </CheckoutCartContainer>
             <FinalTotalPerDay>Total per Day: <span className="total-amount">{total}</span></FinalTotalPerDay>
-            <Button className="action clear" onClick={handleClearCart}>Clear Items</Button>
-            <Button className="action finalize" onClick={handleFinalize}>Finalize Checkout</Button>
+            <CheckoutActions>
+                <Button className="action clear" onClick={handleClearCart}>Clear Items</Button>
+                <Button className="action finalize" onClick={handleFinalize}>Finalize Checkout</Button>
+            </CheckoutActions>
         </CheckoutContainer>
     )
 };

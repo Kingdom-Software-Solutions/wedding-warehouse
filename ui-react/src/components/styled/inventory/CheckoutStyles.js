@@ -6,7 +6,7 @@ import {
     floralWhiteLite,
     jon,
     acadia,
-    success
+    success, danger
 } from '../colors';
 
 export const CheckoutContainer = styled.div`
@@ -64,7 +64,10 @@ export const NameContainer = styled.div`
 export const ReserveDateContainer = styled.div`
    margin-bottom: 5%;
    .availablity-button {
-       margin-left: 460px;
+       margin-left: 400px;
+       margin-top: 1%;
+       font-family: 'Ledger', serif;
+       color: ${danger}
    }
 `;
 
@@ -91,22 +94,31 @@ export const DateInput = styled.input`
 
 export const ConflictContainer = styled.div`
     display: flex;
+    align-items: center;
+    margin: 0 auto;
 `;
 
 export const ConflictMessage = styled.p`
+   white-space: nowrap;
+`;
 
+export const RemoveText = styled.p`
+   margin: 0 2%;
 `;
 
 export const CheckoutCartContainer = styled.div`
     display: flex;
     flex-direction: column;
+    margin-left: 5%;
 `;
 
 export const CheckoutItemContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     width: 500px;
     margin: 0 auto;
+    margin-bottom: 2%;
 `;
 export const CheckoutImageContainer = styled.div`
     max-height: 100%;
@@ -125,6 +137,9 @@ export const CheckoutItemImage = styled.img`
 
 export const CheckoutInfoContainer = styled.div`
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
 `;
 
 export const CheckoutItemName = styled.p`
@@ -139,5 +154,16 @@ export const FinalTotalPerDay = styled.p`
     text-align: center;
     .total-amount {
         color: ${success}
+    }
+    margin-bottom: 5%; // push action div away
+`;
+
+export const CheckoutActions = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    margin: 0 auto;
+    .action {
+        font-family: 'Ledger', serif;
     }
 `;
