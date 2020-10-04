@@ -6,18 +6,22 @@ const OktaProfile = () => {
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
 
-  console.log(userInfo)
-
   useEffect(() => {
     if (!authState.isAuthenticated) {
       // When user isn't authenticated, forget any user info
       setUserInfo(null);
     } else {
-      authService.getUser().then((info) => {
-        setUserInfo(info);
+      // parse the token to get the scoped information
+      authService.getAccessToken()
+      .then((token) => {
+          let user = parseJwt(token)
+          setUserInfo(user) 
       });
     }
   }, [authState, authService]); // Update if authState changes
+
+  console.log(`This user: ${userInfo}`)
+  // add an action to get this users reservations
   
   return (
     <div>
