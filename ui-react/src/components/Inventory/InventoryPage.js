@@ -79,14 +79,17 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
 
     useEffect(()=> {
         if (authState.isAuthenticated){
-            authService.getAccessToken()
+            authService.getIdToken()
             .then((token) => {
+                console.log(token)
                 let user = parseJwt(token)
                 setSuperUser(user.SuperUser) 
             });
         };
         getAllItems();
     }, [authState, authService, superUser, reload]);
+
+    console.log(superUser)
 
     return(
         <>

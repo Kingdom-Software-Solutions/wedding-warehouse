@@ -1,5 +1,6 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
+import { parseJwt } from '../../utils/parseJwt';
 
 const OktaProfile = () => { 
     

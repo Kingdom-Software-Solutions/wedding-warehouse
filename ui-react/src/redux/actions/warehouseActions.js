@@ -139,11 +139,11 @@ export const getAllItems = () => dispatch => {
     dispatch({ type: GET_ALL_ITEMS });
     axiosWithEnv().get("/api/inventory")
     .then(res => {
-        console.log('Get all items res', res)
+        // console.log('Get all items res', res)
         dispatch({type: GET_ALL_ITEMS_SUCCESS , payload: res.data })
     })
     .catch(error => {
-        console.log('Get all items error');
+        // console.log('Get all items error');
         dispatch({ type: GET_ALL_ITEMS_FAILURE })
     });
 }
