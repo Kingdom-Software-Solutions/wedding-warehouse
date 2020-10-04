@@ -78,12 +78,6 @@ npm i
 
 While still in ui-react, `npm start` to run the project on `http://localhost:3000`
 
-
-End with an example of getting some data out of the system or using it for a little demo
-```
-EXAMPLE TO BE ADDED LATER
-```
-
 ## Running the tests
 
 There are currently no automated tests setup in this project.
