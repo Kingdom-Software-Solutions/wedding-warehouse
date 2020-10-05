@@ -79,6 +79,7 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
 
     useEffect(()=> {
         if (authState.isAuthenticated){
+            // custom attrs are added to the id_token in okta
             authService.getIdToken()
             .then((token) => {
                 console.log(token)

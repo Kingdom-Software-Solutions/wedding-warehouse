@@ -34,6 +34,7 @@ const InvNav = () => {
                 <Logo  />
             </LogoDiv>
             <UserActionDiv>
+                <a href="/profile">Profile</a>
                 {/* Need a better way to verify a user is logged in? */}
                 { authState.isPending ?
                     <div>Loading authentication</div>

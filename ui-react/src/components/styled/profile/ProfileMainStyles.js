@@ -8,3 +8,7 @@ import {
     acadia,
     success, danger
 } from '../colors';
+
+export const ProfileContainer = styled.div`
+    display: flex;
+`;

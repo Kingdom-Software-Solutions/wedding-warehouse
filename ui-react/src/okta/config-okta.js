@@ -10,6 +10,6 @@ export const configOkta = {
     clientId: `${CLIENT_ID}`,
     issuer: `https://${OKTA_DOMAIN}/oauth2/default`,
     redirectUri: `http://${HOST}/${CALLBACK_PATH}`,
-    scopes: ['openid', 'profile', 'email'],
+    scopes: ['openid', 'profile', 'email', 'locale', 'address'],
     pkce: true
   };
