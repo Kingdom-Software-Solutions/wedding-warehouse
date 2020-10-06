@@ -8,7 +8,7 @@ const initialState = {
     isUpdating: false
 }
 
-export const userReducer = (state = initialState, action) =>{
+export const oktaReducer = (state = initialState, action) =>{
     switch (action.type) {
         default:
           return state
