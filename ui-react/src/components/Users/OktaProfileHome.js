@@ -4,12 +4,12 @@ import { parseJwt } from '../../utils/parseJwt';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NavBar from '../Navigation/NavBar';
 import { ProfileContainer } from '../styled/profile/ProfileMainStyles';
-
+import { profileObject } from './oktaProfileObject';
 
 const OktaProfile = () => { 
-    
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
+  const [profileState, setProfileState] = useState(profileObject)
 
   useEffect(() => {
     if (!authState.isAuthenticated) {
@@ -43,6 +43,7 @@ const OktaProfile = () => {
         <ProfileContainer>
           <div className="sidebar">
             <span>Put navigations to sub profile pages here</span>
+            <a href="#">My Reservations</a>
           </div> 
           <div>
             {/* first name may break and need to be first_name */}
