@@ -4,12 +4,12 @@ import { parseJwt } from '../../utils/parseJwt';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NavBar from '../Navigation/NavBar';
 import { ProfileContainer } from '../styled/profile/ProfileMainStyles';
-import { profileObject } from './oktaProfileObject';
+import ProfileEdit from './OktaProfileEdit';
 
 const OktaProfile = () => { 
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
-  const [profileState, setProfileState] = useState(profileObject)
+  const [showEdit, setShowEdit] = useState(false)
 
   useEffect(() => {
     if (!authState.isAuthenticated) {
@@ -34,6 +34,9 @@ const OktaProfile = () => {
   // OR USE STATE TO RENDER DIFFERENT SECTIONS ON THE PAGE BY CLICKING IT'S NAME
 
   // START WITH THE LATTER, EASY TO REFACTOR TO FORMER AND IS MORE DRY IMO
+
+  // edit profile component handled with state
+  // route to my reservations page
   
   return (
     <div>
@@ -43,14 +46,20 @@ const OktaProfile = () => {
         <ProfileContainer>
           <div className="sidebar">
             <span>Put navigations to sub profile pages here</span>
+            <a href="/profile">My Profile</a>
             <a href="#">My Reservations</a>
           </div> 
-          <div>
-            {/* first name may break and need to be first_name */}
-            <p>Welcome back, {userInfo.firstName}!</p>
-            <div>This page is still a work in progress. In the meantime, take a look at what's in stock <a href="/inventory">here</a>!
+          {/* pull this into its own component? 👇 */}
+          {showEdit ?
+            <div>
+              {/* first name may break and need to be first_name */}
+              <p>Welcome back, {userInfo.firstName}!</p>
+              <div>This page is still a work in progress. In the meantime, take a look at what's in stock <a href="/inventory">here</a>!
+              </div>
             </div>
-          </div>
+          :
+            <ProfileEdit />
+          }
         </ProfileContainer>
         :
         <CircularProgress />
