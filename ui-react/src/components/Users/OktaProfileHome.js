@@ -11,6 +11,10 @@ const OktaProfile = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [showEdit, setShowEdit] = useState(false)
 
+  const toggleEdit = () => {
+    setShowEdit(!showEdit)
+  };
+
   useEffect(() => {
     if (!authState.isAuthenticated) {
       // When user isn't authenticated, forget any user info
@@ -27,14 +31,6 @@ const OktaProfile = () => {
   }, [authState, authService]); // Update if authState changes
 
   console.log(`This user: ${userInfo}`)
-  // add an action to get this users reservations
-
-  // TWO OPTIONS, I CAN ADD ROUTES TO DIFFERENT PROFILE PAGES AND IMPORT THE SIDEBAR COMPONENT INTO EACH ONE
-
-  // OR USE STATE TO RENDER DIFFERENT SECTIONS ON THE PAGE BY CLICKING IT'S NAME
-
-  // START WITH THE LATTER, EASY TO REFACTOR TO FORMER AND IS MORE DRY IMO
-
   // edit profile component handled with state
   // route to my reservations page
   
@@ -49,17 +45,19 @@ const OktaProfile = () => {
             <a href="/profile">My Profile</a>
             <a href="#">My Reservations</a>
           </div> 
-          {/* pull this into its own component? 👇 */}
+          
           {showEdit ?
+            // {/* pull this into its own component? 👇 */}
             <div>
               {/* first name may break and need to be first_name */}
               <p>Welcome back, {userInfo.firstName}!</p>
               <div>This page is still a work in progress. In the meantime, take a look at what's in stock <a href="/inventory">here</a>!
               </div>
+              <button onClick={()=> toggleEdit()}>Edit Profile</button>
             </div>
           :
           // dont forget to pass down boolean state (showEdit)
-            <ProfileEdit />
+            <ProfileEdit toggle={toggleEdit}  showEdit={showEdit} />
           }
         </ProfileContainer>
         :

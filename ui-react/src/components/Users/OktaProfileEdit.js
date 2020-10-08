@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { parseJwt } from '../../utils/parseJwt';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../redux/actions/oktaActions';
 import { profileObject } from './oktaProfileObject';
 
-const ProfileEdit = () => {
-    const dispatch = useDispatch()
+const ProfileEdit = ({ toggleEdit, showEdit }) => {
+    const dispatch = useDispatch();
+    const profileState = useSelector(state => state.oktaReducer)
     const [changes, setChanges] = useState(profileObject)
 
     const handleChanges = e => {
@@ -18,12 +19,14 @@ const ProfileEdit = () => {
     const handleSubmit = e =>{
         e.preventDefault();
         dispatch(updateUserProfile(changes))
+        toggleEdit()
     };
 
     return(
         <div>
             <h3>Edit Profile</h3>
-            <form type="submit">
+            <button onClick={()=> toggleEdit()}>Cancel</button>
+            <form type="submit" onSubmit={handleSubmit}>
                 {/* add avatar placeholder here */}
                 <label>Update Avatar</label>
                 <input name="picture" type="image" />
@@ -37,6 +40,7 @@ const ProfileEdit = () => {
                 <label>Edit Phone Number</label>
                 <input name="phone_number" />
                 {/* can add address info later if needed */}
+                <button type="submit">Save</button>
             </form>
         </div>
     )
