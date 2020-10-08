@@ -58,6 +58,7 @@ const OktaProfile = () => {
               </div>
             </div>
           :
+          // dont forget to pass down boolean state (showEdit)
             <ProfileEdit />
           }
         </ProfileContainer>
