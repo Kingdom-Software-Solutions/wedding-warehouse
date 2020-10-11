@@ -8,7 +8,7 @@ export const profileObject = {
         family_name: "",
         email: "",
         profile: "",
-        picture: "",
+        avatar: "",
         website: "",
         gender: "",
         birthdate: "",

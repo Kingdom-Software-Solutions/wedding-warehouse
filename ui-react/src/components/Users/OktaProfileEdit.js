@@ -35,7 +35,7 @@ const ProfileEdit = (props) => {
             <form type="submit" onSubmit={handleSubmit}>
                 {/* add avatar placeholder here */}
                 <label>Update Avatar</label>
-                <input name="picture" type="image" />
+                <input name="avatar" type="file" />
                 {/* dont let them crud email unless hitting the update login endpoint, may never be here */}
                 {/* <label></label>
                 <input name="email" /> */}
