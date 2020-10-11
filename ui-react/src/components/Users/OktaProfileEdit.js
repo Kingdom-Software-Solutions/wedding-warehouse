@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../redux/actions/oktaActions';
 import { profileObject } from './oktaProfileObject';
 
-const ProfileEdit = ({ toggleEdit, showEdit }) => {
+const ProfileEdit = (props) => {
     const dispatch = useDispatch();
+    console.log(props)
+    const { toggle, showEdit } = props
+
     const profileState = useSelector(state => state.oktaReducer)
     const [changes, setChanges] = useState(profileObject)
 
@@ -15,17 +18,20 @@ const ProfileEdit = ({ toggleEdit, showEdit }) => {
             [e.target.name]: e.target.value
         })
     };
+    const handleCancel = e => {
+        toggle()
+    }
 
     const handleSubmit = e =>{
         e.preventDefault();
         dispatch(updateUserProfile(changes))
-        toggleEdit()
+        toggle()
     };
 
     return(
         <div>
             <h3>Edit Profile</h3>
-            <button onClick={()=> toggleEdit()}>Cancel</button>
+            <button onClick={handleCancel}>Cancel</button>
             <form type="submit" onSubmit={handleSubmit}>
                 {/* add avatar placeholder here */}
                 <label>Update Avatar</label>

@@ -30,7 +30,7 @@ const OktaProfile = () => {
     }
   }, [authState, authService]); // Update if authState changes
 
-  console.log(`This user: ${userInfo}`)
+  console.log(`This user: ${userInfo}`, userInfo)
   // edit profile component handled with state
   // route to my reservations page
   
@@ -46,11 +46,10 @@ const OktaProfile = () => {
             <a href="#">My Reservations</a>
           </div> 
           
-          {showEdit ?
+          {!showEdit ?
             // {/* pull this into its own component? 👇 */}
             <div>
-              {/* first name may break and need to be first_name */}
-              <p>Welcome back, {userInfo.firstName}!</p>
+              <p>Welcome back, {userInfo.first_name}!</p>
               <div>This page is still a work in progress. In the meantime, take a look at what's in stock <a href="/inventory">here</a>!
               </div>
               <button onClick={()=> toggleEdit()}>Edit Profile</button>
