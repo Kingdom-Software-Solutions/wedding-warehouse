@@ -12,3 +12,11 @@ import {
 export const ProfileContainer = styled.div`
     display: flex;
 `;
+
+export const Sidebar = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 1%;
+    margin: 0 2%;
+`;
