@@ -14,6 +14,7 @@ import AddInventory from './components/Inventory/AddInventory';
 import OktaProfile from './components/Users/OktaProfileHome';
 import Checkout from './components/Inventory/reservations/Checkout';
 import { AppWrapper } from './components/styled/AppStyles';
+import UpcomingReservations from './components/Users/ProfileUpcomingReservations';
 
 function App() {
   return (

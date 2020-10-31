@@ -9,7 +9,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
+import StarIcon from '@material-ui/icons/Star';
 import PersonIcon from '@material-ui/icons/Person';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 const useStyles = makeStyles({
   list: {
@@ -20,11 +23,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProfileSideDrawer() {
+export default function ProfileSideDrawer({
+    admin,
+    // state to switch pages 
+    setHome,
+    setUpcoming 
+}) {
   const history = useHistory();
   const classes = useStyles();
   const [state, setState] = React.useState({
-    left: false,
+    Menu: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -35,27 +43,67 @@ export default function ProfileSideDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const handleHome = () => {
+    setHome(true)
+    setUpcoming(false)
+  };
+  const handleUpcoming = () => {
+      setUpcoming(true)
+      setHome(false)
+  }
+  const handlePast = () => {
+
+  }
+  const handleFavorites = () => {
+      
+  }
+  const handleAdmin = () => {
+      
+  }
+
+
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        [classes.fullList]: anchor === 'Menu'
       })}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem button key="profile" onClick={() => history.push("/profile")}>
-            <ListItemIcon><PersonIcon/></ListItemIcon>
-            <ListItemText primary="Profile" />
+        <ListItem button key="profile" name="home" value="home" onClick={handleHome}>
+            <ListItemIcon name="home"><PersonIcon/></ListItemIcon>
+            <ListItemText primary="Profile" id="home" value="home" />
+        </ListItem>
+        <ListItem button key="upcoming-reservations" name="upcoming" onClick={handleUpcoming}>
+            <ListItemIcon><EventAvailableIcon /></ListItemIcon>
+            <ListItemText primary="Future Reservations" /> 
         </ListItem>
       </List>
       <List>
-          <ListItem button key="reservations">
-            <ListItemIcon><EventAvailableIcon /></ListItemIcon>
-            <ListItemText primary="Reservations" />
+          <ListItem button key="past-reservations" onClick={handlePast}>
+            <ListItemIcon><EventBusyIcon /></ListItemIcon>
+            <ListItemText primary="Past Reservations" />
           </ListItem>
       </List>
+      {/* Uncomment when favorite functionality is built */}
+      {/* <List>
+          <ListItem button key="favorites" onClick={handleFavorites}>
+            <ListItemIcon><StarIcon /></ListItemIcon>
+            <ListItemText primary="Favorited Items" />
+          </ListItem>
+      </List> */}
+      {admin ? 
+      <List>
+        <ListItem button key="admin" onClick={handleAdmin}>
+            <ListItemIcon><SupervisorAccountIcon /></ListItemIcon>
+            <ListItemText primary="Admin" />
+        </ListItem>
+      </List>
+      :
+      null
+      }
     </div>
   );
 

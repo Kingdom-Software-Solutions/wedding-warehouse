@@ -1,18 +1,29 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
+import { Route } from "react-router";
 import { parseJwt } from '../../utils/parseJwt';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import NavBar from '../Navigation/NavBar';
 import { ProfileContainer, Sidebar } from '../styled/profile/ProfileMainStyles';
 import ProfileEdit from './OktaProfileEdit';
 import ProfileSideDrawer from './ProfileSideDrawer';
-import InvNav from '../Navigation/InvNavBar';
 import ProfileNav from '../Navigation/ProfileNavBar';
+import ProfileDetails from './ProfileDetails';
+import UpcomingReservations from './ProfileUpcomingReservations';
+import PastReservations from './ProfilePastReservations';
+import ProfileFavorites from './ProfileFavorites';
+import ProfileAdmin from './ProfileAdmin';
 
-const OktaProfile = () => { 
+const OktaProfile = () => {
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
-  const [showEdit, setShowEdit] = useState(false)
+  const [showEdit, setShowEdit] = useState(false);
+  const [showHome, setShowHome] = useState(true) // needs to be like this unfortunately
+  const [showUpcoming, setShowUpcoming] = useState(false)
+  const [showPast, setShowPast] = useState(false)
+  const [showFavorites, setShowFavorites] = useState(false)
+  const [showAdmin, setShowAdmin] = useState(false)
+  const [superUser, setSuperUser] = useState(false)
+  
 
   const toggleEdit = () => {
     setShowEdit(!showEdit)
@@ -29,6 +40,7 @@ const OktaProfile = () => {
           let user = parseJwt(token)
           console.log(user)
           setUserInfo(user) 
+          setSuperUser(user.SuperUser)
       });
     }
   }, [authState, authService]); // Update if authState changes
@@ -43,22 +55,39 @@ const OktaProfile = () => {
       { userInfo ?
         <ProfileContainer> 
           <Sidebar className="sidebar">
-            <ProfileSideDrawer />
-          </Sidebar> 
-          
-          {!showEdit ?
-            // {/* pull this into its own component? 👇 */}
-            <div>
-              <p>Welcome, {userInfo.first_name}!</p>
-              <p>It's great to see you, take a look at your past, current or upcoming reservations by clicking "My Reservations". Or take a look at what we have for your event <a href="/inventory">here</a>!
-              </p>
-              {/* UNCOMMENT IF WORKING ON OKTA STRETCH */}
-              {/* <button onClick={()=> toggleEdit()}>Edit Profile</button> */}
-            </div>
+            <ProfileSideDrawer
+            admin={superUser}
+            setHome={setShowHome}
+            setUpcoming={setShowUpcoming} 
+            />
+          </Sidebar>
+          {showHome ?
+            <ProfileDetails userInfo={userInfo} />
           :
-          // dont forget to pass down boolean state (showEdit)
-            <ProfileEdit toggle={toggleEdit}  showEdit={showEdit} />
+            null
           }
+          {showUpcoming ? 
+            <UpcomingReservations userInfo={userInfo} />
+          :
+            null
+          }
+          {showPast ? 
+            <PastReservations userInfo={userInfo} />
+          :
+            null
+          }
+          {/* Uncomment when favorite functionality is built */}
+          {/* {showFavorites ? 
+            <ProfileFavorites userInfo={userInfo} />
+          :
+            null
+          } */}
+          {showAdmin ? 
+            <ProfileAdmin userInfo={userInfo} />
+          :
+            null
+          }
+          
         </ProfileContainer>
         :
         <CircularProgress />

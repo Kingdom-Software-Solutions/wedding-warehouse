@@ -34,7 +34,6 @@ const InvNav = () => {
                 <Logo  />
             </LogoDiv>
             <UserActionDiv>
-                <a href="/profile">Profile</a>
                 {/* Need a better way to verify a user is logged in? */}
                 { authState.isPending ?
                     <div>Loading authentication</div>
@@ -45,7 +44,7 @@ const InvNav = () => {
                     </div>
                     :
                     <>
-                    <StyledLink href="/profile">Profile</StyledLink>
+                    <a href="/profile">Profile</a>
                     <Button className="okta-cta" onClick={logout}>Logout</Button>
                     </>
                 )
