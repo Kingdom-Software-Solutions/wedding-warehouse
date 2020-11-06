@@ -7,7 +7,7 @@ console.log(HOST)
 // need to figure out if I need to set the host dynamically
 
 export const configOkta = {
-    clientId: `${CLIENT_ID}`,
+    clientId: CLIENT_ID,
     issuer: `https://${OKTA_DOMAIN}/oauth2/default`,
     redirectUri: `http://${HOST}/${CALLBACK_PATH}`,
     scopes: ['openid', 'profile', 'email'],

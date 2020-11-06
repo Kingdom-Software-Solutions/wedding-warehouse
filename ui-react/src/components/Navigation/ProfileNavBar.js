@@ -6,14 +6,13 @@ import { Button } from '@material-ui/core';
 import ShoppingCartSharpIcon from '@material-ui/icons/ShoppingCartSharp';
 import Badge from '@material-ui/core/Badge';
 import { Logo } from '../component-library/logo';
-import { StyledLink } from '../styled/navigation/NavStyles';
-import { InvNavContainer, UserActionDiv, LogoDiv, CartDiv } from '../styled/navigation/InvNavStyles';
+import {ProfileNavContainer, LinksDiv, StyledLink, UserActionDiv, LogoDiv, CartDiv } from '../styled/navigation/ProfileNavStyles';
 import Cart from './Cart';
 import { cartReducer } from '../../redux/reducers/cartReducer';
 
 
 
-const InvNav = () => {
+const ProfileNav = () => {
     const history = useHistory();
     const badgeCount = useSelector(state => state.cartReducer.items.length)
     const [openCart, setOpenCart] = useState(false)
@@ -28,27 +27,31 @@ const InvNav = () => {
         setOpenCart(true)
     }
 
+    // component uses recyled inventory navigation styles
     return(
-        <InvNavContainer>
+        <ProfileNavContainer>
             <LogoDiv onClick={() => history.push("/")}>
                 <Logo  />
             </LogoDiv>
             <UserActionDiv>
-                {/* Need a better way to verify a user is logged in? */}
-                { authState.isPending ?
-                    <div>Loading authentication</div>
-                :
-                ( !authState.isAuthenticated ? 
-                    <div>
-                        <Button className="okta-cta" onClick={login}>Login | Signup</Button>
-                    </div>
+                <LinksDiv>
+                    <Button className="okta-cta" href="/">Home</Button>
+                    <Button className="okta-cta" href="/inventory">Inventory</Button>
+                </LinksDiv>
+                    {/* Need a better way to verify a user is logged in? */}
+                    { authState.isPending ?
+                        <div>Loading authentication</div>
                     :
-                    <>
-                    <a href="/profile">Profile</a>
-                    <Button className="okta-cta" onClick={logout}>Logout</Button>
-                    </>
-                )
-                }
+                    ( !authState.isAuthenticated ? 
+                        <div>
+                            <Button className="okta-cta" onClick={login}>Login | Signup</Button>
+                        </div>
+                        :
+                        <>
+                        <Button className="okta-cta" onClick={logout}>Logout</Button>
+                        </>
+                    )
+                    }
                 <CartDiv>
                 {openCart ?
                 <Cart className="cart-icon" openCart={openCart} setOpenCart={setOpenCart} />
@@ -61,8 +64,8 @@ const InvNav = () => {
                 }
                 </CartDiv>
             </UserActionDiv>
-        </InvNavContainer>
+        </ProfileNavContainer>
     );
 };
 
-export default InvNav;
+export default ProfileNav;

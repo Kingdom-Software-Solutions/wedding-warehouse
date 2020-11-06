@@ -31,7 +31,7 @@ import {
 import { initialState } from './warehouseInitial';
 
 export const warehouseReducer = (state = initialState, action) =>{
-    console.log("PAYLOAD TO REDUCER", action.payload)
+    // console.log("PAYLOAD TO REDUCER", action.payload)
     switch (action.type) {
         // dept start
         case ADD_DEPT_START:

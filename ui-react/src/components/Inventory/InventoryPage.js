@@ -79,14 +79,18 @@ const InventoryPage = ({ getAllItems, deleteItem, items, updateItem }) => {
 
     useEffect(()=> {
         if (authState.isAuthenticated){
-            authService.getAccessToken()
+            // custom attrs are added to the id_token in okta
+            authService.getIdToken()
             .then((token) => {
+                console.log(token)
                 let user = parseJwt(token)
                 setSuperUser(user.SuperUser) 
             });
         };
         getAllItems();
     }, [authState, authService, superUser, reload]);
+
+    console.log(superUser)
 
     return(
         <>

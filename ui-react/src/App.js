@@ -11,9 +11,10 @@ import LandingPage from './components/Home/LandingPage';
 import InventoryPage from './components/Inventory/InventoryPage';
 import ItemPage from './components/Inventory/ItemPage';
 import AddInventory from './components/Inventory/AddInventory';
-import OktaProfile from './components/Users/OktaProfile';
+import OktaProfile from './components/Users/OktaProfileHome';
 import Checkout from './components/Inventory/reservations/Checkout';
 import { AppWrapper } from './components/styled/AppStyles';
+import UpcomingReservations from './components/Users/ProfileUpcomingReservations';
 
 function App() {
   return (

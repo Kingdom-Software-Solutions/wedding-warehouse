@@ -94,6 +94,10 @@ reservation.post("/availability/all", (req, res) => {
     })
 })
 
+// get user's future reservations (done by email)
+
+// get a user's past reservations (done by email)
+
 // get reservations of one item by daterange
 
 // get reservations of items in cart
