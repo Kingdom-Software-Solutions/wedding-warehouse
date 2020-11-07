@@ -185,3 +185,8 @@ URL: /api/departments/:id
     "message": "Department with the id of 3 was not found"
 }
 ```
+# INVENTORY
+WIP
+
+# RESERVATIONS
+WIP
