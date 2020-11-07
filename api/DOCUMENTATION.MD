@@ -70,7 +70,7 @@ URL: /api/departments
         "name": "Another Dept"
     }
 ]
-
+```
 
 ###  GET DEPT BY ID
 HTTP Request: GET
