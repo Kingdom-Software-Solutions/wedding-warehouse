@@ -1,9 +1,11 @@
 const department = require("express").Router();
-// const Depts = require("../helpers/deptModel");
-const Models = require("../helpers/models")
-const heimdal = require("../auth/authenticator");
+const Models = require("../helpers/models");
+const heimdal = require("../auth/authenticator"); // figure out how to use auth middleware with okta
+const middleware = require("../middleware/index");
 
 const Dept = Models.Department
+
+const { validateDeptId, validateDeptName } = middleware
 
 // add a department
 department.post("/", (req, res) => {
@@ -31,7 +33,7 @@ department.get("/", (req, res) => {
 });
 
 // get dept by id
-department.get("/:id", (req, res) => {
+department.get("/:id", validateDeptId, (req, res) => {
     const { id } = req.params;
     Dept.findById(id)
     .then(dept => {
@@ -43,7 +45,7 @@ department.get("/:id", (req, res) => {
 })
 
 // get dept by name
-department.post("/name", (req, res) => {
+department.post("/name", validateDeptName, (req, res) => {
     const name = req.body
     Dept.findBy(name)
     .then(([dept]) => {
@@ -57,7 +59,7 @@ department.post("/name", (req, res) => {
 
 // update dept
 
-department.put("/:id", (req, res) => {
+department.put("/:id", validateDeptId, (req, res) => {
     const { id } = req.params;
     const changes = req.body;
     Dept.updateById(id, changes)
@@ -69,7 +71,7 @@ department.put("/:id", (req, res) => {
     })    
 });
 
-department.delete("/:id", (req, res) => {
+department.delete("/:id", validateDeptId, (req, res) => {
     const { id } = req.params;
     Dept.removeById(id)
     .then(deleted => {
