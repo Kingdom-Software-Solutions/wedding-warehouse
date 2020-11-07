@@ -96,7 +96,26 @@ reservation.post("/availability/all", (req, res) => {
 
 // get user's future reservations (done by email)
 
+reservation.get("/upcoming/:email", (req, res) => {
+    const { email } = req.params;
+
+    ReserveModels.findAllReservationsByEmail(email)
+    .then(reservations => {
+        const today = new Date().toISOString().split('T')[0]
+        // split the reservations to after today and return it
+    })
+})
+
 // get a user's past reservations (done by email)
+reservation.get("/past/:email", (req, res) => {
+    const { email } = req.params;
+
+    ReserveModels.findAllReservationsByEmail(email)
+    .then(reservations => {
+        const today = new Date().toISOString().split('T')[0]
+        // split the reservations to before today and return it
+    })
+})
 
 // get reservations of one item by daterange
 

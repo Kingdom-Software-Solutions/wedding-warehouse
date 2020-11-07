@@ -34,9 +34,16 @@ function findReservationItems(id) {
     .join('inventory', 'reservations_inventory.inventoryId', 'inventory.id').where("reservations.id", id)
 }
 
+function findAllReservationsByEmail(email){
+    return db('reservations').select("*")
+    .join('reservations_inventory', 'reservations.id', 'reservations_inventory.reservationsId')
+    .join('inventory', 'reservations_inventory.inventoryId', 'inventory.id').where("reservations.renterEmail", email)
+}
+
 module.exports ={
     findAllReserveItems,
     connect,
-    findReservationItems
+    findReservationItems,
+    findAllReservationsByEmail
     // findById
 }
