@@ -114,7 +114,7 @@ The frontend is not being actively hosted at this time. I was experimenting with
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/Kingdom-Software-Solutions/wedding-warehouse/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to Mel's Warehouse.
+Please read [CONTRIBUTING.md](https://github.com/Kingdom-Software-Solutions/wedding-warehouse/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to Mel's Warehouse. You can find documentation on the endpoints and backend in the api folder in the [DOCUMENTATION.md][https://github.com/Kingdom-Software-Solutions/wedding-warehouse/blob/master/api/DOCUMENTATION.MD] file.
 
 ## Versioning
 
