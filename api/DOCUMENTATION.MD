@@ -566,3 +566,34 @@ URL: /api/reservations
 ```
 ##### 500 (Internal Server Error)
 > Will receive a 500 response if there is a problem with the server.
+
+###  GET ALL RESERVATIONS BY DATE RANGE
+> Returns an array of item ids that are reserved in this date range
+HTTP Request: POST
+
+URL: /api/reservations/availability/all
+
+
+##### Body
+| Name         | Type    | Required  | Description                                                |
+| ------------ | ------- | --------- | ---------------------------------------------------------  |
+| Rent Date    | Date    | Yes       | Start date                                                 |
+| Return Date  | Date    | Yes       | Return date                                                |
+
+#### Example
+```javascript
+{
+	"rentDate": "2020-10-01",
+	"returnDate": "2020-10-15"
+}
+```
+
+#### Response
+##### 200 (OK)
+> Will receive a 200 response with a list of reservations id's if the request is successful
+```javascript
+[
+    2,
+    5
+]
+```
