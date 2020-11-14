@@ -40,20 +40,15 @@ reservation.post("/", (req, res) => {
             Connect.insert(connection)
             .then(connected => {
                 console.log("Reservation connected successfully", connected)
-                validatedConnection = true;
+                res.status(201).json({message: "Reservation successful!", reservation})
             })
             .catch(err => {
                 console.log(`Error connecting reservation in /routers/inventory/reservationsRouter.js; Error occured on item with id of ${item.id}`, err)
                 // make an audit table to catch bad reservations for debugging
-                validatedConnection = false
-                
+                res.status(400).json({message: `Error connecting items to reservation. Please review your items array for accuracy:`, items})
             });
             // end connect
         });
-        validatedConnection ? 
-        res.status(201).json({message: "Reservation successful!", reservation})
-        :
-        res.status(400).json({message: `Error connecting items to reservation. Please review your items array for accuracy:`, items})
     })
     .catch(err => {
         console.log("ERROR", err)
@@ -160,5 +155,6 @@ function getConflicts(id){
     console.log(`conflicts in funct ${conflicts}`)
     return conflicts
 }
+
 
 module.exports = reservation
