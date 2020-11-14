@@ -3,7 +3,8 @@ const Models = require('../helpers/models')
 module.exports = {
     validateUserId, // depracated
     validateDeptId,
-    validateDeptName
+    validateDeptName,
+    validateItemId
 }
 
 //custom middleware
@@ -55,5 +56,21 @@ function validateDeptName(req, res, next) {
     res.status(500).json({message: 'Could not get this Department'})
   });
 }
+
+function validateItemId(req, res, next) {
+  const { id } = req.params;
+  Models.Inventory.findById(id)
+  .then(item => {
+    if(item){
+      req.item = item;
+      next();
+    } else {
+      res.status(404).json({message: `Item with the id of ${id} was not found`})
+    }
+  })
+  .catch(err => {
+    res.status(500).json({message: 'Could not get item'})
+  });
+};
 
 

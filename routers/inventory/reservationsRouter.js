@@ -1,8 +1,10 @@
 const reservation = require("express").Router();
 const heimdal = require("../middleware/oktaAuth")
+const middleware = require("../middleware/index");
 const Models = require("../helpers/models");
 const ReserveModels = require("./reservations-models");
 var moment = require('moment');
+const { ArgumentError } = require("jwks-rsa");
 
 // initalize db variables
 const Reserve = Models.Reservations
@@ -13,7 +15,7 @@ const Inv = Models.Inventory
 reservation.post("/", (req, res) => {
  
     const { items } = req.body; // items in user cart from FE
-
+ 
     const reservation = {
         renterFirstName: req.body.renterFirstName,
         renterLastname: req.body.renterLastName,
@@ -27,6 +29,7 @@ reservation.post("/", (req, res) => {
     .then(reservation => {
         console.log("RESERVATION", reservation)
         // for each item in array => add id and create connection
+        let validatedConnection; // hoisted variable to handle bad request
         items.forEach(item => {
             let connection = {
                 reservationsId: reservation.id,
@@ -37,13 +40,15 @@ reservation.post("/", (req, res) => {
             Connect.insert(connection)
             .then(connected => {
                 console.log("Reservation connected successfully", connected)
+                res.status(201).json({message: "Reservation successful!", reservation})
             })
             .catch(err => {
                 console.log(`Error connecting reservation in /routers/inventory/reservationsRouter.js; Error occured on item with id of ${item.id}`, err)
+                // make an audit table to catch bad reservations for debugging
+                res.status(400).json({message: `Error connecting items to reservation. Please review your items array for accuracy:`, items})
             });
             // end connect
         });
-        res.status(201).json({message: "Reservation successful!", reservation})
     })
     .catch(err => {
         console.log("ERROR", err)
@@ -96,7 +101,26 @@ reservation.post("/availability/all", (req, res) => {
 
 // get user's future reservations (done by email)
 
+reservation.get("/upcoming/:email", (req, res) => {
+    const { email } = req.params;
+
+    ReserveModels.findAllReservationsByEmail(email)
+    .then(reservations => {
+        const today = new Date().toISOString().split('T')[0]
+        // split the reservations to after today and return it
+    })
+})
+
 // get a user's past reservations (done by email)
+reservation.get("/past/:email", (req, res) => {
+    const { email } = req.params;
+
+    ReserveModels.findAllReservationsByEmail(email)
+    .then(reservations => {
+        const today = new Date().toISOString().split('T')[0]
+        // split the reservations to before today and return it
+    })
+})
 
 // get reservations of one item by daterange
 
@@ -131,5 +155,6 @@ function getConflicts(id){
     console.log(`conflicts in funct ${conflicts}`)
     return conflicts
 }
+
 
 module.exports = reservation
