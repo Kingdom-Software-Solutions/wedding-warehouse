@@ -4,7 +4,6 @@ const middleware = require("../middleware/index");
 const Models = require("../helpers/models");
 const ReserveModels = require("./reservations-models");
 var moment = require('moment');
-const { ArgumentError } = require("jwks-rsa");
 
 // initalize db variables
 const Reserve = Models.Reservations
@@ -66,6 +65,8 @@ reservation.post("/availability/all", (req, res) => {
         start: rentDate,
         end: returnDate
     }
+    // need to add validation that string is well formed?
+
     // have the endpoint return the date range 
     let conflictingReservations = []
     ReserveModels.findAllReserveItems()
@@ -101,13 +102,17 @@ reservation.post("/availability/all", (req, res) => {
 
 // get user's future reservations (done by email)
 
-reservation.get("/upcoming/:email", (req, res) => {
-    const { email } = req.params;
-
+reservation.post("/upcoming/", (req, res) => {
+    const { email } = req.body;
+    console.log(email)
     ReserveModels.findAllReservationsByEmail(email)
     .then(reservations => {
+        console.log("reservations", reservations)
         const today = new Date().toISOString().split('T')[0]
         // split the reservations to after today and return it
+        const upcoming = reservations.filter(reservation => reservation.rentDate > today) // this isnt right lol
+        console.log(upcoming)
+        res.status(200).json(upcoming)
     })
 })
 
@@ -119,6 +124,8 @@ reservation.get("/past/:email", (req, res) => {
     .then(reservations => {
         const today = new Date().toISOString().split('T')[0]
         // split the reservations to before today and return it
+        const pastReservations = reservations.filter(reservation => reservation.returnDate < today)
+        console.log("reservations", pastReservations)
     })
 })
 
@@ -127,6 +134,8 @@ reservation.get("/past/:email", (req, res) => {
 // get reservations of items in cart
 
 // cancel reservation (patch or put)
+
+// delete reservations
 
 
 // FUNCTIONS
