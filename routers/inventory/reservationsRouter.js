@@ -1,8 +1,10 @@
 const reservation = require("express").Router();
 const heimdal = require("../middleware/oktaAuth")
+const middleware = require("../middleware/index");
 const Models = require("../helpers/models");
 const ReserveModels = require("./reservations-models");
 var moment = require('moment');
+const { ArgumentError } = require("jwks-rsa");
 
 // initalize db variables
 const Reserve = Models.Reservations
@@ -13,7 +15,7 @@ const Inv = Models.Inventory
 reservation.post("/", (req, res) => {
  
     const { items } = req.body; // items in user cart from FE
-
+ 
     const reservation = {
         renterFirstName: req.body.renterFirstName,
         renterLastname: req.body.renterLastName,
@@ -27,6 +29,7 @@ reservation.post("/", (req, res) => {
     .then(reservation => {
         console.log("RESERVATION", reservation)
         // for each item in array => add id and create connection
+        let validatedConnection; // hoisted variable to handle bad request
         items.forEach(item => {
             let connection = {
                 reservationsId: reservation.id,
@@ -37,13 +40,20 @@ reservation.post("/", (req, res) => {
             Connect.insert(connection)
             .then(connected => {
                 console.log("Reservation connected successfully", connected)
+                validatedConnection = true;
             })
             .catch(err => {
                 console.log(`Error connecting reservation in /routers/inventory/reservationsRouter.js; Error occured on item with id of ${item.id}`, err)
+                // make an audit table to catch bad reservations for debugging
+                validatedConnection = false
+                
             });
             // end connect
         });
+        validatedConnection ? 
         res.status(201).json({message: "Reservation successful!", reservation})
+        :
+        res.status(400).json({message: `Error connecting items to reservation. Please review your items array for accuracy:`, items})
     })
     .catch(err => {
         console.log("ERROR", err)

@@ -1,9 +1,12 @@
 const inventory = require("express").Router();
+const middleware = require("../middleware/index");
 const heimdal = require("../middleware/oktaAuth")
 const Models = require("../helpers/models");
 // initalize db variables
 const Inv = Models.Inventory
 // const Review = Models.Reviews
+
+const { validateItemId } = middleware
 
 // add an item to inventory
 // when okta can login we can test/use this middleware
@@ -33,7 +36,7 @@ inventory.get("/", (req, res) => {
     })
 })
 // get item by id
-inventory.get("/:id", (req, res) => {
+inventory.get("/:id", validateItemId, (req, res) => {
     const { id } = req.params;
     // join item to reviews table later and grab reviews with the item?
     Inv.findById(id)
@@ -45,7 +48,7 @@ inventory.get("/:id", (req, res) => {
     })
 })
 // update an item by id
-inventory.put("/:id", (req, res) => {
+inventory.put("/:id", validateItemId, (req, res) => {
     const { id } = req.params;
     const itemUpdate = req.body;
     Inv.updateById(id, itemUpdate)
@@ -58,7 +61,7 @@ inventory.put("/:id", (req, res) => {
 })
 
 // delete an item by id
-inventory.delete("/:id", (req, res) => {
+inventory.delete("/:id", validateItemId, (req, res) => {
     const { id } = req.params;
     Inv.removeById(id)
     .then(item => {

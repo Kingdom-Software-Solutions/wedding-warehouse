@@ -3,8 +3,8 @@ exports.up = function(knex) {
   return knex.schema.createTable('inventory', tbl => {
     tbl.increments('id').primary();
     tbl.string('itemName', 64).unique().notNullable();
-    tbl.text('description', 500);
-    tbl.integer('rentalRate', 100000)
+    tbl.text('description', 500).notNullable();
+    tbl.integer('rentalRate', 100000).notNullable();
     tbl.integer('buyNow', 500000)
     tbl.string('mainImgUrl', 255);
     tbl.string('thumbnailUrl', 255);
