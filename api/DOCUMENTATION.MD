@@ -458,5 +458,18 @@ URL: /api/inventory/:id
 > Will receive a 500 response if there is a problem with the server
 
 
+### DELETE A ITEM
+HTTP Request: DELETE
+
+URL: /api/inventory/:id
+
+#### Response
+##### 200 (OK)
+```javascript
+{
+    "message": "Item successfull deleted! 😬"
+}
+```
+
 # RESERVATIONS
 WIP
