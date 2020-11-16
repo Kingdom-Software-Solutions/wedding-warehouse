@@ -100,32 +100,57 @@ reservation.post("/availability/all", (req, res) => {
     })
 })
 
+// endpoint to get all reservations for the admin to see
+reservation.post("/availability/all/admin", (req, res) => {
+    // pass desired rent start and return
+    const { rentDate, returnDate } = req.body;
+    const daterange = {
+        start: rentDate,
+        end: returnDate
+    }
+    
+    // have the endpoint return the date range 
+    ReserveModels.findAllReserveItems()
+    .then(reservations =>{
+        res.status(200).json(reservations)
+    })
+    .catch(err =>{
+        console.log("ERROR GETTING RESERVATIONS", err)
+        res.status(500).json({errorMessage: "Error getting reservations in daterange. This one's on us.", error: err})
+    })
+})
+
 // get user's future reservations (done by email)
 
 reservation.post("/upcoming/", (req, res) => {
     const { email } = req.body;
-    console.log(email)
+
     ReserveModels.findAllReservationsByEmail(email)
     .then(reservations => {
-        console.log("reservations", reservations)
-        const today = new Date().toISOString().split('T')[0]
         // split the reservations to after today and return it
-        const upcoming = reservations.filter(reservation => reservation.rentDate > today) // this isnt right lol
-        console.log(upcoming)
+        const upcoming = reservations.filter(reservation => moment(reservation.rentStart).isSameOrAfter(getToday())) 
+        // does this need a 404?
         res.status(200).json(upcoming)
+    })
+    .catch(err => {
+        console.log("ERROR GETTING UPCOMING RESERVATIONS", err)
+        res.status(500).json({errorMessage: "Error getting upcoming reservations. This one's on us.", error: err})
     })
 })
 
 // get a user's past reservations (done by email)
-reservation.get("/past/:email", (req, res) => {
-    const { email } = req.params;
+reservation.post("/past", (req, res) => {
+    const { email } = req.body;
 
     ReserveModels.findAllReservationsByEmail(email)
     .then(reservations => {
-        const today = new Date().toISOString().split('T')[0]
         // split the reservations to before today and return it
-        const pastReservations = reservations.filter(reservation => reservation.returnDate < today)
-        console.log("reservations", pastReservations)
+        const past = reservations.filter(reservation => moment(reservation.rentStart).isBefore(getToday()))
+        res.status(200).json(past)
+    })
+    .catch(err => {
+        console.log("ERROR GETTING UPCOMING RESERVATIONS", err)
+        res.status(500).json({errorMessage: "Error getting past reservations. This one's on us.", error: err})
     })
 })
 
@@ -148,6 +173,10 @@ function checkConflicts(rentStart, returnDate, startDateRange, endDateRange){
     } else {
         return false
     }
+};
+
+function getToday(){
+    return new Date().toISOString().split('T')[0]
 }
 
 function getConflicts(id){
