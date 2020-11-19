@@ -27,7 +27,8 @@ export default function ProfileSideDrawer({
     admin,
     // state to switch pages 
     setHome,
-    setUpcoming 
+    setUpcoming,
+    setPast
 }) {
   const history = useHistory();
   const classes = useStyles();
@@ -44,22 +45,20 @@ export default function ProfileSideDrawer({
   };
 
   const handleHome = () => {
-    setHome(true)
-    setUpcoming(false)
+    history.push("/profile")
   };
   const handleUpcoming = () => {
-      setUpcoming(true)
-      setHome(false)
-  }
+    history.push("/profile/upcoming-reservations")
+  };
   const handlePast = () => {
-
-  }
+    history.push("/profile/reservation-history")
+  };
   const handleFavorites = () => {
-      
-  }
+    history.push("/profile/favorites")
+  };
   const handleAdmin = () => {
-      
-  }
+    history.push("profile/admin")
+  };
 
 
   const list = (anchor) => (

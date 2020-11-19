@@ -5,18 +5,26 @@ import {
     SET_DATES,
     CHECK_AVAILABILITY_START,
     CHECK_AVAILABILITY_SUCCESS,
-    CHECK_AVAILABILITY_FAILURE
+    CHECK_AVAILABILITY_FAILURE,
+    GET_UPCOMING_START,
+    GET_UPCOMING_SUCCESS,
+    GET_UPCOMING_FAILURE,
+    GET_PAST_START,
+    GET_PAST_SUCCESS,
+    GET_PAST_FAILURE
 } from '../actions/reserveActions';
 
 const initialState = {
     isReserving: false,
     isChecking: false,
+    isCalling: false,
     // state for inventory modal
     dates: {
         pickUp: new Date().toISOString().split('T')[0],
         returnal: new Date().toISOString().split('T')[0] 
     },
     conflicts: [],
+    reservations: [], 
     error: ""
 
 };
@@ -63,6 +71,40 @@ export const reserveReducer = (state = initialState, action) => {
                 isChecking: false,
                 error: "Error checking availability"
             }
+        case GET_UPCOMING_START:
+            return {
+                ...state,
+                isCalling: true
+            }
+        case GET_UPCOMING_SUCCESS:
+            return {
+                ...state,
+                isCalling: false,
+                reservations: payload
+            }
+        case GET_UPCOMING_FAILURE:
+        return {
+            ...state,
+            isCalling: false,
+            error: "Error getting upcoming reservations"
+        }
+        case GET_PAST_START:
+            return {
+                ...state,
+                isCalling: true
+            }
+        case GET_PAST_SUCCESS:
+            return {
+                ...state,
+                isCalling: false,
+                reservations: payload
+            }
+        case GET_PAST_FAILURE:
+        return {
+            ...state,
+            isCalling: false,
+            error: "Error getting past reservations"
+        }
         default:
             return state
     }

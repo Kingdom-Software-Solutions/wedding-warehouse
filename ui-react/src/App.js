@@ -17,6 +17,7 @@ import { AppWrapper } from './components/styled/AppStyles';
 import UpcomingReservations from './components/Users/ProfileUpcomingReservations';
 
 function App() {
+  // for Route, can't use exact with nested routes?
   return (
     <AppWrapper className="App">
       <Route exact path="/" component={LandingPage} />
@@ -28,7 +29,7 @@ function App() {
       <SecureRoute exact path="/inventory/addItem" component={AddInventory} />
       <Route exact path="/inventory/item/:id" component={ItemPage} />
       <Route path="/checkout" component={Checkout} />
-      <SecureRoute exact path="/profile" component={OktaProfile} />
+      <SecureRoute path="/profile" component={OktaProfile} />
     </AppWrapper>
   );
 }

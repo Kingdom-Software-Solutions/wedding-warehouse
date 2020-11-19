@@ -1,6 +1,6 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
-import { Route } from "react-router";
+import { Route, withRouter } from "react-router";
 import { parseJwt } from '../../utils/parseJwt';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { ProfileContainer, Sidebar } from '../styled/profile/ProfileMainStyles';
@@ -17,11 +17,6 @@ const OktaProfile = () => {
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
-  const [showHome, setShowHome] = useState(true) // needs to be like this unfortunately
-  const [showUpcoming, setShowUpcoming] = useState(false)
-  const [showPast, setShowPast] = useState(false)
-  const [showFavorites, setShowFavorites] = useState(false)
-  const [showAdmin, setShowAdmin] = useState(false)
   const [superUser, setSuperUser] = useState(false)
   
 
@@ -57,37 +52,23 @@ const OktaProfile = () => {
           <Sidebar className="sidebar">
             <ProfileSideDrawer
             admin={superUser}
-            setHome={setShowHome}
-            setUpcoming={setShowUpcoming} 
             />
           </Sidebar>
-          {showHome ?
-            <ProfileDetails userInfo={userInfo} />
-          :
-            null
-          }
-          {showUpcoming ? 
+          {/* Use SecureRoute after I get this working */}
+          <ProfileDetails userInfo={userInfo} />
+          {/* <Route path={"/"} exact component={<ProfileDetails userInfo={userInfo} />} /> */}
+          <Route path={"/-/upcoming-reservations"}>
             <UpcomingReservations userInfo={userInfo} />
-          :
-            null
-          }
-          {showPast ? 
+          </Route>
+          <Route path={"/reservation-history"}>
             <PastReservations userInfo={userInfo} />
-          :
-            null
-          }
-          {/* Uncomment when favorite functionality is built */}
-          {/* {showFavorites ? 
+          </Route>
+          <Route path={"/favorites"}>
             <ProfileFavorites userInfo={userInfo} />
-          :
-            null
-          } */}
-          {showAdmin ? 
+          </Route>
+          <Route path={"/admin"}>
             <ProfileAdmin userInfo={userInfo} />
-          :
-            null
-          }
-          
+          </Route>
         </ProfileContainer>
         :
         <CircularProgress />
