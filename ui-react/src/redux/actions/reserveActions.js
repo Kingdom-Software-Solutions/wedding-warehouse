@@ -44,3 +44,35 @@ export const checkAvailability = (dateStart, dateEnd) => dispatch => {
         dispatch({ type: CHECK_AVAILABILITY_FAILURE})
     })
 }
+
+// get upcoming reservations
+const GET_UPCOMING_START = 'GET_UPCOMING_START';
+const GET_UPCOMING_SUCCESS = 'GET_UPCOMING_SUCCESS';
+const GET_UPCOMING_FAILURE = 'GET_UPCOMING_FAILURE';
+
+export const getUpcomingReservations = (email) => dispatch => {
+    dispatch({type: GET_UPCOMING_START});
+    axiosWithEnv().post('/api/reservations/upcoming')
+    .then(res => {
+        dispatch({ type: GET_UPCOMING_SUCCESS, payload: res.data})
+    })
+    .catch(err => {
+        dispatch({ type: GET_UPCOMING_FAILURE })
+    });
+};
+
+// get past reservations
+const GET_PAST_START = 'GET_UPCOMING_START';
+const GET_PAST_SUCCESS = 'GET_UPCOMING_SUCCESS';
+const GET_PAST_FAILURE = 'GET_UPCOMING_FAILURE';
+
+export const getPastReservations = (email) => dispatch => {
+    dispatch({type: GET_PAST_START });
+    axiosWithEnv().post('/api/reservations/upcoming')
+    .then(res => {
+        dispatch({ type: GET_PAST_SUCCESS, payload: res.data})
+    })
+    .catch(err => {
+        dispatch({ type: GET_PAST_FAILURE })
+    });
+};
