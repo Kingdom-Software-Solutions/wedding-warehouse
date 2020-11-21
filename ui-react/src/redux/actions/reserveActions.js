@@ -57,9 +57,11 @@ export const GET_UPCOMING_SUCCESS = 'GET_UPCOMING_SUCCESS';
 export const GET_UPCOMING_FAILURE = 'GET_UPCOMING_FAILURE';
 
 export const getUpcomingReservations = (email) => dispatch => {
-    console.log(email)
+    let renterEmail = {
+        email: email
+    }
     dispatch({type: GET_UPCOMING_START});
-    axiosWithEnv().post('/api/reservations/upcoming', email)
+    axiosWithEnv().post('/api/reservations/upcoming', renterEmail)
     .then(res => {
         dispatch({ type: GET_UPCOMING_SUCCESS, payload: res.data})
     })
@@ -74,10 +76,11 @@ export const GET_PAST_SUCCESS = 'GET_PAST_SUCCESS';
 export const GET_PAST_FAILURE = 'GET_PAST_FAILURE';
 
 export const getPastReservations = (email) => dispatch => {
-    console.log(email)
-    
+    let renterEmail = {
+        email: email
+    }
     dispatch({type: GET_PAST_START });
-    axiosWithEnv().post('/api/reservations/past', email)
+    axiosWithEnv().post('/api/reservations/past', renterEmail )
     .then(res => {
         dispatch({ type: GET_PAST_SUCCESS, payload: res.data})
     })
