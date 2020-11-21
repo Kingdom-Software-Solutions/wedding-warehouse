@@ -31,6 +31,7 @@ const initialState = {
 
 export const reserveReducer = (state = initialState, action) => {
     const { type, payload } = action;
+    console.log(type)
     switch(type){
         case RESERVE_ITEM_START:
             return {

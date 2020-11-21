@@ -1,11 +1,11 @@
 import { useOktaAuth } from '@okta/okta-react';
 import React, { useState, useEffect } from 'react';
-import { Route, withRouter } from "react-router";
+import { Route, Switch, useRouteMatch } from "react-router";
+import { Link } from 'react-router-dom';
 import { parseJwt } from '../../utils/parseJwt';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { ProfileContainer, Sidebar } from '../styled/profile/ProfileMainStyles';
 import ProfileEdit from './OktaProfileEdit';
-import ProfileSideDrawer from './ProfileSideDrawer';
 import ProfileNav from '../Navigation/ProfileNavBar';
 import ProfileDetails from './ProfileDetails';
 import UpcomingReservations from './ProfileUpcomingReservations';
@@ -17,7 +17,9 @@ const OktaProfile = () => {
   const { authState, authService } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
-  const [superUser, setSuperUser] = useState(false)
+  const [superUser, setSuperUser] = useState(false);
+
+  let { path, url } = useRouteMatch()
   
 
   const toggleEdit = () => {
@@ -48,27 +50,34 @@ const OktaProfile = () => {
     <>
       <ProfileNav />
       { userInfo ?
-        <ProfileContainer> 
+        <ProfileContainer>
           <Sidebar className="sidebar">
-            <ProfileSideDrawer
-            admin={superUser}
-            />
+            <Link to={`${url}`}>Profile</Link>
+            <Link to={`${url}/future-reservations`}>Future Reservations</Link>
+            <Link to={`${url}/past-reservations`}>Past Reservations</Link>
+            {/* should always be the bottom link */}
+            {superUser ? 
+              <Link to={`${url}/admin`}>Admin</Link>
+            :
+              null
+            }
+            
           </Sidebar>
-          {/* Use SecureRoute after I get this working */}
-          <ProfileDetails userInfo={userInfo} />
-          {/* <Route path={"/"} exact component={<ProfileDetails userInfo={userInfo} />} /> */}
-          <Route path={"/-/upcoming-reservations"}>
-            <UpcomingReservations userInfo={userInfo} />
-          </Route>
-          <Route path={"/reservation-history"}>
-            <PastReservations userInfo={userInfo} />
-          </Route>
-          <Route path={"/favorites"}>
-            <ProfileFavorites userInfo={userInfo} />
-          </Route>
-          <Route path={"/admin"}>
-            <ProfileAdmin userInfo={userInfo} />
-          </Route>
+          <Switch>
+            <Route exact path={path}>
+              <ProfileDetails userInfo={userInfo} />
+            </Route>
+            <Route path={`${path}/future-reservations`}>
+              <UpcomingReservations userInfo={userInfo} />
+            </Route>
+            <Route path={`${path}/past-reservations`}>
+              <PastReservations userInfo={userInfo} />
+            </Route>
+            {/* should always be the bottom link */}
+            <Route path={`${path}/admin`}>
+              <ProfileAdmin userInfo={userInfo} />
+            </Route>
+          </Switch>
         </ProfileContainer>
         :
         <CircularProgress />

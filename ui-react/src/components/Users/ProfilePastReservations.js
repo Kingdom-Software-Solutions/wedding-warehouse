@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPastReservations } from '../../redux/actions/reserveActions';
-import ProfileEdit from './OktaProfileEdit';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
@@ -14,6 +13,8 @@ const PastReservations = ({ userInfo }) => {
     useEffect(() => {
         dispatch(getPastReservations(email))
     }, [])
+
+    console.log(reservations)
 
     return(
         <>

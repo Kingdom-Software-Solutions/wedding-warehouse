@@ -8,6 +8,7 @@ import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Security } from '@okta/okta-react';
 import { configOkta } from './okta/config-okta';
+import { ChakraProvider } from "@chakra-ui/react"
 import * as serviceWorker from './serviceWorker';
 
 const config = configOkta;
@@ -19,7 +20,9 @@ ReactDOM.render(
         <Router>
           <PersistGate persistor={persistor}>
             <Security {...config}>
-              <App />
+              <ChakraProvider>
+                <App />
+              </ChakraProvider>
             </Security>
           </PersistGate>
         </Router>

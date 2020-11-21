@@ -15,9 +15,10 @@ import OktaProfile from './components/Users/OktaProfileHome';
 import Checkout from './components/Inventory/reservations/Checkout';
 import { AppWrapper } from './components/styled/AppStyles';
 import UpcomingReservations from './components/Users/ProfileUpcomingReservations';
+import PastReservations from './components/Users/ProfilePastReservations';
 
 function App() {
-  // for Route, can't use exact with nested routes?
+  // if this comment is still here, update components to v5 syntax
   return (
     <AppWrapper className="App">
       <Route exact path="/" component={LandingPage} />
@@ -27,9 +28,11 @@ function App() {
       <Route path="/register" component={Register} />
       <Route exact path="/inventory" component={InventoryPage} />
       <SecureRoute exact path="/inventory/addItem" component={AddInventory} />
-      <Route exact path="/inventory/item/:id" component={ItemPage} />
+      <Route path="/inventory/item/:id" component={ItemPage} />
       <Route path="/checkout" component={Checkout} />
-      <SecureRoute path="/profile" component={OktaProfile} />
+      <SecureRoute path="/profile">
+        <OktaProfile />
+      </SecureRoute>
     </AppWrapper>
   );
 }
