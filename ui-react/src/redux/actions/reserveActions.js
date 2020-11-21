@@ -77,6 +77,8 @@ export const GET_PAST_FAILURE = 'GET_PAST_FAILURE';
 
 export const getPastReservations = (email) => dispatch => {
     let renterEmail = {
+        // email: 'brothervoodoo@marvel.com' 
+        // for testing delete after mvp ☝️
         email: email
     }
     dispatch({type: GET_PAST_START });

@@ -108,7 +108,7 @@ reservation.post("/availability/all/admin", (req, res) => {
         start: rentDate,
         end: returnDate
     }
-    
+
     // have the endpoint return the date range 
     ReserveModels.findAllReserveItems()
     .then(reservations =>{
@@ -141,7 +141,6 @@ reservation.post("/upcoming/", (req, res) => {
 // get a user's past reservations (done by email)
 reservation.post("/past", (req, res) => {
     const { email } = req.body;
-
     ReserveModels.findAllReservationsByEmail(email)
     .then(reservations => {
         // split the reservations to before today and return it
@@ -149,7 +148,8 @@ reservation.post("/past", (req, res) => {
         res.status(200).json(past)
     })
     .catch(err => {
-        console.log("ERROR GETTING UPCOMING RESERVATIONS", err)
+        console.log("ERROR GETTING PAST RESERVATIONS", err)
+        console.log("EMAIL", email)
         res.status(500).json({errorMessage: "Error getting past reservations. This one's on us.", error: err})
     })
 })
