@@ -11,7 +11,7 @@ import ProfileDetails from './ProfileDetails';
 import UpcomingReservations from './ProfileUpcomingReservations';
 import PastReservations from './ProfilePastReservations';
 import ProfileFavorites from './ProfileFavorites';
-import ProfileAdmin from './ProfileAdmin';
+import ProfileAdmin from './admin/ProfileAdmin';
 
 const OktaProfile = () => {
   const { authState, authService } = useOktaAuth();

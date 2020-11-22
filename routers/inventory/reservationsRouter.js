@@ -12,7 +12,7 @@ const Inv = Models.Inventory
 
 // get all reservations
 reservation.get("/", (req, res) => {
-    Reserve.find()
+    ReserveModels.findAll()
     .then(reservations => {
         res.status(200).json(reservations)
     })

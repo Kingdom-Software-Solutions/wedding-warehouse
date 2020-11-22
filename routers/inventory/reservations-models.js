@@ -1,7 +1,8 @@
 const db = require('../../database/dbConfig');
+const reservation = require('./reservationsRouter');
 // THIS IS UNUSED I THINK. REPURPOSE INTO SPECIAL MODEL TO HANDLE JOINS AND CASES TOO SPECIFIC FOR MODEL
 function findAll(){
-    return db('reservations').select("*");
+    return db('reservations').select("*").orderBy('rentStart');
 }
 // function to get all user's reservations by their email
 // That way okta and guests can still look up what they've rented
@@ -42,6 +43,7 @@ function findAllReservationsByEmail(email){
 
 module.exports ={
     findAllReserveItems,
+    findAll,
     connect,
     findReservationItems,
     findAllReservationsByEmail
