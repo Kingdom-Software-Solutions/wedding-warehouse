@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import ProfileEdit from './OktaProfileEdit';
+import { useDispatch, useSelector} from 'react-redux';
+import { getUpcomingReservations } from '../../redux/actions/reserveActions';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { ProfileContainer, Sidebar } from '../styled/profile/ProfileMainStyles';
+
 
 
 const UpcomingReservations = ({ userInfo }) => {
+    const dispatch = useDispatch();
+    const reservations = useSelector(state => state.reserveReducer.reservations)
+    const { email } = userInfo;
+
     const [showEdit, setShowEdit] = useState(false); // can prob use for cancelations
 
     // I should be able to cancel from here
@@ -12,14 +18,30 @@ const UpcomingReservations = ({ userInfo }) => {
     setShowEdit(!showEdit)
     };
 
+    useEffect(() => {
+        dispatch(getUpcomingReservations(email))
+    },[])
+
+    console.log(reservations)
+
     return(
         <>
             {!showEdit ?
-                <div>
-                Placeholder
-                </div>
+                <>
+                {reservations.map(reservation => {
+                    return(
+                        <div key={reservation.reservationId}>
+                            <p>Item: {reservation.itemName}</p>
+                            <p>Rent Date: {reservation.rentStart}</p>
+                            <p>Return Date:{reservation.returnDate}</p>
+                        </div>
+                    )
+                })}
+                </>  
             :
-                <div>Placeholder</div>
+                <div>
+                    Placeholder
+                </div>
             }
         </>
     )

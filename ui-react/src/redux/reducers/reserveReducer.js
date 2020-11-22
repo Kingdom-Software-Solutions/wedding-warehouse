@@ -11,7 +11,10 @@ import {
     GET_UPCOMING_FAILURE,
     GET_PAST_START,
     GET_PAST_SUCCESS,
-    GET_PAST_FAILURE
+    GET_PAST_FAILURE,
+    GET_ALL_RESERVATIONS_START,
+    GET_ALL_RESERVATIONS_SUCCESS,
+    GET_ALL_RESERVATIONS_FAILURE
 } from '../actions/reserveActions';
 
 const initialState = {
@@ -106,6 +109,23 @@ export const reserveReducer = (state = initialState, action) => {
             isCalling: false,
             error: "Error getting past reservations"
         }
+        case GET_ALL_RESERVATIONS_START:
+            return {
+                ...state,
+                isCalling: true
+            }
+        case GET_ALL_RESERVATIONS_SUCCESS:
+            return {
+                ...state,
+                isCalling: false,
+                reservations: payload
+            }
+        case GET_ALL_RESERVATIONS_FAILURE:
+            return {
+                ...state,
+                isCalling: false,
+                error: 'Error getting all reservations'
+            }
         default:
             return state
     }

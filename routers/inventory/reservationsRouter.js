@@ -10,6 +10,18 @@ const Reserve = Models.Reservations
 const Connect = Models.ResInvConnect
 const Inv = Models.Inventory
 
+// get all reservations
+reservation.get("/", (req, res) => {
+    Reserve.find()
+    .then(reservations => {
+        res.status(200).json(reservations)
+    })
+    .catch(err => {
+        console.log("ERROR", err)
+        res.status(500).json({error: err, errorMessage: "Oof! Something went wrong on our end"})        
+    })
+})
+
 // make reservation (Checkout)
 reservation.post("/", (req, res) => {
  

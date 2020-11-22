@@ -26,6 +26,8 @@ const Checkout = () => {
     const dates = useSelector(state => state.reserveReducer.dates);
     const conflicts = useSelector(state => state.reserveReducer.conflicts)
     const today = new Date().toISOString().split('T')[0];
+    // state to reload conflicts only when necessary
+    const [reload, setReload] = useState(false)
     const [rentStart, setRentStart] = useState(dates.pickUp);
     const [rentEnd, setRentEnd] = useState(dates.returnal);
     const [reserveUser, setReserveUser] = useState(activeUser || {
@@ -93,7 +95,6 @@ const Checkout = () => {
                 // modal should say payment was successful then do redirect
         }
     };
-    // ADD DISPATCH CLEAR CART HERE
     const handleBack = () => {
         window.history.back()
     };
@@ -145,8 +146,8 @@ const Checkout = () => {
                 {cart.map(item =>{
                     console.log(conflicts, 'conflicts')
                     // getting an array from the BE of just the item ids
-                    let inConflicts = conflicts.filter(conflict => conflict === item.id)
-                    if(inConflicts.length > 0){
+                    // let inConflicts = conflicts.filter(conflict => conflict === item.id)
+                    if(conflicts.includes(item.id)){
                         return (
                             <ConflictContainer>
                                 <ConflictMessage>{`${item.itemName} is not available in this date range!`}</ConflictMessage>
