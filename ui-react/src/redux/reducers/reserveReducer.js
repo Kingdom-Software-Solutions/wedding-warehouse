@@ -16,6 +16,9 @@ import {
     GET_ALL_RESERVATIONS_SUCCESS,
     GET_ALL_RESERVATIONS_FAILURE
 } from '../actions/reserveActions';
+import {
+    RESERVATION_FILTER_SUCCESS
+} from '../actions/adminActions'
 
 const initialState = {
     isReserving: false,
@@ -125,6 +128,11 @@ export const reserveReducer = (state = initialState, action) => {
                 ...state,
                 isCalling: false,
                 error: 'Error getting all reservations'
+            }
+        case RESERVATION_FILTER_SUCCESS:
+            return {
+                ...state,
+                reservations: payload
             }
         default:
             return state
