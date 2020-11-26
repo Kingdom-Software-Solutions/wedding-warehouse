@@ -31,6 +31,7 @@ const initialState = {
     },
     conflicts: [],
     reservations: [], 
+    filteredReservations: [],
     error: ""
 
 };
@@ -132,7 +133,7 @@ export const reserveReducer = (state = initialState, action) => {
         case RESERVATION_FILTER_SUCCESS:
             return {
                 ...state,
-                reservations: payload
+                filteredReservations: payload
             }
         default:
             return state

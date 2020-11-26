@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { Grid, GridItem, Container, Input, Text, Select } from "@chakra-ui/react"
 import { filterReservations } from '../../../redux/actions/adminActions';
+import { getAllReservations } from '../../../redux/actions/reserveActions';
 
 const FilterBar = ({ reservations }) => {
     const dispatch = useDispatch()
@@ -14,12 +15,12 @@ const FilterBar = ({ reservations }) => {
     })
 
     useEffect(() => {
-        let re = new RegExp(values.name, 'i')
         filterNames()
         console.log('in use effect', reservations)
 
     }, [values])
 
+    // filter functions
     function filterNames(){
         let searchString = values.name
         let filteredNames = reservations.filter(renter => {
@@ -28,12 +29,12 @@ const FilterBar = ({ reservations }) => {
             return (
                 nameString.includes(searchString)
             );
-        })
+        });
         console.log(filteredNames)
-        // create a filter action in redux to reuse 
+        // create a filter action in redux to reuse
+        // create a masterReservations to call before each filter? Have to fix the issue of not having a dynamic search filter
         dispatch(filterReservations(filteredNames))
-
-    }
+    };
 
     const handleChanges = e => {
         e.preventDefault();
