@@ -16,6 +16,7 @@ const FilterBar = ({ reservations }) => {
 
     useEffect(() => {
         filterNames()
+        filterReturnStatus()
         console.log('in use effect', reservations)
 
     }, [values])
@@ -31,9 +32,15 @@ const FilterBar = ({ reservations }) => {
             );
         });
         console.log(filteredNames)
-        // create a filter action in redux to reuse
         // create a masterReservations to call before each filter? Have to fix the issue of not having a dynamic search filter
         dispatch(filterReservations(filteredNames))
+    };
+
+    function filterReturnStatus(){
+        // have to parseInt locally cuz sqlite boolean is an integer. Next app should not use what I learned in school lol
+        let filteredStatus = reservations.filter(renter => renter.returned === parseInt(values.returnStatus))
+        console.log("filter by status", filteredStatus)
+        dispatch(filterReservations(filteredStatus))
     };
 
     const handleChanges = e => {
@@ -79,8 +86,10 @@ const FilterBar = ({ reservations }) => {
                 <Text mb='8px'>Filter Status</Text>
                 <Select name='returnStatus' placeholder="Select Status"
                 onChange={handleChanges}>
-                    <option value="true">Returned</option>
-                    <option value="false">Not Returned</option>
+                    {/* this has to be 0 and 1 as values cuz sqlite, need to check what it is in postgres 🙄 */}
+                    {/* may need to use a .env check */}
+                    <option value={1}>Returned</option>
+                    <option value={0}>Not Returned</option>
                 </Select>
             </GridItem>
         </Grid>
