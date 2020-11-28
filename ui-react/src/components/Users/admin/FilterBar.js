@@ -26,19 +26,25 @@ const FilterBar = ({ reservations }) => {
         let searchString = values.name
         let filteredNames = reservations.filter(renter => {
             let nameString = `${renter.renterFirstName} ${renter.renterLastName}`
-            console.log(nameString)
             return (
                 nameString.includes(searchString)
             );
         });
         console.log(filteredNames)
-        // create a masterReservations to call before each filter? Have to fix the issue of not having a dynamic search filter
         dispatch(filterReservations(filteredNames))
     };
 
     function filterReturnStatus(){
-        // have to parseInt locally cuz sqlite boolean is an integer. Next app should not use what I learned in school lol
-        let filteredStatus = reservations.filter(renter => renter.returned === parseInt(values.returnStatus))
+        // handle sqlite integer booleans
+        if (process.env.REACT_APP_BASE_URL === "development"){
+            if(values.returnStatus === 'true'){
+                values.returnStatus = 1
+            } else if(values.returnStatus === 'false'){
+                values.returnStatus = 0
+            }
+        }
+        console.log(values.returnStatus)
+        let filteredStatus = reservations.filter(renter => renter.returned === values.returnStatus)
         console.log("filter by status", filteredStatus)
         dispatch(filterReservations(filteredStatus))
     };
@@ -85,11 +91,12 @@ const FilterBar = ({ reservations }) => {
             <GridItem style={{display: 'flex'}}>
                 <Text mb='8px'>Filter Status</Text>
                 <Select name='returnStatus' placeholder="Select Status"
+                value={null}
                 onChange={handleChanges}>
                     {/* this has to be 0 and 1 as values cuz sqlite, need to check what it is in postgres 🙄 */}
                     {/* may need to use a .env check */}
-                    <option value={1}>Returned</option>
-                    <option value={0}>Not Returned</option>
+                    <option value={true}>Returned</option>
+                    <option value={false}>Not Returned</option>
                 </Select>
             </GridItem>
         </Grid>

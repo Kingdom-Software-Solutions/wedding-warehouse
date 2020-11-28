@@ -8,6 +8,7 @@ import { Center } from "@chakra-ui/react"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Container } from '@material-ui/core';
 import FilterBar from './FilterBar';
+import { filterReservations } from '../../../redux/actions/adminActions';
 
 const ProfileAdmin = ({ userInfo }) => {
     const dispatch = useDispatch();
@@ -21,9 +22,13 @@ const ProfileAdmin = ({ userInfo }) => {
     }, [])
 
     function checkFilter() {
+      console.log('CHECK FILTER')
       if(filteredReservations.length > 1){
+        console.log('RETURN FILTER ARRAY')
+        console.log(filteredReservations)
         return filteredReservations
       } else{
+        console.log('RETURN RESERVATIONS')
         return reservations
       };
     };
