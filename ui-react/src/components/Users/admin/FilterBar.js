@@ -71,7 +71,7 @@ const FilterBar = ({ reservations }) => {
                 placeholder="Search a name"
                 size="sm"/>
             </GridItem>
-            <GridItem style={{display: 'flex'}}>
+            {/* <GridItem style={{display: 'flex'}}>
                 <Text mb='8px'>Filter Dates:</Text>
                 <Input
                     value={values.startDate}
@@ -87,7 +87,7 @@ const FilterBar = ({ reservations }) => {
                     type='date'
                     size="sm"
                 />
-            </GridItem>
+            </GridItem> */}
             <GridItem style={{display: 'flex'}}>
                 <Text mb='8px'>Filter Status</Text>
                 <Select name='returnStatus' placeholder="Select Status"
